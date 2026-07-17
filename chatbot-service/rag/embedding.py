@@ -10,6 +10,7 @@ Providers (RAG_EMBED_PROVIDER):
 """
 
 import logging
+import threading
 import time
 from typing import Protocol
 
@@ -125,17 +126,22 @@ def _build_embedder(settings: RagSettings) -> DenseEmbedder:
 
 
 _EMBEDDER: DenseEmbedder | None = None
+_EMBEDDER_LOCK = threading.Lock()
 
 
 def get_embedder(settings: RagSettings | None = None) -> DenseEmbedder:
     """Process-wide singleton so the local model loads only once.
 
-    Note: after the first call the cached embedder is returned and `settings`
-    is ignored. Call reset_embedder() to rebuild with a different config.
+    Thread-safe: called from asyncio.to_thread workers, so concurrent first
+    requests must not double-load the model. After the first call the cached
+    embedder is returned and `settings` is ignored — call reset_embedder() to
+    rebuild with a different config.
     """
     global _EMBEDDER
     if _EMBEDDER is None:
-        _EMBEDDER = _build_embedder(settings or get_settings())
+        with _EMBEDDER_LOCK:
+            if _EMBEDDER is None:
+                _EMBEDDER = _build_embedder(settings or get_settings())
     return _EMBEDDER
 
 

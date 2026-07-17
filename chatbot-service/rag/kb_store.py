@@ -29,6 +29,8 @@ Note: Evidence.source_type is always SourceType.RAG; the payload
 "source_type" above is the chunk classification, a separate concept.
 """
 
+import threading
+
 from qdrant_client import QdrantClient, models
 
 from rag.config import RagSettings, get_settings
@@ -103,6 +105,26 @@ class KnowledgeBaseStore:
     def upsert(self, points: list[models.PointStruct]) -> None:
         self.client.upsert(collection_name=self.settings.collection, points=points)
 
+    def dense_search(
+        self,
+        dense_vector: list[float],
+        *,
+        limit: int,
+        query_filter: models.Filter | None = None,
+    ) -> list[models.ScoredPoint]:
+        """Dense-only search — returns calibrated COSINE scores (unlike RRF).
+        Used for the relevance gate and per-evidence confidence."""
+        if not self.client.collection_exists(self.settings.collection):
+            return []
+        return self.client.query_points(
+            collection_name=self.settings.collection,
+            query=dense_vector,
+            using=DENSE_VECTOR_NAME,
+            limit=limit,
+            query_filter=query_filter,
+            with_payload=True,
+        ).points
+
     def hybrid_search(
         self,
         dense_vector: list[float],
@@ -139,3 +161,35 @@ class KnowledgeBaseStore:
             with_payload=True,
         )
         return result.points
+
+
+_STORE: KnowledgeBaseStore | None = None
+_STORE_LOCK = threading.Lock()
+
+
+def get_store(settings: RagSettings | None = None) -> KnowledgeBaseStore:
+    """Process-wide singleton for the serving side (holds the Qdrant lock once).
+
+    Thread-safe: retriever calls this from asyncio.to_thread workers, so two
+    concurrent first requests must not each open QdrantClient on the same path
+    (the second would fail the single-process lock). The ingest CLI creates its
+    own KnowledgeBaseStore instead — it must run offline, not while the server
+    holds this singleton's lock.
+
+    Note: the underlying local (sqlite) client is shared across worker threads;
+    for the single-process demo/MVP concurrent reads are acceptable.
+    """
+    global _STORE
+    if _STORE is None:
+        with _STORE_LOCK:
+            if _STORE is None:
+                _STORE = KnowledgeBaseStore(settings)
+    return _STORE
+
+
+def reset_store() -> None:
+    """Drop the cached store (test isolation)."""
+    global _STORE
+    if _STORE is not None:
+        _STORE.close()
+    _STORE = None

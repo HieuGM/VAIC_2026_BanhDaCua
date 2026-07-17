@@ -60,6 +60,9 @@ class RagSettings(BaseSettings):
     # Retrieval tuning
     prefetch_limit: int = 20  # candidates per branch (dense/sparse) before RRF fusion
     rerank_top_k: int = 5  # final number of evidence chunks returned
+    # Return [] when the top dense cosine is below this — measured on the eval
+    # set: in-domain top-1 cosine min 0.575, off-topic max 0.502.
+    dense_min_score: float = 0.5
 
     # Ingest source directory, relative to the chatbot-service working dir
     data_dir: str = "../data"
