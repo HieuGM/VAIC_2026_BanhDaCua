@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class DoctorService {
@@ -37,7 +38,9 @@ public class DoctorService {
     }
 
     public DoctorDto get(Long id) {
-        return doctorRepository.findById(id).map(this::toDto).orElse(null);
+        return doctorRepository.findById(id)
+                .map(this::toDto)
+                .orElseThrow(() -> new NoSuchElementException("Doctor not found: id=" + id));
     }
 
     public List<DoctorScheduleDto> schedules(Long doctorId, LocalDate from, LocalDate to) {

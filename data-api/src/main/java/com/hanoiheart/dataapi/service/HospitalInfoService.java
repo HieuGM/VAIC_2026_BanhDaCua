@@ -8,6 +8,8 @@ import com.hanoiheart.dataapi.entity.HospitalInfo;
 import com.hanoiheart.dataapi.repository.HospitalInfoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class HospitalInfoService {
 
@@ -22,7 +24,7 @@ public class HospitalInfoService {
     public HospitalInfoDto getCurrent() {
         return repository.findAll().stream().findFirst()
                 .map(this::toDto)
-                .orElse(null);
+                .orElseThrow(() -> new NoSuchElementException("Hospital info not configured"));
     }
 
     private HospitalInfoDto toDto(HospitalInfo h) {
