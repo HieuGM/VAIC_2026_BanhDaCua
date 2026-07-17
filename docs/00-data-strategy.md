@@ -36,7 +36,7 @@
 - **PG `kb_articles`** = kho text nguồn (source-of-truth). Spring Boot lưu, **AI team chunk+embed sang Qdrant**.
 - → DB và KB **không tách bạch hoàn toàn**: text KB cũng nằm trong PG, chỉ vector nằm Qdrant.
 
-## 3. Data inventory — map 6 file hiện có (`docs/data/`)
+## 3. Data inventory — map 6 file hiện có (`data/raw/`)
 
 | File | Loại | → Database (cấu trúc) | → KB (text→vector) |
 |---|---|---|---|
