@@ -33,23 +33,9 @@ _QA_BLOCK_RE = re.compile(
 )
 _ID_RE = re.compile(r"[A-Z]+(?:_[A-Z0-9]+)+")
 _BRACKET_ID_RE = re.compile(r"\[([A-Z]+(?:_[A-Z0-9]+)+)\]")
-
-# Meta/eval sections of the groundtruth spec that must NOT sit in the retrievable
-# corpus: the QA samples (their questions+answers would leak straight into
-# retrieval), the "do-not-use" data, and the chatbot usage rules. Detected by
-# content/category markers.
-_EXCLUDE_MARKERS = (
-    "Câu trả lời chuẩn:",
-    "[QA_",
-    "MẪU GROUNDTRUTH",
-    "KHÔNG NÊN DÙNG",
-    "QUY TẮC SỬ DỤNG",
-)
-
-
-def _is_eval_meta(chunk: dict) -> bool:
-    blob = f"{chunk.get('category') or ''}\n{chunk['content']}"
-    return any(marker in blob for marker in _EXCLUDE_MARKERS)
+# Meta/eval sections (QA samples, do-not-use data, chatbot rules) are excluded
+# from the corpus by the document parser itself (_strip_meta_tail), so no filter
+# is needed here. QA blocks are still parsed straight from the raw file below.
 
 
 def _expand_source_ids(src_line: str) -> list[str]:
@@ -75,22 +61,18 @@ def _expand_source_ids(src_line: str) -> list[str]:
 
 def build_corpus() -> list[dict]:
     settings = get_settings()
-    corpus, excluded = [], 0
+    corpus = []
     for src in load_sources(settings.data_dir):
         for chunk in finalize_chunks(parse_source(src["text"], src["meta"]), src["meta"]):
-            row = {
-                "chunk_id": chunk["chunk_id"],
-                "content": chunk["content"],
-                "category": chunk["category"],
-                "source": chunk["source"],
-                "source_type": chunk["source_type"],
-            }
-            if _is_eval_meta(row):
-                excluded += 1
-                continue
-            corpus.append(row)
-    if excluded:
-        print(f"Excluded {excluded} eval/meta chunks from corpus (leakage guard)")
+            corpus.append(
+                {
+                    "chunk_id": chunk["chunk_id"],
+                    "content": chunk["content"],
+                    "category": chunk["category"],
+                    "source": chunk["source"],
+                    "source_type": chunk["source_type"],
+                }
+            )
     return corpus
 
 

@@ -3,12 +3,36 @@
 Strategy: split on separator lines (=====...), detect UPPERCASE heading lines
 as sub-section starts, then group paragraphs into ~TARGET-char sections so each
 chunk stays citation-friendly. Section heading is prepended to the content.
+
+The groundtruth spec file ends with meta sections (XII–XV) that are NOT
+retrievable hospital facts — "do-not-use" data, the Q&A eval samples (would leak
+straight into retrieval), chatbot usage rules, and JSON/CSV structure notes.
+These form a contiguous tail, so we truncate the document at the first one.
 """
 
 import re
 
 SEPARATOR_RE = re.compile(r"^={10,}\s*$")
 TARGET_CHARS = 900  # soft target per chunk; finalize_chunks enforces hard cap
+
+# Markers of the meta tail, matched ONLY on a roman-numeral section heading
+# ("XII. ...") so a stray uppercase mention in body prose can't truncate a doc.
+_META_TAIL_MARKERS = (
+    "DỮ LIỆU KHÔNG NÊN DÙNG",
+    "MẪU GROUNDTRUTH",
+    "QUY TẮC SỬ DỤNG",
+    "CẤU TRÚC GỢI Ý",
+)
+_ROMAN_HEADING_RE = re.compile(r"^\s*[IVXLC]+\.\s")
+
+
+def _strip_meta_tail(text: str) -> str:
+    """Drop everything from the first meta-section heading onward."""
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if _ROMAN_HEADING_RE.match(line) and any(m in line for m in _META_TAIL_MARKERS):
+            return "\n".join(lines[:i])
+    return text
 
 # A heading = short line, no ending punctuation, mostly uppercase Vietnamese.
 _LOWER_RE = re.compile(r"[a-zàáâãăằắẵặẳầấẫậẩèéêẽềếễệểìíĩỉòóôõơồốỗộổờớỡợởùúũụưừứữựửỳýỵỹỷđ]")
@@ -79,7 +103,7 @@ def _group_paragraphs(body: str) -> list[str]:
 
 def parse_document(text: str, meta: dict) -> list[dict]:
     partials = []
-    for heading, body in _split_sections(text):
+    for heading, body in _split_sections(_strip_meta_tail(text)):
         for piece in _group_paragraphs(body):
             content = f"{heading}\n{piece}" if heading else piece
             partials.append(
