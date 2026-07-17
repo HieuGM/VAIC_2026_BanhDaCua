@@ -16,16 +16,9 @@
 | Port source | `application.yml` → `server.port: ${SERVER_PORT:8081}` (override via env) |
 | Route prefix | `/data/v1` (all controllers under `/data/v1/...`) |
 
-### Authentication — `X-API-Key` (demo, optional)
+### Authentication — none
 
-Controlled by `ApiKeyFilter` (`config/ApiKeyFilter.java`):
-
-- If `hanoi-heart.api-key` (env: `DATA_API_KEY`) is **blank** → filter is **no-op**, all `/data/**` endpoints are **open**. This is the default local-dev behavior.
-- If `DATA_API_KEY` is **set** → every `/data/**` request MUST carry header `X-API-Key: <key>`. Missing/invalid → **401** `{"error":{"code":"unauthorized","message":"Missing or invalid X-API-Key"}}`.
-
-```
-X-API-Key: demo-key-123
-```
+No auth / no login (matches đề tài scope). The data-api is an **internal** service (Docker network, behind the FastAPI gateway / Caddy) — network isolation is the boundary. The earlier demo `X-API-Key` filter was removed (out of scope; it was a no-op by default). No headers required to call `/data/v1/*`.
 
 ### CORS
 
@@ -38,7 +31,6 @@ All errors return `{"error":{"code","message"}}` (produced by `GlobalExceptionHa
 | HTTP | `code` | Trigger |
 |---|---|---|
 | 400 | `bad_request` | `IllegalArgumentException` (business validation) OR `MethodArgumentTypeMismatchException` (e.g. non-numeric `id` path param, bad date format) |
-| 401 | `unauthorized` | Missing/invalid `X-API-Key` (only when `DATA_API_KEY` is configured) |
 | 404 | `not_found` | `NoSuchElementException` / `ResourceNotFoundException` / `EntityNotFoundException` / `EmptyResultDataAccessException` — currently thrown by `DoctorService.get` & `HospitalInfoService.getCurrent` on missing row |
 | 500 | `internal_error` | Catch-all `@ExceptionHandler(Exception.class)` — detail **not leaked** (generic "Unexpected server error") |
 
@@ -123,7 +115,7 @@ Returns the single configured hospital info row. Controller: `HospitalInfoContro
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/hospital-info" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/hospital-info" | jq
 ```
 
 ---
@@ -204,7 +196,7 @@ List hospital departments, optionally filtered by active flag. Paginated (in-mem
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/departments?active=true&page=0&size=20" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/departments?active=true&page=0&size=20" | jq
 ```
 
 ---
@@ -272,7 +264,7 @@ List active doctors, optionally filtered by department. Paginated. Controller: `
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/doctors?department=1&page=0&size=20" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/doctors?department=1&page=0&size=20" | jq
 ```
 
 ---
@@ -295,7 +287,7 @@ Get a single doctor by id.
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/doctors/12" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/doctors/12" | jq
 ```
 
 ---
@@ -364,7 +356,7 @@ List schedules (working shifts) for a doctor, optionally within a date range.
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/doctors/12/schedules?from=2026-07-01&to=2026-07-31" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/doctors/12/schedules?from=2026-07-01&to=2026-07-31" | jq
 ```
 
 ---
@@ -423,7 +415,7 @@ List hospital services, optionally filtered by category and/or department. Pagin
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/services?category=Khám bệnh&department=1&page=0&size=20" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/services?category=Khám bệnh&department=1&page=0&size=20" | jq
 ```
 
 ---
@@ -476,7 +468,7 @@ List price rows attached to a service. Sorted by `audience ASC, campus ASC`. **N
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/services/55/prices" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/services/55/prices" | jq
 ```
 
 ---
@@ -528,7 +520,7 @@ List BHYT (health insurance) policies. Sorted by `category ASC, code ASC` (or `c
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/bhyt-policies?category=Điều trị" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/bhyt-policies?category=Điều trị" | jq
 ```
 
 ---
@@ -593,7 +585,7 @@ List procedure steps. Sorted by `code ASC, stepNo ASC` (or `stepNo ASC` when `co
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/procedures?code=QT.25.01" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/procedures?code=QT.25.01" | jq
 ```
 
 ---
@@ -648,7 +640,7 @@ List active support channels (hotline, Zalo, Facebook, etc.). Sorted by `sortOrd
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/channels" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/channels" | jq
 ```
 
 ---
@@ -722,7 +714,7 @@ List available appointment slots (mock — production would proxy HIS). Sorted b
 
 **curl:**
 ```bash
-curl -s "http://localhost:8081/data/v1/appointment-slots?doctor=12&date=2026-07-21" -H "X-API-Key: demo-key-123" | jq
+curl -s "http://localhost:8081/data/v1/appointment-slots?doctor=12&date=2026-07-21" | jq
 ```
 
 ---
@@ -781,7 +773,7 @@ Items below are observations, not bugs. Code is source of truth.
 | 7 | Channels list | `{ channelType, label, url, phone }` | Adds `id, campus, sortOrder`; only returns `isActive=true` | Extra fields additive; non-active hidden |
 | 8 | Extra fields in DTOs | (Various) | DTOs add `description`, `note`, `sourceDoc`, `effectiveDate`, etc. — all additive | FE-facing, non-breaking |
 | 9 | Endpoints not implemented | docs/07 §B.3 also lists `/kb/articles`, `/faqs`, `/emergency-protocols` | **No controllers exist** for these 3 endpoints | KB / FAQ / emergency-protocol retrieval not yet wired in data-api (likely owned by AI/FastAPI side instead) |
-| 10 | Auth | `X-API-Key` (demo) | Enforced only when `DATA_API_KEY` env non-blank; default = open | Dev = no auth; prod = required |
+| 10 | Auth | ~~`X-API-Key` (demo)~~ | **Removed** (out of scope — no auth in đề tài; data-api internal). Network = boundary | None |
 | 11 | Admin CRUD | docs/07 §B note: "Admin CRUD … guard `X-API-Key`, MVP có thể skip" | No POST/PUT/DELETE controllers | Matches MVP scope (seed via Flyway) |
 | 12 | CORS exposed header | (Not specified) | `X-Total-Count` exposed but **not set** by any controller (pagination metadata is in body via `PageResponse`) | Header is a no-op today |
 
