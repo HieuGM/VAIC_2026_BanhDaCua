@@ -1,0 +1,27 @@
+# === 3rd-party AI dev toolkit (not project source) ===
+Claudekit Engineer v2.13.0/
+.opencode/
+
+# === Transient extraction / OCR artifacts ===
+docs/_extracted/
+
+# === OS / Editor junk ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# === Secrets ===
+.env
+.env.*
+!.env.example
+
+# === Build artifacts (extend as stacks land) ===
+node_modules/
+__pycache__/
+*.pyc
+dist/
+build/
+.next/
+.venv/
