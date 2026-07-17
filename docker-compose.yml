@@ -31,7 +31,6 @@ services:
       DB_PASS: ${DB_PASS:-hanoiheart}
       SERVER_PORT: 8081
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
-      DATA_API_KEY: ${DATA_API_KEY:-}
     ports:
       - "8081:8081"
 

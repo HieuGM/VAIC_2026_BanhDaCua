@@ -44,4 +44,3 @@ management:
 hanoi-heart:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
-  api-key: ${DATA_API_KEY:}
