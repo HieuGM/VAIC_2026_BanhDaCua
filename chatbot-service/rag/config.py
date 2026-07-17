@@ -21,17 +21,26 @@ class RagSettings(BaseSettings):
         extra="ignore",
     )
 
-    # Embedding (OpenAI-compatible endpoint)
+    # Embedding provider: "sentence_transformers" (local, e.g. bge-m3) or
+    # "openai" (OpenAI-compatible HTTP API: OpenAI / FPT Cloud).
+    embed_provider: str = "sentence_transformers"
+    embed_model: str = "BAAI/bge-m3"
+    # Dense vector size must match embed_model output:
+    # bge-m3=1024, text-embedding-3-small=1536, multilingual-e5-large=1024
+    embed_dim: int = 1024
+
+    # Local (sentence_transformers) knobs
+    embed_device: str = "auto"  # auto -> cuda if available else cpu
+    embed_max_seq_length: int = 512  # chunks are short; caps memory
+    embed_batch_size: int = 32
+
+    # OpenAI-compatible API knobs (used when embed_provider == "openai")
     embed_base_url: str = "https://api.openai.com/v1"
-    embed_model: str = "text-embedding-3-small"
     # Falls back to the project-wide OPENAI_API_KEY; set RAG_EMBED_API_KEY (+
-    # RAG_EMBED_BASE_URL/RAG_EMBED_MODEL/RAG_EMBED_DIM) to switch to FPT Cloud.
+    # RAG_EMBED_BASE_URL/RAG_EMBED_MODEL/RAG_EMBED_DIM) for FPT Cloud.
     embed_api_key: str = Field(
         "", validation_alias=AliasChoices("RAG_EMBED_API_KEY", "OPENAI_API_KEY")
     )
-    # Dense vector size must match embed_model output:
-    # text-embedding-3-small=1536, multilingual-e5-large=1024, Vietnamese_Embedding=1024
-    embed_dim: int = 1536
 
     # Rerank (chat-completion endpoint, cheap model; may differ from embedding provider)
     rerank_base_url: str = "https://api.openai.com/v1"
