@@ -9,6 +9,7 @@ with OpenAI or FPT Cloud (multilingual-e5-large / Vietnamese_Embedding).
 
 from functools import lru_cache
 
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,15 +24,21 @@ class RagSettings(BaseSettings):
     # Embedding (OpenAI-compatible endpoint)
     embed_base_url: str = "https://api.openai.com/v1"
     embed_model: str = "text-embedding-3-small"
-    embed_api_key: str = ""
+    # Falls back to the project-wide OPENAI_API_KEY; set RAG_EMBED_API_KEY (+
+    # RAG_EMBED_BASE_URL/RAG_EMBED_MODEL/RAG_EMBED_DIM) to switch to FPT Cloud.
+    embed_api_key: str = Field(
+        "", validation_alias=AliasChoices("RAG_EMBED_API_KEY", "OPENAI_API_KEY")
+    )
     # Dense vector size must match embed_model output:
-    # multilingual-e5-large=1024, Vietnamese_Embedding=1024, text-embedding-3-small=1536
-    embed_dim: int = 1024
+    # text-embedding-3-small=1536, multilingual-e5-large=1024, Vietnamese_Embedding=1024
+    embed_dim: int = 1536
 
     # Rerank (chat-completion endpoint, cheap model; may differ from embedding provider)
     rerank_base_url: str = "https://api.openai.com/v1"
     rerank_model: str = "gpt-4o-mini"
-    rerank_api_key: str = ""
+    rerank_api_key: str = Field(
+        "", validation_alias=AliasChoices("RAG_RERANK_API_KEY", "OPENAI_API_KEY")
+    )
     rerank_enabled: bool = True
     rerank_min_score: float = 0.3
 
