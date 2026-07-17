@@ -43,4 +43,5 @@ Chatbot web RAG: ingest (crawl site + SOP) → retrieve + rerank → LLM grounde
 
 ## Liên quan
 - [[00-competition-rubric-and-principles]] · [[00-hospital-domain-rules]]
+- [[00-data-strategy]] (data inventory + 8 gap cần BA bổ sung — xem §4)
 - [[01-project-overview]] → [[04-non-functional-requirements]] · [[07-api-design]] · [[10-development-roadmap]]

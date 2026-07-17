@@ -1,87 +1,121 @@
-# 01 — Project Overview
+# 01 — Project Overview (PDR rút gọn)
 
-> Tổng quan dự án. Đọc sau `00-competition-rubric-and-principles` và `00-hospital-domain-rules`.
-> Cập nhật: 2026-07-17 · Trạng thái: Draft v1.
+> **Mục đích:** nguồn sự thật về *tầm nhìn, scope, tech stack, team, metrics*.
+> **Đọc sau:** `00-competition-rubric-and-principles`, `00-hospital-domain-rules`.
+> Cập nhật: 2026-07-17 · Phiên bản: **v1.1** · Trạng thái: **Review** (owner: Lead — verify theo `00-team-working-guide` §7).
 
 ---
 
 ## 1. Tên & Codename
-- **Tên dự án (demo):** TimHN Assistant — Trợ lý CSKH AI cho Bệnh viện Tim Hà Nội
-- **Codename repo:** `BanhDaCua`
-- **Đề bài:** *"Intelligent AI Customer Care Assistant for Hanoi Heart Hospital"* (VAIC 2026)
+- **Tên dự án (demo):** *TimHN Assistant* — Trợ lý CSKH AI cho Bệnh viện Tim Hà Nội (BVT).
+- **Codename repo:** `BanhDaCua`.
+- **Đề bài:** *"Intelligent AI Customer Care Assistant for Hanoi Heart Hospital"* — VAIC 2026.
+- **Domain:** Y tế (nghiêm ngặt — **KHÔNG hallucinate**, an toàn dữ liệu).
 
 ## 2. Tầm nhìn (Vision)
-Trợ lý AI hội thoại **đáng tin cậy**, trả lời chính xác các câu hỏi CSKH của bệnh nhân/người nhà BV Tim HN dựa trên **nguồn chính thức**, giảm tải tổng đài/reception, và **bắt đúng dấu hiệu cấp cứu** để chuyển khoa Cấp cứu kịp thời.
+Trợ lý AI hội thoại **đáng tin cậy**, trả lời chính xác câu hỏi CSKH của BN/người nhà BVT dựa trên **nguồn chính thức**, giảm tải tổng đài/reception 24/7, và **bắt đúng dấu hiệu cấp cứu** để chuyển khoa Cấp cứu kịp thời theo `HD.25.01`.
 
 ## 3. Vấn đề (Problem)
-- **2.500–3.000 BN ngoại trú/ngày** → lượng câu hỏi lặp khổng lồ (đặt khám, quy trình, BHYT, giá, giờ, lịch BS).
-- Trả lời thủ công qua tổng đài/website/mạng xã hội/reception → **chậm, không đồng nhất, quá tải nhân sự CSKH**.
-- Thiếu kênh tự phục vụ 24/7 đáng tin cậy cho thông tin chính thức.
+| # | Nỗi đau | Hệ quả |
+|---|---|---|
+| P1 | **2.500–3.000 BN ngoại trú/ngày** tạo lượng câu hỏi lặp khổng lồ | Tổng đài/reception quá tải |
+| P2 | Trả lời thủ công nhiều kênh (DT/Web/Fanpage) | Chậm, mâu thuẫn thông tin |
+| P3 | Thiếu kênh tự phục vụ 24/7 đáng tin cậy | BN nản, tăng chờ, giảm trải nghiệm |
+| P4 | BN/kế bên không nhận diện dấu hiệu nguy hiểm | Chậm chuyển cấp cứu → rủi ro y tế |
 
 ## 4. Giải pháp (Solution)
-Chatbot web (text + ASR/TTS tiếng Việt tuỳ chọn) trên kiến trúc **RAG grounded**:
-- Ingest KB chính thức (crawl website BV + SOP `QT.25.01`) → vector store.
-- Truy vấn → retrieve + rerank → LLM grounded + **citation**.
-- Lớp guardrail: intent router, **emergency triage (kill switch)**, refusal/out-of-scope gate.
-- Tích hợp (mock + roadmap thật): redirect đặt khám (Web/Zalo Mini App/Tổng đài), tra lịch/giá khi có API.
+Chatbot web (text + ASR/TTS tiếng Việt *bonus*) trên kiến trúc **RAG grounded**:
+- **Ingest** KB chính thức (crawl website BV + SOP `QT.25.01` + forms) → vector store.
+- **Retrieve + rerank** → LLM grounded + **citation** (R1, R9).
+- **Guardrail** theo lớp: intent router → **emergency triage kill switch (R2)** → refusal/out-of-scope gate (R7) → no-medical-advice (R4).
+- **Integration** (mock + roadmap thật): redirect đặt khám (Web/Zalo Mini App/Tổng đài — R6); tra lịch/giá khi có API.
 
 ## 5. Phạm vi (Scope)
+**In-scope (48h):** chat UI responsive (text) + RAG pipeline đầy đủ + guardrail (emergency/OOS/no-advice) + KB (site công khai + SOP) + mock booking + roadmap pilot + deploy Docker trên VPS (public URL). Bonus: ASR/TTS tiếng Việt nếu đủ thời gian.
+**Out-of-scope:** chẩn đoán/kê đơn/giải thích KQ CLS · tích hợp thật HIS/API · fine-tune model · hồ sơ bệnh án/auth BN · mobile native (xem `00-competition-rubric-and-principles` §6).
 
-### In-scope (48h)
-- Chat UI web responsive (text); bonus ASR/TTS tiếng Việt.
-- RAG pipeline đầy đủ (ingest → retrieve → answer + citation).
-- Guardrail emergency + out-of-scope + no-medical-advice.
-- KB từ website công khai BV + SOP.
-- Mock integration đặt khám + roadmap pilot.
-- Deploy Docker trên VPS, public URL.
+## 6. Tech Stack
 
-### Out-of-scope (xem `00-competition-rubric-and-principles` §6)
-- Chẩn đoán/kê đơn/giải thích KQ CLS.
-- Tích hợp thật HIS/API BV.
-- Fine-tune model riêng.
-- Hồ sơ bệnh án / auth BN.
-- Mobile native.
+> **Quyết ownership (3 lớp backend, swappable — ô 03):** **Web FE** = 2 web dev (Next.js) · **Data Backend** = Spring Boot (PostgreSQL, business data) · **AI/Backend** = 2 AI engineer (FastAPI + RAG + Qdrant). FastAPI gọi Spring Boot qua interface `HospitalDataProvider` → demo đọc PG, prod swap HIS thật (xem `06` §6).
 
-## 6. Tech Stack (đề xuất — chi tiết ở `05-system-architecture`)
+### 6.1 Web (Frontend) — **đề xuất CHỐT** (chi tiết setup ở `08-development-guide`)
 
-| Lớp | Công nghệ | Lý do |
+| Lớp | Công nghệ | Lý do (defensible — ô 06) |
 |---|---|---|
-| Frontend | Next.js 15 (App Router) + TS + Tailwind + shadcn/ui | Chat UI nhanh, responsive, dễ deploy |
-| Backend API | Python 3.12 + FastAPI | Hệ sinh thái AI/RAG, async, nhẹ |
-| RAG | Qdrant (vector DB) + BGE-M3/multilingual-e5 (embed VI) + rerank | Tiếng Việt tốt, chạy Docker |
-| LLM | Cloud API (demo): GPT-4o-mini / Gemini / Claude · **Đường on-prem**: Qwen2.5 / Vistral-7B (pilot) | Chất lượng 48h + privacy path |
-| Guardrail | Rule-based + LLM classifier (emergency/intent) | Kill switch R2, gate R7 |
-| ASR/TTS (bonus) | VinAI PhoWhisper (ASR) + Viettel/FPT TTS | Tiếng Việt |
-| KB ingest | Firecrawl/httpx + langchain-style chunker | Crawl site BV + SOP md |
-| Deploy | Docker Compose + Caddy (TLS) trên VPS | 1 lệnh, portable sang infra BV |
-| Obs/Eval | Structlog + small eval set (golden Q&A) | Grounding correctness |
+| Framework | **Next.js 15 (App Router) + React 19 + TypeScript 5** | Team 3 web fluency React; Route Handler làm **BFF proxy SSE** → ẩn URL FastAPI + inject key + 1 domain (không CORS); standalone Docker build. |
+| UI primitives | **shadcn/ui** (Radix-based) + lucide-react | Copy-paste ownership, a11y sẵn (focus trap/ARIA → ô 04), aesthetic y tế sạch, không fight theme. |
+| Styling | **Tailwind CSS** | Nhanh, đồng nhất, bundle nhỏ, mobile-first. |
+| Data/streaming | **TanStack Query v5** (REST) + **SSE** native/ReadableStream hook | Cache + devtools cho `/citations/{id}`, `/session`, `/channels`; streaming answer token-by-token. |
+| Markdown | **react-markdown + remark-gfm + rehype-sanitize** | Render câu trả lời LLM; **sanitize HTML** = security (ô 05). |
+| Form/validate | React Hook Form + Zod | Form đặt khám/feedback; schema dùng chung với contract `07`. |
+| i18n | next-intl | Tiếng Việt mặc định, EN fallback (R10). |
+| Animation | Framer Motion *(dùng ít)* | Banner cấp cứu pulse, transition tin nhắn (ô 04). |
+| Audio (bonus) | MediaRecorder + Web Audio API + native Audio | Mic ASR + playback TTS (FR-9). |
+| Test | Vitest + Testing Library (+ Playwright smoke) | Unit + e2e luồng demo. |
+| Lint/format | **Biome** *(1 tool, nhanh)* hoặc ESLint+Prettier | Tối thiểu config trong 48h. |
+| Pkg manager | **pnpm** | Nhanh, tiết kiệm disk, monorepo-friendly. |
 
-## 7. Team & Luồng song song (không phụ thuộc)
+> **Alternative (lean):** nếu team muốn tối giản → **Vite + React SPA** (static build qua Caddy, browser gọi trực tiếp FastAPI + CORS). Mất BFF, tự wire streaming/a11y. *Khuyên Next.js cho polish ô 04.*
 
-| Role (số lượng) | Sở hữu | Phụ thuộc? |
+### 6.2 Data Backend — **Spring Boot** (sở hữu: data dev)
+| Lớp | Công nghệ |
+|---|---|
+| Framework | **Java 21 + Spring Boot 3** (Spring Web/Data JPA) |
+| DB | **PostgreSQL** (schema `hospital`) |
+| Migration | Flyway (`V1__init` + `V2__seed`) |
+| API | REST `/api/v1/*` (departments, doctors, schedules, services, prices, bhyt, procedures, kb/articles, faqs, channels, emergency, appointment-slots mock) |
+| Seed | `data/seed/*.json|csv` loader (`SPRING_PROFILES=seed`) |
+| Deploy | Docker (cùng compose với api/qdrant/caddy) |
+
+> Là **nguồn dữ liệu cấu trúc chính thức** cho demo. Prod → adapter gọi HIS thật.
+
+### 6.3 AI / RAG (sở hữu AI team — *FE/data không phụ thuộc nội bộ*)
+| Lớp | Công nghệ |
+|---|---|
+| API | Python 3.12 + **FastAPI** (SSE `POST /api/v1/chat`) |
+| RAG | Qdrant (vector DB) + BGE-M3 / multilingual-e5 (embed VI) + BGE-reranker-v2-m3 |
+| LLM | Cloud API (demo): GPT-4o-mini / Gemini / Claude · on-prem path: Qwen2.5 / Vistral-7B (pilot) |
+| Guardrail | Rule-based + LLM classifier (emergency/intent) |
+| ASR/TTS (bonus) | VinAI PhoWhisper (ASR) + Viettel/FPT TTS |
+| KB ingest | Firecrawl/httpx + chunker |
+| Deploy | Docker Compose + Caddy (TLS) trên VPS |
+| Obs/Eval | Structlog + golden Q&A eval set |
+
+> **Điểm giao thoa duy nhất FE↔AI = API contract `07-api-design.md`** (chốt giờ đầu → 3 luồng song song).
+
+## 7. Team & luồng song song (không phụ thuộc)
+| Role (SL) | Sở hữu code | Phụ thuộc |
 |---|---|---|
-| Web FE (3) | Next.js chat UI, suggested Q, citation UI, ASR/TTS UI, redirect buttons | Chỉ phụ thuộc **API contract** (`07-api-design`), không phụ thuộc AI nội bộ |
-| AI (2) | RAG pipeline (ingest/retrieve/answer), guardrail, eval, KB xây | Phụ thuộc **KB content** (BA) + API contract |
-| BA (1) | KB content (FAQ/giá/quyền BHYT từ site), bộ test golden Q&A, kịch bản demo, slide/pitch | Độc lập |
+| **Web FE (2)** | `web/` (Next.js) | chỉ contract `07` |
+| **Data Backend (1)** | `data-api/` (Spring Boot + PG `hospital`) | data seed (BA) |
+| **AI (2)** | `api/` (FastAPI), `ingest/`, `retrieval/`, `guardrail/`, `eval/`, Qdrant | data REST (Spring Boot) + KB (BA) + contract `07` |
+| **BA (1)** | `data/seed`, `data/content`, golden Q&A, slide, kịch bản demo | độc lập |
+| **Lead** (1 trong 6) | repo + Docker compose + deploy | — |
 
-> **Nguyên tắc chia việc:** chốt **API contract** (`07-api-design`) NGAY trong giờ đầu → 3 luồng (FE / AI / data+BA) chạy song song không chặn nhau. Contract ổn định, impl thay đổi.
+> **Nguyên tắc:** chốt contract `07` NGAY giờ đầu → 3 luồng chạy song song. *Contract ổn định, impl thay đổi.*
 
-## 8. Success Metrics (định lượng — dùng cho slide + rubric 03)
-- **Grounding accuracy ≥ 90%** trên golden Q&A set (có trích nguồn đúng).
-- **Emergency recall = 100%** (không bỏ sót case cấp cứu test).
-- **T2 là < 4s** (end-to-end chat).
-- **Demo 5'** chạy thật trên deployed URL, ≥3 luồng tình huống (FAQ / BHYT / cấp cứu).
-- **Reduction proxy**: giả định giảm 40–60% cuộc gọi tổng đài lặp (business case).
+## 8. Success Metrics (định lượng — slide + ô 03)
+| Metric | Mục tiêu demo | Mục tiêu pilot |
+|---|---|---|
+| Grounding accuracy (golden set, có nguồn đúng) | ≥ 90% | ≥ 95% |
+| Emergency recall (không sót case cấp cứu) | **100%** | **100%** |
+| Chat end-to-end P50 / P95 | ≤ 3s / ≤ 6s | ≤ 2s / ≤ 4s |
+| Demo | 5' chạy thật trên URL, ≥ 3 luồng (FAQ/BHYT/cấp cứu) | — |
+| Business proxy | giả định giảm 40–60% cuộc gọi lặp | đo thật |
 
 ## 9. Rủi ro chính
 | Rủi ro | Tác động | Giảm thiểu |
 |---|---|---|
-| Hallucinate thông tin y tế | Mất ô 05, nguy hiểm | Grounding cứng + citation + refusal gate; eval set |
-| Crawler site BV chặn/đổi cấu trúc | KB mỏng | Backup: SOP + nội dung BA biên soạn |
-| 48h thiếu thời gian | Demo hời hợt | Lát cắt hẹp, ưu tiên 01+02+03+05 |
-| API BV không có | Pilot yếu | Mock + roadmap thật rõ ràng |
-| VPS giới hạn GPU (ASR/TTS/local LLM) | Bonus bị cắt | Cloud API cho LLM; ASR/TTS làm nếu đủ thời gian |
+| Hallucinate thông tin y tế | mất ô 05, nguy hiểm | grounding cứng + citation + refusal gate + eval set |
+| Crawler bị chặn/đổi cấu trúc | KB mỏng | backup: SOP + nội dung BA biên soạn |
+| 48h thiếu thời gian | demo hời hợt | lát cắt hẹp, ưu tiên 01+02+03+05 |
+| API BV không có | pilot yếu | mock + roadmap thật rõ (ôm ô 03) |
+| VPS không GPU | ASR/TTS/local LLM bị cắt | cloud API LLM; ASR/TTS bonus |
 
-## 10. Liên quan
-- [[00-competition-rubric-and-principles]] · [[00-hospital-domain-rules]]
-- [[02-business-analysis]] · [[03-functional-requirements]] · [[04-non-functional-requirements]]
+## 10. Giả định & mục cần VERIFY (xem `brainstorming.md` §Verify)
+LLM provider+credit · cấu hình VPS/GPU · URL site BV + quyền crawl · API/HIS thật · domain+DNS · on-prem documentation. **Chưa chốt — verify trước giờ 2.**
+
+## 11. Liên quan
+- Nền tảng: [[00-competition-rubric-and-principles]] · [[00-hospital-domain-rules]]
+- Chuỗi: [[02-business-analysis]] → [[03-functional-requirements]] → [[04-non-functional-requirements]]
+- Setup/contract: [[07-api-design]] · [[08-development-guide]] · [[09-deployment-guide]]

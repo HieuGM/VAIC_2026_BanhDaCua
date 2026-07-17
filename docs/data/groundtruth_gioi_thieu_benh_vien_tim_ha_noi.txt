@@ -1,0 +1,918 @@
+GROUNDTRUTH - NHÓM THÔNG TIN GIỚI THIỆU BỆNH VIỆN TIM HÀ NỘI
+Phiên bản: 1.0
+Ngày thu thập: 17/07/2026
+Mục đích: Làm dữ liệu chuẩn cho hệ thống hỏi đáp/RAG.
+Nguyên tắc: Chỉ ghi nhận nội dung xuất hiện trên website chính thức; không tự suy diễn chức danh hoặc dữ liệu còn thiếu.
+
+======================================================================
+I. THÔNG TIN NGUỒN
+======================================================================
+
+[SOURCE_01]
+Tên trang: Giới thiệu chung
+URL: https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung
+Loại dữ liệu: Giới thiệu bệnh viện, sứ mệnh, cơ cấu, nhân lực, cơ sở vật chất,
+kỹ thuật chuyên môn, đào tạo, hợp tác và công tác xã hội.
+
+[SOURCE_02]
+Tên trang: Ban lãnh đạo bệnh viện
+URL: https://benhvientimhanoi.vn/vn/cong/thong-tin/ban-lanh-dao
+Loại dữ liệu: Danh sách tên thành viên ban lãnh đạo được hiển thị trên trang.
+Lưu ý: Trang không hiển thị chức danh bằng văn bản có thể trích xuất.
+
+[SOURCE_03]
+Tên trang: Cơ cấu tổ chức
+URL: https://benhvientimhanoi.vn/vn/cong/thong-tin/co-cau-to-chuc
+Loại dữ liệu: Sơ đồ cơ cấu tổ chức.
+Lưu ý: Nội dung chính được đăng dưới dạng hình ảnh, không có nội dung văn bản
+chi tiết để trích xuất tự động. Phần cơ cấu bên dưới được đối chiếu từ trang
+“Giới thiệu chung”.
+
+[SOURCE_04]
+Tên trang: Quá trình phát triển
+URL: https://benhvientimhanoi.vn/vn/cong/thong-tin/qua-trinh-phat-trien
+Loại dữ liệu: Lịch sử hình thành và các mốc phát triển của bệnh viện.
+Lưu ý: Nhiều số liệu trên trang mang tính lịch sử tại thời điểm bài viết.
+
+
+======================================================================
+II. HỒ SƠ NHẬN DIỆN BỆNH VIỆN
+======================================================================
+
+[FACT_HOSPITAL_001]
+Chủ đề: Tên tiếng Việt
+Giá trị: Bệnh viện Tim Hà Nội
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_HOSPITAL_002]
+Chủ đề: Tên tiếng Anh
+Giá trị: Hanoi Heart Hospital
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_HOSPITAL_003]
+Chủ đề: Slogan
+Giá trị: Vì một trái tim khỏe
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_HOSPITAL_004]
+Chủ đề: Website
+Giá trị: benhvientimhanoi.vn
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_HOSPITAL_005]
+Chủ đề: Ba tiêu chí phục vụ
+Giá trị:
+- Bệnh viện thân thiện.
+- Dịch vụ thuận tiện.
+- Nhân viên thanh lịch.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_HOSPITAL_006]
+Chủ đề: Ba phương châm làm việc 3H
+Giá trị:
+- Head: trí tuệ.
+- Hand: kỹ năng.
+- Heart: lương tâm, trách nhiệm và y đức.
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_HOSPITAL_007]
+Chủ đề: Bốn trụ cột
+Giá trị:
+- Chuyên môn kỹ thuật đạt trình độ cao.
+- Dịch vụ chất lượng tốt.
+- Công tác đào tạo, chỉ đạo tuyến.
+- Công tác xã hội.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_HOSPITAL_008]
+Chủ đề: Năm lĩnh vực mũi nhọn
+Giá trị:
+- Tim mạch nội khoa.
+- Tim mạch nhi khoa.
+- Tim mạch can thiệp.
+- Phẫu thuật tim mạch.
+- Tim mạch chuyển hóa.
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+
+======================================================================
+III. ĐỊA VỊ PHÁP LÝ VÀ VAI TRÒ
+======================================================================
+
+[FACT_LEGAL_001]
+Chủ đề: Quyết định thành lập
+Giá trị: Bệnh viện được thành lập theo Quyết định số 6863/QĐ-UB ngày
+15/11/2001 của UBND Thành phố Hà Nội.
+Nguồn: SOURCE_01, SOURCE_04
+Độ ổn định: Cao
+
+[FACT_LEGAL_002]
+Chủ đề: Nguồn gốc hình thành
+Giá trị: Bệnh viện Tim Hà Nội được thành lập trên cơ sở tổ chức lại
+Bệnh viện Hoàn Kiếm.
+Nguồn: SOURCE_04
+Độ ổn định: Cao
+
+[FACT_LEGAL_003]
+Chủ đề: Phân hạng và cơ quan trực thuộc
+Giá trị: Bệnh viện Tim Hà Nội là bệnh viện chuyên khoa hạng I trực thuộc
+Sở Y tế Hà Nội.
+Nguồn: SOURCE_01, SOURCE_04
+Độ ổn định: Trung bình
+Cảnh báo: Cần xác minh lại nếu dùng làm thông tin pháp lý tại thời điểm hiện hành.
+
+[FACT_LEGAL_004]
+Chủ đề: Quy chế hoạt động
+Giá trị: Bệnh viện hoạt động theo Quy chế được ban hành theo Quyết định
+số 3251/QĐ-UBND ngày 20/05/2005 của UBND Thành phố Hà Nội.
+Nguồn: SOURCE_01, SOURCE_04
+Độ ổn định: Cao về mặt lịch sử
+
+[FACT_LEGAL_005]
+Chủ đề: Tổ chức lại bệnh viện
+Giá trị: Ngày 03/12/2014, UBND Thành phố Hà Nội ban hành Quyết định
+số 6438/QĐ-UBND về việc tổ chức lại Bệnh viện Tim Hà Nội trên cơ sở sáp nhập
+Trung tâm Y tế Công nghiệp Hà Nội vào Bệnh viện Tim Hà Nội.
+Nguồn: SOURCE_01
+Độ ổn định: Cao về mặt lịch sử
+
+[FACT_ROLE_001]
+Chủ đề: Vai trò chuyên môn
+Giá trị: Website giới thiệu Bệnh viện Tim Hà Nội là bệnh viện chuyên khoa
+đầu ngành tim mạch của Thủ đô Hà Nội và là bệnh viện chuyên khoa tim mạch
+tuyến cuối của cả nước.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+Cảnh báo: Giữ nguyên cách diễn đạt “website giới thiệu” để tránh biến mô tả
+quảng bá thành kết luận pháp lý độc lập.
+
+
+======================================================================
+IV. ĐỊA CHỈ VÀ THÔNG TIN LIÊN HỆ
+======================================================================
+
+[FACT_CONTACT_001]
+Chủ đề: Cơ sở 1
+Giá trị: Số 92 Trần Hưng Đạo, phường Cửa Nam, Hà Nội.
+Nguồn: SOURCE_01, SOURCE_02, SOURCE_03, SOURCE_04
+Độ ổn định: Trung bình
+
+[FACT_CONTACT_002]
+Chủ đề: Cơ sở 2
+Giá trị: Số 695 Lạc Long Quân, phường Tây Hồ, Hà Nội.
+Nguồn: SOURCE_01, SOURCE_02, SOURCE_03, SOURCE_04
+Độ ổn định: Trung bình
+
+[FACT_CONTACT_003]
+Chủ đề: Hotline
+Giá trị: 19001082
+Ghi chú: Chân trang website ghi “24h/7”.
+Nguồn: SOURCE_01, SOURCE_02, SOURCE_03, SOURCE_04
+Độ ổn định: Trung bình
+
+[FACT_CONTACT_004]
+Chủ đề: Email chăm sóc khách hàng
+Giá trị: cskh@timhanoi.vn
+Nguồn: SOURCE_01, SOURCE_02, SOURCE_03, SOURCE_04
+Độ ổn định: Trung bình
+
+
+======================================================================
+V. SỨ MỆNH VÀ NHIỆM VỤ
+======================================================================
+
+[FACT_MISSION_001]
+Chủ đề: Khám và điều trị
+Giá trị: Khám và điều trị bệnh tim mạch cho người dân Hà Nội và cả nước
+trên năm lĩnh vực: nội khoa, ngoại khoa, nhi khoa, tim mạch can thiệp và
+tim mạch chuyển hóa; đồng thời khám chữa bệnh đa khoa tại cơ sở 2.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_MISSION_002]
+Chủ đề: Chỉ đạo tuyến
+Giá trị: Thực hiện chỉ đạo tuyến đối với các bệnh viện trực thuộc
+Sở Y tế Hà Nội.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_MISSION_003]
+Chủ đề: Đào tạo và chuyển giao kỹ thuật
+Giá trị: Đào tạo và chuyển giao kỹ thuật cho các địa phương trong các chương
+trình bệnh viện vệ tinh, NORRED và các chương trình hợp tác khác.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+Cảnh báo: Các con số tỉnh/thành trong bài viết có thể thuộc thời điểm cũ.
+
+[FACT_MISSION_004]
+Chủ đề: Phòng chống bệnh
+Giá trị: Thực hiện phòng chống các bệnh lý tim mạch và chuyển hóa.
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_MISSION_005]
+Chủ đề: Nghiên cứu
+Giá trị: Thực hiện nghiên cứu khoa học.
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_MISSION_006]
+Chủ đề: Công tác xã hội
+Giá trị: Thực hiện công tác xã hội và hoạt động thiện nguyện.
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+[FACT_MISSION_007]
+Chủ đề: Hợp tác quốc tế
+Giá trị: Thực hiện hợp tác quốc tế trong lĩnh vực tim mạch, đào tạo và
+chuyển giao chuyên môn.
+Nguồn: SOURCE_01
+Độ ổn định: Cao
+
+
+======================================================================
+VI. BAN LÃNH ĐẠO ĐƯỢC HIỂN THỊ TRÊN WEBSITE
+======================================================================
+
+[FACT_LEADER_001]
+Họ tên: PGS.TS.BS Nguyễn Sinh Hiền
+Nguồn: SOURCE_02
+Độ ổn định: Thấp
+Cảnh báo: Trang chỉ hiển thị tên, không có chức danh bằng văn bản.
+Không được tự gán chức danh khi trả lời.
+
+[FACT_LEADER_002]
+Họ tên: TS.BS Vũ Quỳnh Nga
+Nguồn: SOURCE_02
+Độ ổn định: Thấp
+Cảnh báo: Trang chỉ hiển thị tên, không có chức danh bằng văn bản.
+Không được tự gán chức danh khi trả lời.
+
+[FACT_LEADER_003]
+Họ tên: TS.BS Phạm Như Hùng
+Nguồn: SOURCE_02
+Độ ổn định: Thấp
+Cảnh báo: Trang chỉ hiển thị tên, không có chức danh bằng văn bản.
+Không được tự gán chức danh khi trả lời.
+
+[FACT_LEADER_004]
+Họ tên: TS.BS Hoàng Văn
+Nguồn: SOURCE_02
+Độ ổn định: Thấp
+Cảnh báo: Trang chỉ hiển thị tên, không có chức danh bằng văn bản.
+Không được tự gán chức danh khi trả lời.
+
+[HISTORICAL_NOTE_LEADER_001]
+Nội dung: Trang “Giới thiệu chung” có đoạn mô tả TS.BS Hoàng Văn là
+Phó Giám đốc bệnh viện và chuyên gia về tim mạch can thiệp.
+Nguồn: SOURCE_01
+Phân loại: Thông tin lịch sử theo thời điểm biên soạn trang.
+Không sử dụng để khẳng định chức danh hiện tại nếu chưa có nguồn cập nhật.
+
+
+======================================================================
+VII. CƠ CẤU TỔ CHỨC VÀ NHÂN LỰC ĐƯỢC NÊU TRÊN TRANG GIỚI THIỆU
+======================================================================
+
+[FACT_ORG_001]
+Chủ đề: Thành phần tổ chức cấp cao
+Giá trị:
+- Đảng ủy Bệnh viện.
+- Ban Giám đốc Bệnh viện.
+- Các khoa, phòng, ban.
+- Các tổ chức đoàn thể gồm Công đoàn và Đoàn Thanh niên.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_ORG_002]
+Chủ đề: Tổng số đơn vị
+Giá trị: Trang giới thiệu ghi bệnh viện có 30 khoa, phòng, ban, trong đó
+16 khoa lâm sàng, 3 khoa cận lâm sàng và 11 đơn vị chức năng, hậu cần.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+Cảnh báo chất lượng: Cùng trang tiếp tục liệt kê 11 khoa lâm sàng và
+5 khoa cận lâm sàng. Hai cách thống kê có dấu hiệu không nhất quán.
+Không nên dùng con số tổng hợp này để trả lời chắc chắn nếu chưa được xác minh.
+
+[FACT_ORG_003]
+Chủ đề: Nhân lực
+Giá trị: Trang giới thiệu ghi tổng số cán bộ, viên chức và người lao động
+là 589 người, gồm 161 biên chế, 3 lao động hợp đồng theo Nghị định 68/NĐ-CP
+và 425 hợp đồng lao động của bệnh viện.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+Cảnh báo: Đây là số liệu tại thời điểm bài viết, không phải số liệu hiện hành
+được xác nhận năm 2026.
+
+[FACT_ORG_004]
+Chủ đề: Ban giám đốc theo số lượng
+Giá trị: Trang giới thiệu ghi 1 giám đốc và 3 phó giám đốc.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+
+[FACT_ORG_005]
+Chủ đề: Các phòng chức năng được liệt kê
+Giá trị:
+- Phòng Kế hoạch tổng hợp.
+- Phòng Tổ chức cán bộ.
+- Phòng Hành chính quản trị.
+- Phòng Vật tư - Thiết bị y tế.
+- Phòng Công nghệ thông tin.
+- Phòng Tài chính kế toán.
+- Phòng Công tác xã hội.
+- Phòng Điều dưỡng.
+- Phòng Quản lý chất lượng bệnh viện.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_ORG_006]
+Chủ đề: Phòng khám đa khoa
+Giá trị: Có 1 phòng khám đa khoa.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+
+[FACT_ORG_007]
+Chủ đề: Trung tâm
+Giá trị: Có Trung tâm Đào tạo và Chỉ đạo tuyến.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_ORG_008]
+Chủ đề: Các khoa lâm sàng được liệt kê
+Giá trị:
+- Khoa Khám bệnh.
+- Khoa Nội.
+- Khoa Nội Nhi.
+- Khoa Tim mạch chuyển hóa.
+- Khoa Hồi sức tích cực Nhi.
+- Khoa Gây mê hồi sức.
+- Khoa Hồi sức tích cực.
+- Khoa Ngoại.
+- Khoa Tim mạch can thiệp.
+- Khoa Cấp cứu.
+- Khoa Các bệnh mạch máu.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_ORG_009]
+Chủ đề: Các khoa cận lâm sàng được liệt kê
+Giá trị:
+- Khoa Xét nghiệm.
+- Khoa Dược.
+- Khoa Kiểm soát nhiễm khuẩn.
+- Khoa Chẩn đoán hình ảnh.
+- Khoa Dinh dưỡng.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_ORG_010]
+Chủ đề: Các đơn nguyên được liệt kê
+Giá trị:
+- Đơn nguyên Khám và điều trị tự nguyện.
+- Đơn nguyên Thăm dò điện sinh lý và rối loạn nhịp.
+- Đơn nguyên Sơ sinh.
+- Đơn nguyên Tim mạch can thiệp cơ sở 2.
+- Đơn nguyên Can thiệp tĩnh mạch.
+- Đơn nguyên Chẩn đoán hình ảnh kỹ thuật cao.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+
+======================================================================
+VIII. CƠ SỞ VẬT CHẤT VÀ TRANG THIẾT BỊ ĐƯỢC NÊU TRÊN TRANG GIỚI THIỆU
+======================================================================
+
+[FACT_INFRA_001]
+Chủ đề: Quy mô giường nội trú
+Giá trị: 300 giường nội trú.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+
+[FACT_INFRA_002]
+Chủ đề: Số phòng khám
+Giá trị: 50 phòng khám.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+
+[FACT_INFRA_003]
+Chủ đề: Phòng tim mạch can thiệp
+Giá trị: 3 phòng tim mạch can thiệp (Cathlab).
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+
+[FACT_INFRA_004]
+Chủ đề: Phòng mổ tim hở
+Giá trị: 4 phòng mổ tim hở.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+
+[FACT_INFRA_005]
+Chủ đề: Thiết bị được giới thiệu
+Giá trị:
+- 2 máy chụp mạch DSA của Philips.
+- Máy CEC.
+- Máy cộng hưởng từ 1.5 Tesla.
+- Máy CT 128 dãy.
+- 25 máy siêu âm tim, trong đó có các máy siêu âm 4D.
+- Hệ thống siêu âm và điện tim gắng sức.
+- Trang thiết bị trong phòng mổ, hồi sức và cấp cứu.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+Cảnh báo: Số lượng thiết bị có thể thay đổi; chỉ dùng như dữ liệu lịch sử
+nếu chưa xác minh lại.
+
+
+======================================================================
+IX. NĂNG LỰC VÀ KỸ THUẬT CHUYÊN MÔN
+======================================================================
+
+[FACT_CLINICAL_001]
+Lĩnh vực: Tim mạch nội khoa và chuyển hóa
+Nội dung:
+- Chẩn đoán và điều trị nội khoa tim mạch - chuyển hóa.
+- Siêu âm tim Doppler 2D và 4D.
+- Siêu âm tim qua thực quản.
+- Siêu âm tim cản âm.
+- Siêu âm Dobutamin.
+- Siêu âm tim thai.
+- Holter điện tim.
+- Holter huyết áp.
+- Nghiệm pháp gắng sức.
+- Quản lý tăng huyết áp, đái tháo đường.
+- Tư vấn sử dụng thuốc chống đông máu.
+- Chụp MSCT 128 dãy.
+- Cộng hưởng từ 1.5 Tesla.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_002]
+Lĩnh vực: Tim mạch can thiệp người lớn
+Nội dung:
+- Can thiệp động mạch vành.
+- Nong van hai lá.
+- Đặt stent graft trong điều trị bệnh động mạch chủ.
+- Thay van động mạch chủ qua da.
+- Can thiệp bệnh mạch ngoại vi và mạch não.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_003]
+Lĩnh vực: Tim mạch can thiệp trẻ em
+Nội dung:
+- Đặt stent ống động mạch.
+- Đặt stent động mạch phổi.
+- Mở van động mạch phổi trong bệnh teo van động mạch phổi.
+- Thay van động mạch phổi qua da.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_004]
+Lĩnh vực: Điện sinh lý tim và rối loạn nhịp
+Nội dung:
+- Đặt máy tạo nhịp tim.
+- CRT.
+- ICD.
+- Điều trị các rối loạn nhịp phức tạp bằng sóng cao tần.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_005]
+Lĩnh vực: Hệ thống lập bản đồ nội mạc 3 chiều
+Nội dung: Ngày 23/03/2015, bệnh viện đưa vào sử dụng hệ thống 3D mapping
+Ensite Velocity của St. Jude Medical để chẩn đoán và điều trị rối loạn nhịp.
+Nguồn: SOURCE_01
+Độ ổn định: Cao về mặt lịch sử
+
+[FACT_CLINICAL_006]
+Lĩnh vực: Phẫu thuật tim
+Nội dung:
+- Phẫu thuật bệnh tim bẩm sinh phức tạp.
+- Phẫu thuật tim bẩm sinh ở trẻ sơ sinh.
+- Sửa van tim.
+- Thay van tim.
+- Phẫu thuật bắc cầu động mạch vành.
+- Phẫu thuật điều trị phồng và phồng lóc động mạch chủ.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_007]
+Lĩnh vực: Bệnh mạch máu ngoại vi
+Nội dung:
+- Phồng động mạch chủ bụng.
+- Hẹp động mạch cảnh.
+- Bệnh lý mạch máu các chi.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_008]
+Lĩnh vực: Tim mạch nhi khoa
+Nội dung:
+- Khám ngoại trú và chăm sóc bệnh nhi tại nhà.
+- Điều trị nội trú và hồi sức tích cực nhi.
+- Điều trị các bệnh tim bẩm sinh và bệnh lý tim mạch khác ở trẻ em.
+- Chăm sóc các bệnh lý kèm theo như suy dinh dưỡng, viêm phổi, tiêu chảy
+và các bệnh nhiễm trùng.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_CLINICAL_009]
+Lĩnh vực: Tim mạch chuyển hóa
+Nội dung:
+- Khám và điều trị đái tháo đường.
+- Khám và điều trị rối loạn mỡ máu.
+- Quản lý và điều trị bệnh mạn tính.
+- Khám và điều trị bàn chân đái tháo đường.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+
+======================================================================
+X. ĐÀO TẠO, CHỈ ĐẠO TUYẾN, HỢP TÁC VÀ CÔNG TÁC XÃ HỘI
+======================================================================
+
+[FACT_TRAINING_001]
+Chủ đề: Nguyên tắc đào tạo
+Giá trị: Đào tạo thực sự, trách nhiệm cao.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_TRAINING_002]
+Chủ đề: Hình thức đào tạo
+Giá trị:
+- Đào tạo tập trung.
+- Đào tạo không tập trung.
+- Đào tạo theo nhu cầu.
+- Đào tạo cầm tay chỉ việc.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_TRAINING_003]
+Chủ đề: Phạm vi đào tạo và chuyển giao
+Giá trị: Trang giới thiệu nêu hoạt động chỉ đạo tuyến tại 30 quận, huyện
+của Hà Nội; tham gia dự án bệnh viện vệ tinh và NORRED; hợp tác đào tạo,
+chuyển giao kỹ thuật với nhiều tỉnh, thành.
+Nguồn: SOURCE_01
+Độ ổn định: Thấp
+Cảnh báo: Không dùng các con số như dữ liệu hiện hành nếu chưa cập nhật.
+
+[FACT_INTERNATIONAL_001]
+Chủ đề: Hợp tác quốc tế
+Giá trị:
+- Có thỏa thuận hợp tác với Trung tâm Viện trường Đại học Toulouse, Pháp.
+- Hợp tác với Viện Tim mạch Quốc gia Singapore.
+- Làm việc với MD1 World và Project Vietnam Foundation.
+- Mời chuyên gia quốc tế đến làm việc, can thiệp và phẫu thuật.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_SOCIAL_001]
+Chủ đề: Chương trình “Vì một trái tim khỏe”
+Giá trị: Website giới thiệu chương trình đã tổ chức các hoạt động khám chữa
+bệnh miễn phí tại nhiều địa phương trên cả nước.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+
+[FACT_SOCIAL_002]
+Chủ đề: Hỗ trợ phẫu thuật
+Giá trị: Website giới thiệu bệnh viện đã thực hiện phẫu thuật miễn phí cho
+nhiều trẻ em mắc bệnh tim bẩm sinh.
+Nguồn: SOURCE_01
+Độ ổn định: Trung bình
+Cảnh báo: Không sử dụng số lượng định lượng nếu chưa có báo cáo cập nhật.
+
+
+======================================================================
+XI. LỊCH SỬ HÌNH THÀNH VÀ CÁC MỐC PHÁT TRIỂN
+======================================================================
+
+[EVENT_2001_11_15]
+Ngày: 15/11/2001
+Sự kiện: UBND Thành phố Hà Nội ban hành Quyết định số 6863/QĐ-UB thành lập
+Bệnh viện Tim Hà Nội trên cơ sở tổ chức lại Bệnh viện Hoàn Kiếm.
+Nguồn: SOURCE_04
+
+[EVENT_INITIAL_SCALE]
+Thời điểm: Khi thành lập
+Sự kiện:
+- Quy mô 50 giường bệnh.
+- 60 biên chế ban đầu.
+- Có Ban giám đốc và 9 khoa, phòng.
+Nguồn: SOURCE_04
+Cảnh báo: Dữ liệu lịch sử, không phản ánh quy mô hiện nay.
+
+[EVENT_2001_2004]
+Thời gian: 11/2001-03/2004
+Sự kiện: Giai đoạn xây dựng cơ sở vật chất, đầu tư trang thiết bị, tuyển dụng
+và đào tạo đội ngũ chuyên môn nòng cốt.
+Nguồn: SOURCE_04
+
+[EVENT_2004_03]
+Thời gian: 03/2004
+Sự kiện: Bệnh viện triển khai khám nội tim mạch.
+Nguồn: SOURCE_04
+
+[EVENT_2004_07_25]
+Ngày: 25/07/2004
+Sự kiện: Thực hiện thành công ca phẫu thuật tim hở đầu tiên tại bệnh viện.
+Nguồn: SOURCE_04
+Ghi chú: Trang lịch sử nêu bệnh nhân là Lê Thị Lan, 12 tuổi; phẫu thuật viên
+chính là ThS Nguyễn Văn Mão, nguyên Giám đốc bệnh viện.
+
+[EVENT_2004_08_19]
+Ngày: 19/08/2004
+Sự kiện: Bệnh viện chính thức khánh thành và đi vào hoạt động.
+Nguồn: SOURCE_04
+
+[EVENT_2004_12_01]
+Ngày: 01/12/2004
+Sự kiện: Ca phẫu thuật tim hở thứ 100 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2005_10_14]
+Ngày: 14/10/2005
+Sự kiện: Ca phẫu thuật tim hở thứ 500 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2006_08_30]
+Ngày: 30/08/2006
+Sự kiện: Ca phẫu thuật tim hở thứ 1.000 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2007_12_31]
+Ngày: 31/12/2007
+Sự kiện: Ca phẫu thuật tim hở thứ 2.000 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2008_12_30]
+Ngày: 30/12/2008
+Sự kiện: Ca phẫu thuật tim hở thứ 3.000 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2009_03]
+Thời gian: 03/2009
+Sự kiện: Thành lập Đơn vị Tim mạch can thiệp.
+Nguồn: SOURCE_04
+
+[EVENT_2009_11_30]
+Ngày: 30/11/2009
+Sự kiện: Ca phẫu thuật tim hở thứ 4.000 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2010_08]
+Thời gian: 08/2010
+Sự kiện: Đưa phòng phẫu thuật thứ ba vào hoạt động.
+Nguồn: SOURCE_04
+
+[EVENT_2010_10_10]
+Ngày: 10/10/2010
+Sự kiện: Ca phẫu thuật tim hở thứ 5.000 thành công.
+Nguồn: SOURCE_04
+
+[EVENT_2013_UPGRADE]
+Thời gian: 2013
+Sự kiện: Triển khai và hoàn thành giai đoạn I dự án nâng cấp bệnh viện,
+bao gồm cải tạo cơ sở vật chất và đầu tư trang thiết bị.
+Nguồn: SOURCE_04
+
+[EVENT_2014_12_03]
+Ngày: 03/12/2014
+Sự kiện: UBND Thành phố Hà Nội ban hành Quyết định số 6438/QĐ-UBND về việc
+tổ chức lại bệnh viện trên cơ sở sáp nhập Trung tâm Y tế Công nghiệp Hà Nội.
+Nguồn: SOURCE_01
+
+
+======================================================================
+XII. DỮ LIỆU KHÔNG NÊN DÙNG NHƯ THÔNG TIN HIỆN HÀNH
+======================================================================
+
+1. Tầm nhìn 2015-2020 trên trang giới thiệu đã hết kỳ kế hoạch.
+2. Các số liệu 589 nhân sự, 300 giường, 50 phòng khám, 3 Cathlab,
+4 phòng mổ tim hở có thể đã thay đổi.
+3. Các chức danh lãnh đạo không được hiển thị rõ trên trang ban lãnh đạo.
+4. Các thống kê số bệnh nhân, số ca phẫu thuật và tỷ lệ tử vong thuộc các
+giai đoạn lịch sử.
+5. Các kế hoạch được viết ở thì tương lai trong bài lịch sử năm 2013
+không được coi là trạng thái hiện tại.
+6. Trang cơ cấu tổ chức đăng sơ đồ dưới dạng hình ảnh; cần bản ảnh rõ hoặc
+tài liệu tổ chức mới nhất để trích xuất chính xác.
+7. Trang giới thiệu có sự không nhất quán giữa con số tổng hợp khoa/phòng
+và danh sách chi tiết. Cần đánh dấu “cần xác minh”.
+
+
+======================================================================
+XIII. MẪU GROUNDTRUTH HỎI - ĐÁP
+======================================================================
+
+[QA_001]
+Câu hỏi: Bệnh viện Tim Hà Nội có tên tiếng Anh là gì?
+Câu trả lời chuẩn: Tên tiếng Anh của Bệnh viện Tim Hà Nội là
+“Hanoi Heart Hospital”.
+Nguồn: FACT_HOSPITAL_002
+
+[QA_002]
+Câu hỏi: Slogan của Bệnh viện Tim Hà Nội là gì?
+Câu trả lời chuẩn: Slogan của bệnh viện là “Vì một trái tim khỏe”.
+Nguồn: FACT_HOSPITAL_003
+
+[QA_003]
+Câu hỏi: Bệnh viện Tim Hà Nội có những cơ sở nào?
+Câu trả lời chuẩn: Website bệnh viện công bố hai cơ sở:
+cơ sở 1 tại số 92 Trần Hưng Đạo, phường Cửa Nam, Hà Nội; cơ sở 2 tại
+số 695 Lạc Long Quân, phường Tây Hồ, Hà Nội.
+Nguồn: FACT_CONTACT_001, FACT_CONTACT_002
+
+[QA_004]
+Câu hỏi: Hotline của Bệnh viện Tim Hà Nội là số nào?
+Câu trả lời chuẩn: Hotline được công bố trên website là 19001082.
+Nguồn: FACT_CONTACT_003
+
+[QA_005]
+Câu hỏi: Email chăm sóc khách hàng của bệnh viện là gì?
+Câu trả lời chuẩn: Email chăm sóc khách hàng được công bố là
+cskh@timhanoi.vn.
+Nguồn: FACT_CONTACT_004
+
+[QA_006]
+Câu hỏi: Bệnh viện Tim Hà Nội được thành lập khi nào?
+Câu trả lời chuẩn: Bệnh viện được thành lập theo Quyết định số
+6863/QĐ-UB ngày 15/11/2001 của UBND Thành phố Hà Nội.
+Nguồn: FACT_LEGAL_001
+
+[QA_007]
+Câu hỏi: Bệnh viện Tim Hà Nội được hình thành từ đơn vị nào?
+Câu trả lời chuẩn: Bệnh viện được thành lập trên cơ sở tổ chức lại
+Bệnh viện Hoàn Kiếm.
+Nguồn: FACT_LEGAL_002
+
+[QA_008]
+Câu hỏi: Bệnh viện Tim Hà Nội trực thuộc cơ quan nào?
+Câu trả lời chuẩn: Theo thông tin trên website, Bệnh viện Tim Hà Nội là
+bệnh viện chuyên khoa hạng I trực thuộc Sở Y tế Hà Nội.
+Nguồn: FACT_LEGAL_003
+
+[QA_009]
+Câu hỏi: Năm lĩnh vực mũi nhọn của bệnh viện là gì?
+Câu trả lời chuẩn: Gồm tim mạch nội khoa, tim mạch nhi khoa, tim mạch
+can thiệp, phẫu thuật tim mạch và tim mạch chuyển hóa.
+Nguồn: FACT_HOSPITAL_008
+
+[QA_010]
+Câu hỏi: Phương châm 3H của bệnh viện có ý nghĩa gì?
+Câu trả lời chuẩn: 3H gồm Head là trí tuệ, Hand là kỹ năng và Heart là
+lương tâm, trách nhiệm, y đức.
+Nguồn: FACT_HOSPITAL_006
+
+[QA_011]
+Câu hỏi: Ai đang được hiển thị trong mục Ban lãnh đạo?
+Câu trả lời chuẩn: Trang Ban lãnh đạo hiển thị bốn tên:
+PGS.TS.BS Nguyễn Sinh Hiền, TS.BS Vũ Quỳnh Nga,
+TS.BS Phạm Như Hùng và TS.BS Hoàng Văn.
+Nguồn: FACT_LEADER_001 đến FACT_LEADER_004
+Cảnh báo: Không tự gán chức danh vì trang không hiển thị chức danh bằng văn bản.
+
+[QA_012]
+Câu hỏi: Giám đốc hiện tại của Bệnh viện Tim Hà Nội là ai?
+Câu trả lời chuẩn: Trang Ban lãnh đạo được cung cấp chỉ hiển thị tên các
+thành viên, không hiển thị chức danh bằng văn bản. Vì vậy, chưa đủ dữ liệu
+chính thức từ các nguồn này để xác nhận ai đang giữ chức Giám đốc.
+Nguồn: SOURCE_02
+Loại: Fallback do thiếu dữ liệu
+
+[QA_013]
+Câu hỏi: Bệnh viện có khoa Tim mạch can thiệp không?
+Câu trả lời chuẩn: Có. Khoa Tim mạch can thiệp được liệt kê trong nhóm
+các khoa lâm sàng trên trang giới thiệu chung.
+Nguồn: FACT_ORG_008
+
+[QA_014]
+Câu hỏi: Bệnh viện có khoa Cấp cứu không?
+Câu trả lời chuẩn: Có. Khoa Cấp cứu được liệt kê trong nhóm khoa lâm sàng.
+Nguồn: FACT_ORG_008
+
+[QA_015]
+Câu hỏi: Bệnh viện có điều trị bệnh tim cho trẻ em không?
+Câu trả lời chuẩn: Có. Tim mạch nhi khoa là một trong năm lĩnh vực mũi nhọn.
+Website cũng giới thiệu hoạt động khám, điều trị nội trú, hồi sức nhi và điều
+trị các bệnh tim bẩm sinh, bệnh tim mạch ở trẻ em.
+Nguồn: FACT_HOSPITAL_008, FACT_CLINICAL_008
+
+[QA_016]
+Câu hỏi: Bệnh viện có thực hiện phẫu thuật tim hở không?
+Câu trả lời chuẩn: Có. Phẫu thuật tim mạch là một trong các lĩnh vực mũi nhọn;
+website giới thiệu các kỹ thuật như sửa, thay van tim, bắc cầu động mạch vành
+và phẫu thuật bệnh tim bẩm sinh.
+Nguồn: FACT_HOSPITAL_008, FACT_CLINICAL_006
+
+[QA_017]
+Câu hỏi: Ca phẫu thuật tim hở đầu tiên của bệnh viện được thực hiện khi nào?
+Câu trả lời chuẩn: Theo trang lịch sử, ca phẫu thuật tim hở đầu tiên được
+thực hiện thành công ngày 25/07/2004.
+Nguồn: EVENT_2004_07_25
+
+[QA_018]
+Câu hỏi: Bệnh viện chính thức khánh thành khi nào?
+Câu trả lời chuẩn: Bệnh viện chính thức khánh thành và đi vào hoạt động
+ngày 19/08/2004.
+Nguồn: EVENT_2004_08_19
+
+[QA_019]
+Câu hỏi: Bệnh viện có thực hiện chụp CT và MRI không?
+Câu trả lời chuẩn: Trang giới thiệu có nêu chụp MSCT 128 dãy và cộng hưởng
+từ 1.5 Tesla trong các kỹ thuật, trang thiết bị của bệnh viện.
+Nguồn: FACT_CLINICAL_001, FACT_INFRA_005
+Cảnh báo: Cần xác minh tình trạng cung cấp và lịch thực hiện hiện tại trước
+khi hướng dẫn người bệnh đặt dịch vụ.
+
+[QA_020]
+Câu hỏi: Bệnh viện hiện có bao nhiêu nhân viên?
+Câu trả lời chuẩn: Trang giới thiệu từng ghi 589 cán bộ, viên chức và người
+lao động, nhưng đây là số liệu tại thời điểm bài viết và chưa đủ căn cứ để
+khẳng định là số liệu hiện nay.
+Nguồn: FACT_ORG_003
+Loại: Trả lời có cảnh báo thời gian
+
+[QA_021]
+Câu hỏi: Bệnh viện hiện có bao nhiêu khoa?
+Câu trả lời chuẩn: Các dữ liệu trên trang giới thiệu chưa hoàn toàn nhất quán
+giữa số lượng tổng hợp và danh sách chi tiết. Cần kiểm tra sơ đồ tổ chức hoặc
+văn bản tổ chức mới nhất của bệnh viện trước khi đưa ra con số chính xác.
+Nguồn: FACT_ORG_002
+Loại: Fallback do dữ liệu mâu thuẫn
+
+[QA_022]
+Câu hỏi: Bệnh viện có hỗ trợ đào tạo và chuyển giao kỹ thuật không?
+Câu trả lời chuẩn: Có. Đào tạo, chỉ đạo tuyến và chuyển giao kỹ thuật là một
+trong các nhiệm vụ và trụ cột được bệnh viện công bố.
+Nguồn: FACT_HOSPITAL_007, FACT_MISSION_003
+
+[QA_023]
+Câu hỏi: Bệnh viện có hoạt động thiện nguyện không?
+Câu trả lời chuẩn: Có. Website giới thiệu các hoạt động công tác xã hội và
+thiện nguyện, trong đó có chương trình “Vì một trái tim khỏe”.
+Nguồn: FACT_MISSION_006, FACT_SOCIAL_001
+
+[QA_024]
+Câu hỏi: Bệnh viện có điều trị đái tháo đường không?
+Câu trả lời chuẩn: Website giới thiệu lĩnh vực tim mạch chuyển hóa có khám,
+điều trị đái tháo đường, rối loạn mỡ máu, quản lý bệnh mạn tính và điều trị
+bàn chân đái tháo đường.
+Nguồn: FACT_CLINICAL_009
+
+
+======================================================================
+XIV. QUY TẮC SỬ DỤNG TRONG CHATBOT
+======================================================================
+
+1. Với dữ liệu ổn định như tên, slogan, lịch sử thành lập:
+   Có thể trả lời trực tiếp và dẫn nguồn.
+
+2. Với dữ liệu có thể thay đổi như lãnh đạo, nhân sự, số giường, thiết bị,
+   cơ cấu khoa phòng:
+   Phải kèm thời điểm cập nhật hoặc cảnh báo “theo thông tin trên website”.
+
+3. Không suy diễn chức danh từ thứ tự ảnh hoặc vị trí hiển thị.
+
+4. Khi hai nguồn hoặc hai đoạn trên cùng trang không nhất quán:
+   Không chọn tùy ý một con số; cần trả lời rằng dữ liệu cần xác minh.
+
+5. Không sử dụng các kế hoạch cũ, ví dụ “tầm nhìn 2015-2020”, như kế hoạch
+   hiện hành.
+
+6. Các thông tin lịch sử phải được diễn đạt ở thì quá khứ.
+
+7. Khi người dùng hỏi thông tin hiện tại nhưng nguồn chỉ có dữ liệu cũ:
+   Nêu rõ dữ liệu lịch sử và chuyển sang kênh xác minh chính thức.
+
+
+======================================================================
+XV. CẤU TRÚC GỢI Ý KHI CHUYỂN SANG JSON/CSV
+======================================================================
+
+Các trường nên có:
+- record_id
+- category
+- subcategory
+- title
+- content
+- answer
+- aliases
+- source_name
+- source_url
+- source_section
+- collected_at
+- valid_from
+- valid_to
+- temporal_status: stable | time_sensitive | historical
+- confidence: high | medium | low
+- requires_verification: true | false
+- notes
+
+Kết thúc tài liệu.

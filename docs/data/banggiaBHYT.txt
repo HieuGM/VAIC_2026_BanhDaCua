@@ -1,0 +1,759 @@
+SỞ Y TẾ HÀ NỘI
+BỆNH VIỆN TIM HÀ NỘI
+VÌ MỘT TRÁI TIM KHỎE
+
+BẢNG GIÁ BẢO HIỂM Y TẾ
+
+===================================================================
+MỤC LỤC
+===================================================================
+DANH MỤC                                             CHỈ MÀU ĐÁNH DẤU
+1. BẢNG GIÁ KHÁM BỆNH VÀ NGÀY GIƯỜNG                 (tím)
+2. BẢNG GIÁ XÉT NGHIỆM                                (cam)
+3. BẢNG GIÁ THỦ THUẬT VÀ CHẨN ĐOÁN HÌNH ẢNH           (xanh lá)
+4. BẢNG GIÁ CHỤP CỘNG HƯỞNG TỪ                        (vàng)
+5. BẢNG GIÁ CHỤP CẮT LỚP VI TÍNH                      (đỏ)
+6. BẢNG GIÁ CAN THIỆP TIM MẠCH                        (xanh dương)
+
+Ghi chú chung: Bảng giá BHYT áp dụng theo Thông tư số 22/2023/TT-BYT
+của Bộ Y tế hiện hành (một số mục Chụp cắt lớp vi tính áp dụng thêm
+điều kiện thanh toán tại Thông tư số 13/2020 của Bộ Y tế hiện hành).
+Đơn vị tính: VNĐ
+
+===================================================================
+1. BẢNG GIÁ BẢO HIỂM Y TẾ - KHÁM BỆNH VÀ NGÀY GIƯỜNG ĐIỀU TRỊ
+===================================================================
+STT | DỊCH VỤ KỸ THUẬT | GIÁ BHYT CHI TRẢ TỐI ĐA | GHI CHÚ
+1 | Khám bệnh | 42.100 |
+2 | Giường Nội khoa | 255.300 |
+3 | Giường Hồi sức cấp cứu | 474.700 |
+4 | Giường Hồi sức tích cực | 786.300 |
+5 | Giường Ngoại khoa loại 1 | 339.000 |
+6 | Giường Ngoại khoa loại 2 | 308.500 |
+7 | Giường Ngoại khoa loại 3 | 270.500 |
+8 | Giường Ngoại khoa loại 4 | 242.100 |
+
+===================================================================
+2. BẢNG GIÁ BẢO HIỂM Y TẾ - XÉT NGHIỆM
+===================================================================
+STT | Mã tương đương | DỊCH VỤ KỸ THUẬT | GIÁ BHYT CHI TRẢ TỐI ĐA | GHI CHÚ
+1 | 23.0350.1544 | Định lượng CRP [KHÔNG CÓ TÌNH TRẠNG NHIỄM TRÙNG, BHYT THANH TOÁN BẰNG GIÁ PHẢN ỨNG CRP] | 21.800 |
+2 | 22.0153.1610 | Xét nghiệm tế bào trong nước dịch chẩn đoán tế bào học (não tuỷ, màng tim, màng phổi, màng bụng, dịch khớp, rửa phế quản…) bằng máy phân tích huyết học tự động | 92.900 |
+3 | 22.0013.1242 | Định lượng Fibrinogen bằng phương pháp trực tiếp | 105.000 |
+4 | 22.0279.1269 | Định nhóm máu hệ ABO (Kỹ thuật ống nghiệm) [ĐỊNH NHÓM MÁU CHO BỆNH NHÂN TẠI KHOA XÉT NGHIỆM] | 40.200 |
+5 | 22.0292.1280 | Định nhóm máu hệ Rh(D) (Kỹ thuật phiến đá) | 32.000 |
+6 | 22.0142.1304 | Máu lắng (bằng phương pháp thủ công) | 23.700 |
+7 | 22.0005.1354 | Thời gian thromboplastin một phần hoạt hoá (APTT), (Tên khác: TCK) bằng máy tự động | 41.500 |
+8 | 22.0121.1369 | Tổng phân tích tế bào máu ngoại vi (bằng máy đếm laser) | 47.500 |
+9 | 22.0001.1352 | Thời gian prothrombin (PT: Prothrombin Time), (Các tên khác: TQ; Tỷ lệ Prothrombin) bằng máy tự động, bán tự động | 65.300 |
+10 | 22.0268.1330 | Phản ứng hòa hợp trong môi trường nước muối ở 22°C (Kỹ thuật ống nghiệm) | 29.600 |
+11 | 22.0279.1267 | Định nhóm máu hệ ABO (Kỹ thuật ống nghiệm) [ĐỊNH NHÓM MÁU CHO TÚI MÁU, CHẾ PHẨM MÁU TẠI KHOA XÉT NGHIỆM] | 23.700 |
+12 | 22.0275.1327 | Phản ứng hoà hợp có sử dụng kháng globulin người (Kỹ thuật Scangel/Gelcard trên máy tự động) [Nghiệm pháp Coombs gián tiếp] | 76.900 |
+13 | 22.0262.1408 | Xét nghiệm lựa chọn đơn vị máu phù hợp (10 đơn vị máu trong 3 điều kiện 22°C, 37°C, kháng globulin người) bằng phương pháp Scangel/Gelcard | 475.000 |
+14 | 22.0502.1267 | Định nhóm máu tại giường bệnh trước truyền máu [ĐỊNH NHÓM MÁU CHO TÚI MÁU TOÀN PHẦN/KHỐI HC/KHỐI BC THỨ HAI TRỞ ĐI TẠI GIƯỜNG] | 23.700 |
+15 | 22.0275.1327 | Phản ứng hòa hợp có sử dụng kháng globulin người (Kỹ thuật Scangel/Gelcard trên máy bán tự động) | 76.900 |
+16 | 22.0269.1329 | Phản ứng hòa hợp trong môi trường muối 22°C (kỹ thuật Scangel/Gelcard trên máy bán tự động) | 69.900 |
+17 | 22.0279.1268 | Định nhóm máu tại giường bệnh trước truyền máu [ĐỊNH NHÓM MÁU CỦA BN TRUYỀN KHỐI TC, HUYẾT TƯƠNG TẠI GIƯỜNG] | 21.200 |
+18 | 22.0502.1267 | Định nhóm máu tại giường bệnh trước truyền máu [ĐỊNH NHÓM MÁU BN + TÚI MÁU TOÀN PHẦN/KHỐI HC/KHỐI BC ĐẦU TIÊN TẠI GIƯỜNG] | 23.700 |
+19 | 22.0290.1275 | Định nhóm máu hệ ABO, Rh(D) (Kỹ thuật Scangel/Gelcard trên máy bán tự động) | 89.000 |
+20 | 22.0117.1503 | Định lượng sắt huyết thanh | 32.800 |
+21 | 24.0119.1649 | HBsAg miễn dịch bán tự động/tự động | 77.300 |
+22 | 24.0146.1622 | Anti-HCV miễn dịch bán tự động/ tự động | 123.000 |
+23 | 23.0046.1480 | Định lượng cortisol (máu) | 92.900 |
+24 | 23.0130.1483 | Định lượng Pro-calcitonin [đủ điều kiện theo giá Định lượng CRP] | 54.600 |
+25 | 23.0228.1483 | Định lượng CRP [ĐỦ ĐIỀU KIỆN THANH TOÁN THEO TT50 CỦA BYT] | 54.600 |
+26 | 23.0130.1549 | Định lượng Pro-calcitonin [ĐỦ ĐIỀU KIỆN THANH TOÁN THEO TT50 CỦA BYT] | 404.000 |
+27 | 23.0138.1554 | Định lượng PSA tự do (Free Prostate - Specific Antigen) [Máu] | 87.500 |
+28 | 24.0108.1720.SC2 | Xét nghiệm SARS-CoV-2 Ag test nhanh | 23.200 |
+29 | 23.0118.1503 | Định lượng Mg [Máu] | 32.800 |
+30 | 23.0003.1494 | Định lượng Acid Uric [Máu] | 21.800 | Mỗi chất
+31 | 23.0007.1494 | Định lượng Albumin | 21.800 | Mỗi chất
+32 | 23.0018.1457 | Định lượng AFP (Alpha Fetoproteine) [Máu] | 92.900 |
+33 | 23.0027.1493 | Định lượng Bilirubin toàn phần | 21.800 | Không thanh toán đối với các xét nghiệm Bilirubin gián tiếp; Tỷ lệ A/G là những xét nghiệm có thể ngoại suy được.
+34 | 23.0025.1493 | Định lượng Bilirubin trực tiếp | 21.800 | Không thanh toán đối với các xét nghiệm Bilirubin gián tiếp; Tỷ lệ A/G là những xét nghiệm có thể ngoại suy được.
+35 | 23.0029.1473 | Định lượng Calci toàn phần | 13.000 | Chỉ thanh toán khi định lượng trực tiếp.
+36 | 23.0030.1472 | Định lượng Calci ion hóa [Máu] | 16.400 |
+37 | 23.0042.1482 | Đo hoạt độ CK (Creatine kinase) | 27.300 |
+38 | 23.0043.1478 | Đo hoạt độ CK-MB (Isozym MB of Creatine kinase) | 38.200 |
+39 | 23.0051.1494 | Định lượng Creatinin (máu) | 21.800 | Mỗi chất
+40 | 23.0050.1484 | Định lượng CRP hs (C-Reactive Protein high sesitivity) | 54.600 |
+41 | 23.0058.1487 | Điện giải đồ (Na, K, Cl) | 29.500 | Áp dụng cho cả trường hợp cho kết quả nhiều hơn 3 chỉ số
+42 | 23.0069.1561 | Định lượng FT4 (Free Thyroxine) | 65.600 |
+43 | 23.0120.1541 | Định lượng NSE (Neuron Specific Enolase) [Máu] | 195.000 |
+44 | 23.0077.1518 | Đo hoạt độ GGT (Gama Glutamyl Transferase)[Máu] | 19.500 |
+45 | 23.0075.1494 | Định lượng Glucose | 21.800 | Mỗi chất
+46 | 23.0083.1523 | Định lượng HbA1c | 102.000 |
+47 | 01.0281.1510 | Xét nghiệm đường máu mao mạch tại giường (một lần) | 15.500 |
+48 | 23.0206.1596 | Tổng phân tích nước tiểu (Bằng máy tự động) | 27.800 |
+49 | 23.0090.1425 | Đo hoạt độ ALP (Alkalin Phosphatase) | 21.800 |
+50 | 23.0121.1548 | Định lượng proBNP (NT-proBNP) | 414.000 |
+51 | 23.0133.1494 | Định lượng Protein toàn phần | 21.800 | Mỗi chất
+52 | 23.0139.1553 | Định lượng PSA toàn phần (Total prostate-Specific Antigen) [Máu] | 92.900 |
+53 | 23.0147.1561 | Định lượng T3 (Tri iodothyronine) | 65.600 |
+54 | 23.0148.1561 | Định lượng T4 (Thyroxine) | 65.600 |
+55 | 23.0162.1570 | Định lượng TSH (Thyroid Stimulating hormone) | 60.100 |
+56 | 23.0166.1494 | Định lượng Urê máu | 21.800 | Mỗi chất
+57 | 23.0020.1493 | Đo hoạt độ AST (GOT) | 21.800 | Không thanh toán đối với các xét nghiệm Bilirubin gián tiếp; Tỷ lệ A/G là những xét nghiệm có thể ngoại suy được.
+58 | 23.0019.1493 | Đo hoạt độ ALT (GPT) | 21.800 | Không thanh toán đối với các xét nghiệm Bilirubin gián tiếp; Tỷ lệ A/G là những xét nghiệm có thể ngoại suy được.
+59 | 23.0112.1506 | Định lượng LDL - C (Low density lipoprotein Cholesterol) | 27.300 |
+60 | 23.0084.1506 | Định lượng HDL-C (High density lipoprotein Cholesterol) | 27.300 |
+61 | 23.0158.1506 | Định lượng Triglycerid (máu) | 27.300 |
+62 | 23.0063.1514 | Định lượng Ferritin | 82.000 |
+63 | 23.0015.1461 | Định lượng Anti - TPO (Anti-thyroid Peroxidase antibodies) [Máu] | 207.000 |
+64 | 23.0156.1566 | Định lượng TRAb (TSH Receptor Antibodies) [Máu] | 414.000 |
+65 | 23.0220.1608 | Phản ứng Rivalta [dịch] | 8.600 |
+66 | 23.0098.1529 | Định lượng Insulin [Máu] | 82.000 |
+67 | 24.0017.1714 | AFB trực tiếp nhuộm Ziehl-Neelsen | 70.300 |
+68 | 24.0008.1722 | Vi khuẩn kháng thuốc định lượng (MIC) (cho 1 loại kháng sinh) | 191.000 |
+69 | 24.0006.1723 | Vi khuẩn kháng thuốc định tính | 202.000 |
+70 | 24.0322.1724 | Vi khuẩn nuôi cấy và định danh phương pháp thông thường | 246.000 |
+71 | 24.0001.1714 | Vi khuẩn nhuộm soi | 70.300 |
+72 | 24.0322.1724 | Vi nấm nuôi cấy và định danh phương pháp thông thường | 246.000 |
+73 | 24.0317.1674 | Trichomonas vaginalis soi tươi | 43.100 |
+74 | 24.0323.1716 | Vi nấm nuôi cấy và định danh hệ thống tự động | 307.000 |
+75 | 24.0321.1674 | Vi nấm nhuộm soi | 43.100 |
+76 | 23.0103.1531 | Xét nghiệm Khí máu [Máu] | 218.000 |
+77 | 23.0104.1532 | Định lượng Lactat (Acid Lactic) [Máu] | 98.400 |
+
+===================================================================
+3. BẢNG GIÁ BẢO HIỂM Y TẾ - THỦ THUẬT VÀ CHẨN ĐOÁN HÌNH ẢNH
+===================================================================
+STT | Mã tương đương | DỊCH VỤ KỸ THUẬT | GIÁ BHYT CHI TRẢ TỐI ĐA | GHI CHÚ
+1 | 18.0073.0028 | Chụp Xquang Hirtz [số hóa] | 68.300 |
+2 | 18.0097.0030 | Chụp Xquang khớp cùng chậu thẳng chếch hai bên [số hóa] | 125.000 |
+3 | 18.0110.0028 | Chụp Xquang khớp háng nghiêng [số hóa] | 68.300 |
+4 | 18.0097.0030 | Chụp Xquang khớp cùng chậu thẳng chếch hai bên [số hóa 3 phim] | 125.000 |
+5 | 18.0100.0028 | Chụp Xquang khớp vai thẳng [Chụp X-quang số hóa 1 phim] | 68.300 |
+6 | 18.0119.0028 | Chụp Xquang ngực thẳng [số hóa] | 68.300 |
+7 | 18.0124.0034 | Chụp Xquang thực quản cổ nghiêng [số hóa] | 239.000 |
+8 | 18.0125.0028 | Chụp Xquang bụng không chuẩn bị thẳng hoặc nghiêng [số hóa] | 68.300 |
+9 | 18.0127.0028 | Chụp Xquang tại giường [số hóa] | 68.300 |
+10 | 18.0128.0028 | Chụp Xquang tại phòng mổ [số hóa] | 68.300 |
+11 | 18.0086.0029 | Chụp Xquang cột sống cổ thẳng nghiêng [số hóa] | 100.000 |
+12 | 18.0072.0029 | Chụp Xquang Blondeau [số hóa] | 100.000 |
+13 | 18.0073.0028 | Chụp Xquang Hirtz [số hóa] | 68.300 |
+14 | 18.0067.0029 | Chụp Xquang sọ thẳng nghiêng [số hóa] | 100.000 |
+15 | 18.0068.0029 | Chụp Xquang mặt thẳng nghiêng [số hóa] | 100.000 |
+16 | 18.0086.0029 | Chụp Xquang cột sống cổ thẳng nghiêng [số hóa] | 100.000 |
+17 | 18.0081.2002 | Chụp Xquang răng cận chóp (Periapical) | 14.200 |
+18 | 18.0089.0029 | Chụp Xquang cột sống cổ C1-C2 răng [số hóa] | 100.000 |
+19 | 18.0090.0029 | Chụp Xquang cột sống ngực thẳng nghiêng [số hóa] | 100.000 |
+20 | 18.0082.0028 | Chụp Xquang răng cánh cắn (Bite wing) [số hóa] | 68.300 |
+21 | 18.0083.0028 | Chụp Xquang răng toàn cảnh [số hóa] | 68.300 |
+22 | 18.0084.0028 | Chụp Xquang phim cắn (Occlusal) [số hóa] | 68.300 |
+23 | 18.0122.0029 | Chụp Xquang khớp ức đòn thẳng chếch [số hóa] | 100.000 |
+24 | 18.0087.0029 | Chụp Xquang cột sống cổ chếch hai bên [số hóa] | 100.000 |
+25 | 18.0088.0030 | Chụp Xquang cột sống cổ động, nghiêng 3 tư thế [số hóa] | 125.000 |
+26 | 18.0097.0030 | Chụp Xquang khớp cùng chậu thẳng chếch hai bên [số hóa] | 125.000 |
+27 | 18.0100.0028 | Chụp Xquang khớp vai thẳng [số hóa] | 68.300 |
+28 | 18.0110.0028 | Chụp Xquang khớp háng nghiêng [số hóa] | 68.300 |
+29 | 18.0119.0028 | Chụp Xquang ngực thẳng [số hóa] | 68.300 |
+30 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang bụng không chuẩn bị] | 68.300 |
+31 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang cột sống thắt lưng] | 68.300 |
+32 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang xương cánh tay] | 68.300 |
+33 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang khớp háng] | 68.300 |
+34 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang ngực nghiêng hoặc chếch mỗi bên] | 68.300 |
+35 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang ngực thẳng] | 68.300 |
+36 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang xương cổ chân] | 68.300 |
+37 | 18.0127.0028 | Chụp Xquang tại giường [Chụp Xquang xương cổ tay] | 68.300 |
+38 | 01.0232.0140 | Nội soi dạ dày thực quản cấp cứu chẩn đoán và cầm máu | 753.000 | Chưa bao gồm thuốc cầm máu, dụng cụ cầm máu (clip, bộ thắt tĩnh mạch thực quản...)
+39 | 02.0253.0135 | Nội soi thực quản - Dạ dày - Tá tràng cấp cứu | 255.000 |
+40 | 20.0067.0140 | Nội soi dạ dày thực quản cấp cứu chảy máu tiêu hoá cao để chẩn đoán và điều trị | 753.000 |
+41 | 20.0079.0134 | Nội soi thực quản, dạ dày, tá tràng kết hợp sinh thiết | 455.000 | Đã bao gồm chi phí Test HP
+42 | 20.0080.0135 | Nội soi thực quản - dạ dày - tá tràng không sinh thiết | 255.000 |
+43 | 02.0255.0319 | Nội soi thực quản - Dạ dày - Tá tràng qua đường mũi | 615.000 |
+44 | 02.0314.0001 | Siêu âm ổ bụng | 49.300 |
+45 | 01.0303.0001 | Siêu âm cấp cứu tại giường bệnh | 49.300 |
+46 | 02.0112.0004 | Siêu âm Doppler mạch máu [SIÊU ÂM TĨNH MẠCH] | 233.000 |
+47 | 18.0045.0004 | Siêu âm Doppler động mạch, tĩnh mạch chi dưới | 233.000 |
+48 | 02.0112.0004 | Siêu âm Doppler mạch máu [CHI TRÊN] | 233.000 |
+49 | 02.0112.0004 | Siêu âm Doppler mạch máu [CHI DƯỚI] | 233.000 |
+50 | 02.0114.0006 | Siêu âm tim gắng sức (thảm chạy, thuốc) | 598.000 |
+51 | 18.0053.0007 | Siêu âm 3D/4D tim | 468.000 |
+52 | 02.0117.0008 | Siêu âm tim qua thực quản | 816.000 |
+53 | 18.0048.0004 | Doppler động mạch cảnh, Doppler xuyên sọ | 233.000 |
+54 | 02.0113.0004 | Siêu âm Doppler tim | 233.000 |
+55 | 18.0044.0001 | Siêu âm phần mềm (da, tổ chức dưới da) | 49.300 |
+56 | 03.4252.0004 | Siêu âm tim thai qua thành bụng | 233.000 |
+57 | 18.0011.0001 | Siêu âm màng phổi | 49.300 |
+58 | 18.0001.0001 | Siêu âm tuyến giáp | 49.300 |
+59 | 18.0043.0001 | Siêu âm khớp (gối, háng, khuỷu, cổ tay….) | 49.300 |
+60 | 02.0112.0004 | Siêu âm Doppler mạch máu | 233.000 |
+61 | 18.0054.0001 | Siêu âm tuyến vú hai bên | 49.300 |
+62 | 02.0024.0004 | Siêu âm Doppler động mạch thận | 233.000 |
+63 | 02.0316.0004 | Siêu âm Doppler mạch máu hệ tĩnh cửa hoặc mạch máu ổ bụng | 233.000 |
+64 | 18.0031.0004 | Siêu âm Doppler tử cung, buồng trứng qua đường âm đạo | 233.000 |
+65 | 02.0116.0007 | Siêu âm tim 4D [Để thực hiện các phẫu thuật hoặc can thiệp tim mạch] | 468.000 | Chỉ áp dụng trong trường hợp chỉ định để thực hiện các phẫu thuật hoặc can thiệp tim mạch.
+66 | 18.0066.0003 | Siêu âm 3D/4D trực tràng | 186.000 |
+67 | 02.0113.0004 | Siêu âm Doppler tim | 233.000 |
+68 | 18.0048.0004 | Doppler động mạch cảnh, Doppler xuyên sọ | 233.000 |
+69 | 18.0045.0004 | Siêu âm Doppler động mạch, tĩnh mạch chi | 233.000 |
+70 | 18.0024.0004 | Siêu âm Doppler động mạch thận | 233.000 |
+71 | 02.0112.0004 | Siêu âm Doppler mạch máu | 233.000 |
+72 | 02.0115.0005 | Siêu âm tim cản âm | 268.000 |
+73 | 18.0043.0001 | Siêu âm khớp (gối, háng, khuỷu, cổ tay….) | 49.300 |
+74 | 18.0044.0001 | Siêu âm phần mềm (da, tổ chức dưới da) | 49.300 |
+75 | 18.0011.0001 | Siêu âm màng phổi | 49.300 |
+76 | 18.0001.0001 | Siêu âm tuyến giáp | 49.300 |
+77 | 18.0054.0001 | Siêu âm tuyến vú hai bên | 49.300 |
+78 | 18.0023.0004 | Siêu âm Doppler mạch máu ổ bụng (động mạch chủ, mạc treo tràng trên, thân tạng…) | 233.000 |
+79 | 02.0114.0006 | Siêu âm tim gắng sức (thảm chạy, thuốc) | 598.000 |
+80 | 02.0117.0008 | Siêu âm tim qua thực quản | 816.000 |
+81 | 18.0018.0001 | Siêu âm tử cung phần phụ | 49.300 |
+82 | 18.0020.0001 | Siêu âm thai (thai, nhau thai, nước ối) | 49.300 |
+83 | 18.0026.0069 | Siêu âm Doppler thai nhi (thai, nhau thai, dây rốn, động mạch tử cung) | 84.800 |
+84 | 18.0020.0001 | Siêu âm thai (thai, nhau thai, nước ối) | 49.300 |
+85 | 18.0034.0001 | Siêu âm thai nhi trong 3 tháng đầu | 49.300 |
+86 | 18.0035.0001 | Siêu âm thai nhi trong 3 tháng giữa | 49.300 |
+87 | 18.0036.0001 | Siêu âm thai nhi trong 3 tháng cuối | 49.300 |
+88 | 03.4252.0004 | Siêu âm tim thai qua thành bụng | 233.000 |
+89 | 18.0054.0001 | Siêu âm tuyến vú hai bên | 49.300 |
+90 | 02.0150.0114 | Hút đờm hầu họng | 12.200 |
+91 | 03.0076.0114 | Hút đờm khí phế quản ở người bệnh sau đặt nội khí quản, mở khí quản, thở máy. | 12.200 |
+92 | 02.0112.0004 | Siêu âm Doppler mạch máu | 233.000 |
+93 | 01.0008.0100 | Đặt catheter tĩnh mạch trung tâm nhiều nòng | 1.137.000 |
+94 | 01.0009.0098 | Đặt catheter động mạch | 1.379.000 |
+95 | 01.0034.0299 | Hồi phục nhịp xoang cho người bệnh loạn nhịp bằng máy sốc điện | 485.000 |
+96 | 01.0036.0192 | Tạo nhịp tim cấp cứu tạm thời với điện cực ngoài lồng ngực | 1.008.000 |
+97 | 01.0041.0081 | Chọc dò màng ngoài tim cấp cứu | 259.000 |
+98 | 01.0071.0120 | Mở khí quản cấp cứu | 734.000 |
+99 | 01.0073.0120 | Mở khí quản thường quy | 734.000 |
+100 | 01.0080.0206 | Thay canuyn mở khí quản | 253.000 |
+101 | 01.0157.0508 | Cố định lồng ngực do chấn thương gãy xương sườn | 53.000 |
+102 | 01.0089.0206 | Đặt canuyn mở khí quản 02 nòng | 253.000 |
+103 | 01.0092.0001 | Siêu âm màng phổi cấp cứu | 49.300 |
+104 | 01.0093.0079 | Chọc hút dịch – khí màng phổi bằng kim hay catheter | 150.000 |
+105 | 01.0097.0111 | Dẫn lưu màng phổi liên tục ≤ 8 giờ | 188.000 |
+106 | 01.0132.0209 | Thông khí nhân tạo xâm nhập [1 ngày] | 583.000 |
+107 | 01.0202.0083 | Chọc dịch tuỷ sống | 114.000 |
+108 | 01.0219.0160 | Rửa dạ dày loại bỏ chất độc bằng hệ thống kín | 601.000 |
+109 | 01.0232.0140 | Nội soi dạ dày thực quản cấp cứu chẩn đoán và cầm máu | 753.000 |
+110 | 01.0244.0165 | Chọc dẫn lưu ổ áp xe dưới siêu âm | 620.000 | Chưa bao gồm ống thông.
+111 | 02.0011.0079 | Chọc hút khí màng phổi | 150.000 |
+112 | 02.0012.0095 | Dẫn lưu màng phổi, ổ áp xe phổi dưới hướng dẫn của siêu âm | 697.000 |
+113 | 02.0013.0096 | Dẫn lưu màng phổi, ổ áp xe phổi dưới hướng dẫn của chụp cắt lớp vi tính | 1.218.000 |
+114 | 02.0032.0898 | Khí dung thuốc giãn phế quản | 23.000 |
+115 | 02.0038.0125 | Nội soi màng phổi, sinh thiết màng phổi | 5.814.000 |
+116 | 02.0039.0124 | Nội soi màng phổi, gây dính bằng thuốc/ hóa chất | 5.036.000 |
+117 | 02.0058.0122 | Nghiệm pháp hồi phục phế quản với thuốc giãn phế quản | 101.000 |
+118 | 02.0061.0164 | Rút ống dẫn lưu màng phổi, ống dẫn lưu ổ áp xe | 184.000 |
+119 | 02.0062.0161 | Rửa phổi toàn bộ | 8.428.000 |
+120 | 02.0074.0081 | Chọc dò và dẫn lưu màng ngoài tim | 259.000 |
+121 | 01.0163.0121 | Mở thông bàng quang trên xương mu | 384.000 |
+122 | 01.0164.0210 | Thông bàng quang | 94.300 |
+123 | 01.0173.0195 | Lọc máu cấp cứu (ở người chưa có mở thông động tĩnh mạch) | 1.565.000 | Quả lọc dây máu dùng 1 lần; đã bao gồm catheter 2 nòng được tính bình quân là 0,25 lần cho 1 lần chạy thận.
+124 | 01.0176.0118 | Lọc máu liên tục cấp cứu (CVVH) | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+125 | 01.0177.0118 | Lọc máu liên tục cấp cứu có thẩm tách (CVVHD) | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+126 | 01.0178.0118 | Lọc máu liên tục cấp cứu (CVVH) cho người bệnh sốc nhiễm khuẩn | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+127 | 01.0179.0118 | Lọc máu liên tục cấp cứu (CVVH) cho người bệnh suy đa tạng | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+128 | 01.0180.0118 | Lọc máu liên tục cấp cứu (CVVH) cho người bệnh viêm tụy cấp | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+129 | 01.0181.0118 | Lọc máu thẩm tách liên tục cấp cứu (CVVHDF) | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+130 | 01.0182.0118 | Lọc máu thẩm tách liên tục cấp cứu (CVVHDF) cho người bệnh sốc nhiễm khuẩn | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+131 | 01.0183.0118 | Lọc máu thẩm tách liên tục cấp cứu (CVVHDF) cho người bệnh suy đa tạng | 2.248.000 | Chưa bao gồm quả lọc, bộ dây dẫn và dịch lọc.
+132 | 02.0204.0116 | Lọc màng bụng cấp cứu liên tục [Lọc màng bụng chu kỳ (CAPD)] | 574.000 |
+133 | 01.0188.0117 | Lọc màng bụng cấp cứu liên tục [bằng máy] | 988.000 |
+134 | 01.0199.0119 | Lọc máu hấp phụ với than hoạt trong ngộ độc cấp | 1.672.000 |
+135 | 02.0382.0213 | Tiêm khớp háng | 96.200 | Chưa bao gồm thuốc tiêm.
+136 | 02.0378.0174 | Sinh thiết màng hoạt dịch dưới hướng dẫn của siêu âm | 1.128.000 |
+137 | 02.0340.0086 | Chọc hút tế bào bằng kim nhỏ | 116.000 |
+138 | 02.0341.0086 | Chọc hút tế bào xương bằng kim nhỏ | 116.000 |
+139 | 02.0342.0086 | Chọc hút tế bào phần mềm bằng kim nhỏ | 116.000 |
+140 | 02.0381.0213 | Tiêm khớp gối | 96.200 | Chưa bao gồm thuốc tiêm.
+141 | 02.0383.0213 | Tiêm khớp cổ chân | 96.200 | Chưa bao gồm thuốc tiêm.
+142 | 02.0384.0213 | Tiêm khớp bàn ngón chân | 96.200 | Chưa bao gồm thuốc tiêm.
+143 | 02.0385.0213 | Tiêm khớp cổ tay | 96.200 | Chưa bao gồm thuốc tiêm.
+144 | 02.0386.0213 | Tiêm khớp bàn ngón tay | 96.200 | Chưa bao gồm thuốc tiêm.
+145 | 02.0387.0213 | Tiêm khớp đốt ngón tay | 96.200 | Chưa bao gồm thuốc tiêm.
+146 | 02.0388.0213 | Tiêm khớp khuỷu tay | 96.200 | Chưa bao gồm thuốc tiêm.
+147 | 02.0389.0213 | Tiêm khớp vai | 96.200 | Chưa bao gồm thuốc tiêm.
+148 | 02.0390.0213 | Tiêm khớp ức - đòn | 96.200 | Chưa bao gồm thuốc tiêm.
+149 | 02.0391.0213 | Tiêm khớp ức - sườn | 96.200 | Chưa bao gồm thuốc tiêm.
+150 | 02.0392.0213 | Tiêm khớp đòn - cùng vai | 96.200 | Chưa bao gồm thuốc tiêm.
+151 | 02.0394.0320 | Tiêm ngoài màng cứng | 336.000 |
+152 | 02.0396.0213 | Tiêm điểm bám gân mỏm trâm quay (mỏm trâm trụ) | 96.200 | Chưa bao gồm thuốc tiêm.
+153 | 02.0396.0213 | Tiêm điểm bám gân lồi cầu trong (lồi cầu ngoài) xương cánh tay | 96.200 | Chưa bao gồm thuốc tiêm.
+154 | 02.0398.0213 | Tiêm điểm bám gân quanh khớp gối | 96.200 | Chưa bao gồm thuốc tiêm.
+155 | 02.0400.0213 | Tiêm hội chứng đường hầm cổ tay | 96.200 | Chưa bao gồm thuốc tiêm.
+156 | 02.0401.0213 | Tiêm gân gấp ngón tay | 96.200 | Chưa bao gồm thuốc tiêm.
+157 | 02.0402.0213 | Tiêm gân nhị đầu khớp vai | 96.200 | Chưa bao gồm thuốc tiêm.
+158 | 02.0403.0213 | Tiêm gân trên gai (dưới gai, gân bao xoay khớp vai) | 96.200 | Chưa bao gồm thuốc tiêm.
+159 | 02.0404.0213 | Tiêm điểm bám gân mỏm cùng vai | 96.200 | Chưa bao gồm thuốc tiêm.
+160 | 02.0405.0213 | Tiêm điểm bám gân mỏm trâm quay (trâm trụ) | 96.200 | Chưa bao gồm thuốc tiêm.
+161 | 02.0406.0213 | Tiêm gân gót | 96.200 | Chưa bao gồm thuốc tiêm.
+162 | 02.0407.0213 | Tiêm cân gan chân | 96.200 | Chưa bao gồm thuốc tiêm.
+163 | 02.0411.0213 | Tiêm khớp gối dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+164 | 02.0412.0213 | Tiêm khớp háng dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+165 | 02.0413.0213 | Tiêm khớp cổ chân dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+166 | 02.0414.0213 | Tiêm khớp bàn ngón chân dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+167 | 02.0415.0213 | Tiêm khớp cổ tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+168 | 02.0416.0213 | Tiêm khớp bàn ngón tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+169 | 02.0417.0213 | Tiêm khớp đốt ngón tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+170 | 02.0418.0214 | Tiêm khớp khuỷu tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+171 | 02.0429.0213 | Tiêm điểm bám gân mỏm cùng vai dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+172 | 02.0428.0214 | Tiêm gân trên gai (dưới gai, gân bao xoay khớp vai) dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+173 | 02.0419.0213 | Tiêm khớp vai dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+174 | 02.0420.0213 | Tiêm khớp ức đòn dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+175 | 02.0421.0213 | Tiêm khớp ức – sườn dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+176 | 02.0422.0213 | Tiêm khớp đòn- cùng vai dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+177 | 02.0423.0214 | Tiêm khớp thái dương hàm dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+178 | 02.0424.0213 | Tiêm hội chứng DeQuervain dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+179 | 02.0425.0214 | Tiêm hội chứng đường hầm cổ tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+180 | 02.0426.0213 | Tiêm gân gấp ngón tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+181 | 02.0427.0213 | Tiêm gân gấp ngón tay dưới hướng dẫn của siêu âm | 138.000 | Chưa bao gồm thuốc tiêm.
+182 | 02.0349.0112 | Hút dịch khớp gối | 120.000 |
+183 | 02.0361.0112 | Hút nang bao hoạt dịch | 120.000 |
+184 | 13.0152.0589 | Bóc nang tuyến Bartholin | 1.309.000 |
+185 | 13.0153.0603 | Chích rạch màng trinh do ứ máu kinh | 825.000 |
+186 | 13.0151.0601 | Chích áp xe tuyến Bartholin | 875.000 |
+187 | 13.0160.0606 | Chọc dò túi cùng Douglas | 291.000 |
+188 | 13.0053.0594 | Cắt chỉ khâu vòng cổ tử cung | 125.000 |
+189 | 13.0155.0334 | Cắt, đốt sùi mào gà âm hộ, âm đạo, tầng sinh môn | 758.000 |
+190 | 13.0157.0619 | Hút buồng tử cung do rong kinh, rong huyết | 215.000 |
+191 | 13.0149.0624 | Khâu rách cùng đồ âm đạo | 1.979.000 |
+192 | 13.0052.0626 | Khâu vòng cổ tử cung | 561.000 |
+193 | 13.0040.0629 | Làm thuốc vết khâu tầng sinh môn nhiễm khuẩn | 88.900 |
+194 | 13.0144.0721 | Thủ thuật xoắn polip cổ tử cung, âm đạo | 406.000 |
+195 | 13.0156.0639 | Nong buồng tử cung đặt dụng cụ chống dính | 597.000 |
+196 | 13.0148.0630 | Lấy dị vật âm đạo | 602.000 |
+197 | 13.0158.0634 | Nạo hút thai trứng | 824.000 |
+198 | 13.0049.0635 | Nạo sót thai, nạo sót rau sau sẩy, sau đẻ | 355.000 |
+199 | 13.0239.0645 | Phá thai bằng thuốc cho tuổi thai đến hết 7 tuần | 189.000 |
+200 | 13.0238.0648 | Phá thai từ tuần thứ 6 đến hết 12 tuần bằng phương pháp hút chân không | 408.000 |
+201 | 13.0241.0644 | Phá thai đến hết 7 tuần bằng phương pháp hút chân không | 408.000 |
+202 | 13.0154.0712 | Sinh thiết cổ tử cung, âm hộ, âm đạo | 393.000 |
+203 | 13.0166.0715 | Soi cổ tử cung | 63.900 |
+204 | 13.0145.0611 | Điều trị tổn thương cổ tử cung bằng đốt điện, đốt nhiệt, đốt laser, áp lạnh... | 170.000 |
+205 | 02.0002.0071 | Bơm rửa khoang màng phổi | 227.000 |
+206 | 02.0003.0073 | Bơm streptokinase vào khoang màng phổi | 1.027.000 |
+207 | 01.0223.0211 | Đặt ống thông hậu môn | 85.900 |
+208 | 02.0025.0109 | Gây dính màng phổi bằng thuốc/ hóa chất qua ống dẫn lưu màng phổi | 207.000 |
+209 | 09.9000.1894 | Gây mê khác | 761.000 |
+210 | 02.0026.0111 | Hút dẫn lưu khoang màng phổi bằng máy hút áp lực âm liên tục | 188.000 |
+211 | 09.0123.0898 | Khí dung đường thở ở bệnh nhân nặng | 23.000 |
+212 | 01.0201.0849 | Soi đáy mắt cấp cứu | 55.300 |
+213 | 10.1113.0398 | Phẫu thuật đặt catheter ổ bụng để lọc màng bụng | 7.476.000 |
+214 | 01.0008.0100 | Đặt catheter tĩnh mạch trung tâm nhiều nòng | 1.137.000 |
+215 | 01.0032.0299 | Sốc điện ngoài lồng ngực cấp cứu | 485.000 |
+216 | 02.0081.0054 | Đặt bóng đối xung động mạch chủ | 6.926.000 |
+217 | 01.0048.0290 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy hô hấp cấp ≤ 8 giờ [Phẫu thuật đặt hệ thống tim phổi nhân tạo (ECMO)] | 5.367.000 | Chưa bao gồm bộ tim phổi, dây dẫn và canuyn chạy ECMO.
+218 | 01.0048.0291 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy hô hấp cấp ≤ 8 giờ [Thay dây, thay tim phổi (ECMO)] | 1.558.000 | Chưa bao gồm bộ tim phổi, dây dẫn và canuyn chạy ECMO.
+219 | 01.0048.0292 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy hô hấp cấp ≤ 8 giờ [Theo dõi, chạy tim phổi nhân tạo (ECMO) mỗi 12 giờ] | 1.404.000 | Áp dụng thanh toán cho mỗi 8 giờ thực hiện.
+220 | 01.0048.0293 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy hô hấp cấp ≤ 8 giờ [Kết thúc và rút hệ thống ECMO] | 2.536.000 |
+221 | 01.0049.0290 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy tuần hoàn cấp ≤ 8 giờ [Phẫu thuật đặt hệ thống tim phổi nhân tạo (ECMO)] | 5.367.000 | Chưa bao gồm bộ tim phổi, dây dẫn và canuyn chạy ECMO.
+222 | 01.0049.0291 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy tuần hoàn cấp ≤ 8 giờ [Thay dây, thay tim phổi (ECMO)] | 1.558.000 | Chưa bao gồm bộ tim phổi, dây dẫn và canuyn chạy ECMO.
+223 | 01.0049.0292 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy tuần hoàn cấp ≤ 8 giờ [Theo dõi, chạy tim phổi nhân tạo (ECMO) mỗi 12 giờ] | 1.404.000 | Áp dụng thanh toán cho mỗi 12 giờ thực hiện.
+224 | 01.0049.0293 | Tim phổi nhân tạo (ECMO) cấp cứu tại giường trong hỗ trợ suy tuần hoàn cấp ≤ 8 giờ [Kết thúc và rút hệ thống ECMO] | 2.536.000 |
+225 | 21.0106.1800 | Nghiệm pháp dung nạp Glucose đường uống 2 mẫu có định lượng Insulin kèm theo | 132.000 |
+226 | 02.0075.0081 | Chọc dò màng ngoài tim | 259.000 |
+227 | 02.0076.0081 | Dẫn lưu màng ngoài tim | 259.000 |
+228 | 01.0087.0898 | Khí dung thuốc qua thở máy (một lần) | 23.000 | Chưa bao gồm thuốc khí dung.
+229 | 02.0204.0116 | Lọc màng bụng chu kỳ (CAPD) | 574.000 |
+230 | 01.0073.0120 | Mở khí quản thường quy | 734.000 |
+231 | 01.0218.0159 | Rửa dạ dày cấp cứu | 131.000 |
+232 | 02.0075.0081 | Chọc dò màng ngoài tim | 259.000 |
+233 | 02.0120.0192 | Sốc điện điều trị rung nhĩ | 1.008.000 |
+234 | 02.0188.0210 | Đặt sonde bàng quang | 94.300 |
+235 | 01.0132.0209 | Thông khí nhân tạo xâm nhập [1 ngày] | 583.000 |
+236 | 01.0216.0103 | Đặt ống thông dạ dày | 94.300 |
+237 | 01.0007.0099 | Đặt catheter tĩnh mạch trung tâm 01 nòng | 664.000 |
+238 | 02.0009.0077 | Chọc dò dịch màng phổi | 143.000 |
+239 | 01.0158.0074 | Cấp cứu ngừng tuần hoàn hô hấp cơ bản | 498.000 | Bao gồm cả bóng dùng nhiều lần.
+240 | 01.0066.1888 | Đặt ống nội khí quản | 579.000 |
+241 | 01.0202.0083 | Chọc dịch tuỷ sống | 114.000 | Chưa bao gồm kim chọc dò.
+242 | 03.3821.0216 | Cắt lọc tổ chức hoại tử hoặc cắt lọc vết thương đơn giản | 184.000 |
+243 | 03.3826.0200 | Thay băng, cắt chỉ vết mổ (≤ 15cm) [NHI KHOA] | 60.000 | Chỉ áp dụng với BN ngoại trú
+244 | 10.9003.0200 | Thay băng [Thay băng vết thương hoặc mổ chiều dài ≤ 15cm] | 60.000 | Chỉ áp dụng với BN ngoại trú
+245 | 10.9003.0201 | Thay băng [Thay băng vết thương chiều dài trên 15cm đến 30 cm; sau phẫu thuật CÓ TỪ HAI ĐƯỜNG MỔ TRỞ LÊN; vết mổ nhiễm trùng] | 85.000 |
+246 | 10.9003.0202 | Thay băng [Thay băng vết thương hoặc mổ chiều dài từ trên 30 cm đến 50 cm] | 115.000 |
+247 | 10.9003.0204 | Thay băng [Thay băng vết thương hoặc mổ chiều dài từ 30 cm đến 50 cm nhiễm trùng] | 184.000 |
+248 | 03.3827.0216 | Khâu vết thương phần mềm dài dưới 10cm (Khâu vết thương phần mềm tổn thương nông chiều dài < 10 cm) | 184.000 |
+249 | 02.0008.0078 | Chọc tháo dịch màng phổi dưới hướng dẫn của siêu âm | 183.000 |
+250 | 03.0080.0079 | Chọc hút/dẫn lưu khí màng phổi áp lực thấp [NHI KHOA] | 150.000 |
+251 | 01.0158.0074 | Cấp cứu ngừng tuần hoàn hô hấp cơ bản | 498.000 |
+252 | 02.0163.0203 | Thay băng các vết loét hoại tử rộng sau TBMMN | 139.000 |
+253 | 01.0346.0097 | Khai thông mạch não bằng điều trị thuốc tiêu sợi huyết trong nhồi máu não cấp | 557.000 | Chưa bao gồm thuốc tiêu sợi huyết.
+254 | 01.0322.0097 | Khai thông động mạch vành bằng sử dụng thuốc tiêu sợi huyết trong điều trị nhồi máu cơ tim cấp | 557.000 | Chưa bao gồm thuốc tiêu sợi huyết.
+255 | 03.0080.0079 | Chọc hút/dẫn lưu khí màng phổi áp lực thấp | 150.000 |
+256 | 01.0094.0111 | Dẫn lưu khí màng phổi áp lực thấp < 8 giờ | 188.000 |
+257 | 02.0011.0079 | Chọc hút khí màng phổi | 150.000 |
+258 | 01.0132.0209 | Thông khí nhân tạo xâm nhập [giờ theo thực tế] | 583.000 |
+259 | 02.0205.0119 | Lọc huyết tương (Plasmapheresis) | 1.672.000 |
+260 | 02.0150.0114 | Hút đờm hầu họng | 12.200 |
+261 | 01.0056.0300 | Hút đờm qua ống nội khí quản/canuyn mở khí quản bằng ống thông kín (có thở máy) (một lần hút) | 337.000 |
+262 | 01.0055.0114 | Hút đờm qua ống nội khí quản/canuyn mở khí quản bằng ống thông một lần ở người bệnh có thở máy (một lần hút) | 12.200 |
+263 | 01.0281.1510 | Xét nghiệm đường máu mao mạch tại giường (một lần) | 15.500 |
+264 | 02.0188.0210 | Đặt sonde bàng quang | 94.300 |
+265 | 01.0173.0195 | Lọc máu cấp cứu (ở người chưa có mở thông động tĩnh mạch) [TRƯỜNG HỢP PHẢI ĐẶT CATHETER] | 1.565.000 | Quả lọc dây máu dùng 1 lần; đã bao gồm catheter 2 nòng được tính bình quân là 0,25 lần cho 1 lần chạy thận.
+266 | 01.0173.0195 | Lọc máu cấp cứu (ở người đã mở thông động tĩnh mạch) [TRƯỜNG HỢP KHÔNG PHẢI ĐẶT CATHETER] | 1.565.000 |
+267 | 01.0173.0195 | Thận nhân tạo cấp cứu [TRƯỜNG HỢP KHÔNG PHẢI ĐẶT CATHETER] | 1.565.000 |
+268 | 01.0173.0195 | Thận nhân tạo cấp cứu [TRƯỜNG HỢP PHẢI ĐẶT CATHETER] | 1.565.000 | Quả lọc dây máu dùng 1 lần; đã bao gồm catheter 2 nòng được tính bình quân là 0,25 lần cho 1 lần chạy thận.
+269 | 15.0222.0898 | Khí dung mũi họng [TAI MŨI HỌNG] | 23.000 |
+270 | 08.0004.0224 | Nhĩ châm | 69.400 |
+271 | 08.0006.0271 | Thủy châm | 70.100 |
+272 | 08.0008.0224 | Ôn châm | 69.400 |
+273 | 08.0009.0228 | Cứu | 36.100 |
+274 | 08.0010.0224 | Chích lể | 69.400 |
+275 | 08.0011.0243 | Laser châm | 49.100 |
+276 | 08.0013.0238 | Kéo nắn cột sống cổ | 48.700 |
+277 | 08.0014.0238 | Kéo nắn cột sống thắt lưng | 48.700 |
+278 | 08.0166.0230 | Điện nhĩ châm điều trị liệt dây VII ngoại biên | 71.400 |
+279 | 08.0168.0230 | Điện nhĩ châm điều trị thiểu năng tuần hoàn não mạn tính | 71.400 |
+280 | 08.0169.0230 | Điện nhĩ châm điều trị đau đầu, đau nửa đầu | 71.400 |
+281 | 08.0170.0230 | Điện nhĩ châm điều trị mất ngủ | 71.400 |
+282 | 08.0177.0230 | Điện nhĩ châm điều trị liệt nửa người do tai biến mạch máu não | 71.400 |
+283 | 08.0199.0230 | Điện nhĩ châm điều trị liệt chi trên | 71.400 |
+284 | 08.0200.0230 | Điện nhĩ châm điều trị liệt chi dưới | 71.400 |
+285 | 08.0279.0230 | Điện châm điều trị huyết áp thấp | 71.400 |
+286 | 08.0280.0230 | Điện châm điều trị thiểu năng tuần hoàn não mạn tính | 71.400 |
+287 | 08.0301.0230 | Điện châm điều trị liệt chi trên | 71.400 |
+288 | 08.0330.0271 | Thuỷ châm điều trị liệt nửa người do tai biến mạch máu não | 70.100 |
+289 | 08.0354.0271 | Thuỷ châm điều trị huyết áp thấp | 70.100 |
+290 | 08.0355.0271 | Thuỷ châm điều trị thiểu năng tuần hoàn não mạn tính | 70.100 |
+291 | 08.0389.0280 | Xoa bóp bấm huyệt điều trị liệt chi trên | 69.300 |
+292 | 08.0390.0280 | Xoa bóp bấm huyệt điều trị liệt chi dưới | 69.300 |
+293 | 08.0391.0280 | Xoa bóp bấm huyệt điều trị liệt nửa người do tai biến mạch máu não | 69.300 |
+294 | 08.0447.0280 | Xoa bóp bấm huyệt điều trị giảm đau sau phẫu thuật | 69.300 |
+295 | 08.0457.0228 | Cứu điều trị liệt chi trên thể hàn | 36.100 |
+296 | 08.0458.0228 | Cứu điều trị liệt chi dưới thể hàn | 36.100 |
+297 | 08.0459.0228 | Cứu điều trị liệt nửa người thể hàn | 36.100 |
+298 | 08.0479.0235 | Giác hơi điều trị ngoại cảm phong hàn | 34.500 |
+299 | 08.0480.0235 | Giác hơi điều trị ngoại cảm phong nhiệt | 34.500 |
+300 | 08.0481.0235 | Giác hơi điều trị các chứng đau | 34.500 |
+301 | 08.0005.0230 | Điện châm | 71.400 |
+302 | 17.0033.0266 | Kỹ thuật tập tay và bàn tay cho người bệnh liệt nửa người | 45.700 |
+303 | 17.0034.0267 | Kỹ thuật tập đứng và đi cho người bệnh liệt nửa người | 51.400 |
+304 | 17.0037.0267 | Tập ngồi thăng bằng tĩnh và động | 51.400 |
+305 | 17.0043.0268 | Tập đi với nạng (nạng nách, nạng khuỷu) | 30.600 |
+306 | 17.0044.0268 | Tập đi với gậy | 30.600 |
+307 | 17.0047.0268 | Tập lên, xuống cầu thang | 30.600 |
+308 | 17.0048.0268 | Tập đi trên các địa hình khác nhau (dốc, sỏi, gồ ghề...) | 30.600 |
+309 | 17.0052.0267 | Tập vận động thụ động | 51.400 |
+310 | 17.0053.0267 | Tập vận động có trợ giúp | 51.400 |
+311 | 17.0056.0267 | Tập vận động có kháng trở | 51.400 |
+312 | 17.0071.0270 | Tập với xe đạp tập | 12.500 |
+313 | 17.0073.0277 | Tập các kiểu thở | 31.100 |
+314 | 17.0075.0277 | Tập ho có trợ giúp | 31.100 |
+315 | 17.0078.0238 | Kỹ thuật kéo nắn trị liệu | 48.700 |
+316 | 17.0085.0282 | Kỹ thuật xoa bóp vùng | 45.200 |
+317 | 17.0086.0283 | Kỹ thuật xoa bóp toàn thân | 55.800 |
+318 | 17.0104.0264 | Tập nuốt | 134.000 |
+319 | 14.0166.0778 | Lấy dị vật giác mạc sâu [Lấy dị vật giác mạc nông, một mắt (gây tê)] | 88.400 |
+320 | 14.0193.0856 | Tiêm dưới kết mạc [1 mắt] | 50.300 |
+321 | 14.0194.0857 | Tiêm cạnh nhãn cầu [1 mắt] | 50.300 |
+322 | 14.0197.0855 | Bơm thông lệ đạo [1 mắt] | 61.500 |
+323 | 14.0200.0782 | Lấy dị vật kết mạc [1 mắt] | 67.000 |
+324 | 14.0202.0785 | Lấy calci kết mạc | 37.300 |
+325 | 14.0203.0075 | Cắt chỉ khâu da mi đơn giản [CHỈ ÁP DỤNG BN NGOẠI TRÚ] | 35.600 | Chỉ áp dụng cho BN ngoại trú
+326 | 14.0204.0075 | Cắt chỉ khâu kết mạc [CHỈ ÁP DỤNG BN NGOẠI TRÚ] | 35.600 | Chỉ áp dụng cho BN ngoại trú
+327 | 14.0205.0759 | Đốt lông xiêu, nhổ lông siêu | 50.000 |
+328 | 14.0206.0730 | Bơm rửa lệ đạo | 38.300 |
+329 | 14.0207.0738 | Chích chắp, lẹo, nang lông mi, chích áp xe mi, kết mạc | 81.000 |
+330 | 14.0210.0799 | Nặn tuyến bờ mi, đánh bờ mi | 37.300 |
+331 | 14.0211.0842 | Rửa cùng đồ | 44.000 |
+332 | 14.0212.0864 | Cấp cứu bỏng mắt ban đầu | 340.000 |
+333 | 14.0214.0778 | Bóc giả mạc [1 mắt] | 88.400 |
+334 | 14.0215.0505 | Rạch áp xe mi | 197.000 |
+335 | 14.0216.0505 | Rạch áp xe túi lệ | 197.000 |
+336 | 14.0218.0849 | Soi đáy mắt trực tiếp | 55.300 |
+337 | 16.0205.1024 | Nhổ chân răng vĩnh viễn | 200.000 |
+338 | 16.0197.1036 | Phẫu thuật nhổ răng lạc chỗ | 348.000 |
+339 | 16.0072.1018 | Phục hồi cổ răng bằng Composite | 348.000 |
+340 | 16.0072.1018 | Phục hồi cổ răng bằng Composite | 348.000 |
+341 | 16.0067.1031 | Điều trị sâu ngà răng phục hồi bằng GlassIonomer Cement (GIC) kết hợp Composite | 259.000 |
+342 | 16.0205.1024 | Nhổ chân răng vĩnh viễn | 200.000 |
+343 | 16.0203.1026 | Nhổ răng vĩnh viễn | 218.000 |
+344 | 16.0070.1031 | Điều trị sâu ngà răng phục hồi bằng GlassIonomer Cement | 259.000 |
+345 | 16.0068.1031 | Điều trị sâu ngà răng phục hồi bằng Composite | 259.000 |
+346 | 16.0067.1031 | Điều trị sâu ngà răng phục hồi bằng GlassIonomer Cement (GIC) kết hợp Composite | 259.000 |
+347 | 16.0069.1031 | Điều trị sâu ngà răng phục hồi bằng Amalgam | 259.000 |
+348 | 16.0074.1018 | Phục hồi cổ răng bằng GlassIonomer Cement | 348.000 |
+349 | 16.0225.1035 | Trám bít hố rãnh bằng nhựa Sealant | 224.000 |
+350 | 16.0238.1029 | Nhổ răng sữa | 40.700 |
+351 | 16.0043.1020 | Lấy cao răng | 143.000 |
+
+===================================================================
+4. BẢNG GIÁ BẢO HIỂM Y TẾ - CHỤP CỘNG HƯỞNG TỪ
+===================================================================
+STT | Mã tương đương | DỊCH VỤ KỸ THUẬT | GIÁ BHYT CHI TRẢ TỐI ĐA | GHI CHÚ
+1 | 18.0296.0066 | Chụp cộng hưởng từ sọ não (0.2-1.5T) | 1.322.000 |
+2 | 18.0297.0065 | Chụp cộng hưởng từ sọ não có tiêm chất tương phản (0.2-1.5T) | 2.227.000 |
+3 | 18.0298.0066 | Chụp cộng hưởng từ não- mạch não không tiêm chất tương phản | 1.322.000 |
+4 | 18.0300.0066 | Chụp cộng hưởng từ hệ mạch cổ không tiêm chất tương phản | 1.322.000 |
+5 | 18.0301.0065 | Chụp cộng hưởng từ hệ mạch cổ có tiêm chất tương phản | 2.227.000 |
+6 | 18.0302.0065 | Chụp cộng hưởng từ tuyến yên có tiêm chất tương phản | 2.227.000 |
+7 | 18.0303.0066 | Chụp cộng hưởng từ hốc mắt và thần kinh thị giác | 1.322.000 |
+8 | 18.0304.0065 | Chụp cộng hưởng từ hốc mắt và thần kinh thị giác có tiêm chất tương phản | 2.227.000 |
+9 | 18.0305.0065 | Chụp cộng hưởng từ tưới máu não (perfusion) | 2.227.000 |
+10 | 18.0306.0068 | Chụp cộng hưởng từ phổ não (spect tính rography) (0.2-1.5T) | 3.191.000 |
+11 | 18.0308.0066 | Chụp cộng hưởng từ khuếch tán (DWI - Diffusion-weighted Imaging) (0.2-1.5T) | 1.322.000 |
+12 | 18.0309.0065 | Chụp cộng hưởng từ đáy sọ và xương đá (0.2-1.5T) | 2.227.000 |
+13 | 18.0310.0066 | Chụp cộng hưởng từ vùng mặt - cổ (0.2-1.5T) | 1.322.000 |
+14 | 18.0311.0065 | Chụp cộng hưởng từ vùng mặt - cổ có tiêm tương phản (0.2-1.5T) | 2.227.000 |
+15 | 18.0312.0068 | Chụp cộng hưởng từ sọ não chức năng (0.2-1.5T) | 3.191.000 |
+16 | 18.0313.0066 | Chụp cộng hưởng từ lồng ngực (0.2-1.5T) | 1.322.000 |
+17 | 18.0314.0065 | Chụp cộng hưởng từ lồng ngực có tiêm thuốc cản quang | 2.227.000 |
+18 | 18.0315.0065 | Chụp cộng hưởng từ thông khí phổi (Heli) (0.2-) | 2.227.000 |
+19 | 18.0316.0066 | Chụp cộng hưởng từ tuyến vú (0.2-1.5T) | 1.322.000 |
+20 | 18.0317.0065 | Chụp cộng hưởng từ tuyến vú động học có tiêm tương phản (0.2-1.5T) | 2.227.000 |
+21 | 18.0318.0068 | Chụp cộng hưởng từ phổ tuyến vú (0.2-1.5T) | 3.191.000 |
+22 | 18.0319.0066 | Chụp cộng hưởng từ tầng bụng không tiêm chất tương phản (gồm: chụp cộng hưởng từ gan-mật, tụy, lách, thận, dạ dày-tá tràng...) (0.2-1.5T) | 1.322.000 |
+23 | 18.0321.0065 | Chụp cộng hưởng từ vùng chậu (gồm: chụp cộng hưởng từ tử cung-phần phụ, tiền liệt tuyến, đại tràng chậu hông, trực tràng, các khối u vùng chậu, có tiêm) | 2.227.000 |
+24 | 18.0322.0065 | Chụp cộng hưởng từ vùng chậu dò hậu môn (0.2-1.5T) | 2.227.000 |
+25 | 18.0323.0065 | Chụp cộng hưởng từ vùng chậu có tiêm chất tương phản (0.2-1.5T) | 2.227.000 |
+26 | 18.0324.0066 | Chụp cộng hưởng từ bìu, dương vật (0.2-1.5T) | 1.322.000 |
+27 | 18.0325.0065 | Chụp cộng hưởng từ bìu, dương vật có tiêm chất tương phản | 2.227.000 |
+28 | 18.0326.0066 | Chụp cộng hưởng từ động học sàn chậu, tống phân (defecography-MR) (0.2-1.5T) | 1.322.000 |
+29 | 18.0327.0065 | Chụp cộng hưởng từ ruột non (enteroclysis) | 2.227.000 |
+30 | 18.0328.0065 | Chụp cộng hưởng từ nội soi ảo khung đại tràng (virtual colonoscopy) | 2.227.000 |
+31 | 18.0329.0065 | Chụp cộng hưởng từ tuyến tiền liệt có tiêm chất tương phản | 2.227.000 |
+32 | 18.0330.0068 | Chụp cộng hưởng từ phổ tuyến tiền liệt (0.2-1.5T) | 3.191.000 |
+33 | 18.0331.0065 | Chụp cộng hưởng từ đánh giá bánh nhau (rau) | 2.227.000 |
+34 | 18.0332.0066 | Chụp cộng hưởng từ thai nhi (0.2-1.5T) | 1.322.000 |
+35 | 18.0333.0067 | Chụp cộng hưởng từ gan với chất tương phản đặc hiệu mô (0.2-1.5T) [chụp cộng hưởng từ gan bằng chất tương phản thông thường nhưng không xác định được bản chất mô bệnh học] | 8.691.000 |
+36 | 18.0334.0066 | Chụp cộng hưởng từ cột sống cổ (0.2-1.5T) | 1.322.000 |
+37 | 18.0335.0065 | Chụp cộng hưởng từ cột sống cổ có tiêm tương phản (0.2-1.5T) | 2.227.000 |
+38 | 18.0336.0066 | Chụp cộng hưởng từ cột sống ngực (0.2-1.5T) | 1.322.000 |
+39 | 18.0337.0065 | Chụp cộng hưởng từ cột sống ngực có tiêm tương phản | 2.227.000 |
+40 | 18.0338.0066 | Chụp cộng hưởng từ cột sống thắt lưng - cùng (0.2-1.5T) | 1.322.000 |
+41 | 18.0339.0065 | Chụp cộng hưởng từ cột sống thắt lưng - cùng có tiêm thuốc tương phản | 2.227.000 |
+42 | 18.0340.0066 | Chụp cộng hưởng từ khớp (0.2-1.5T) | 1.322.000 |
+43 | 18.0341.0065 | Chụp cộng hưởng từ khớp có tiêm tương phản | 2.227.000 |
+44 | 18.0342.0065 | Chụp cộng hưởng từ khớp có tiêm tương phản | 2.227.000 |
+45 | 18.0343.0066 | Chụp cộng hưởng từ xương và tủy xương (0.2-) | 1.322.000 |
+46 | 18.0344.0065 | Chụp cộng hưởng từ xương và tủy xương có tiêm chất tương phản | 2.227.000 |
+47 | 18.0345.0066 | Chụp cộng hưởng từ phần mềm chi (0.2-1.5T) | 1.322.000 |
+48 | 18.0346.0065 | Chụp cộng hưởng từ phần mềm chi có tiêm tương phản | 2.227.000 |
+49 | 18.0347.0065 | Chụp cộng hưởng từ động mạch chủ-chậu | 2.227.000 |
+50 | 18.0348.0065 | Chụp cộng hưởng từ động mạch chủ-ngực | 2.227.000 |
+51 | 18.0349.0065 | Chụp cộng hưởng từ động mạch vành (1.5T) | 2.227.000 |
+52 | 18.0350.0065 | Chụp cộng hưởng từ tim (1.5T) | 2.227.000 |
+53 | 18.0351.0065 | Chụp cộng hưởng từ tầng trên ổ bụng có khảo sát mạch các tạng (bao gồm mạch: gan, tụy, lách và mạch khối u) (1.5T) | 2.227.000 |
+54 | 18.0352.0066 | Chụp cộng hưởng từ động mạch chi trên | 1.322.000 |
+55 | 18.0353.0065 | Chụp cộng hưởng từ động mạch chi trên có tiêm thuốc tương phản | 2.227.000 |
+56 | 18.0354.0066 | Chụp cộng hưởng từ động mạch chi dưới | 1.322.000 |
+57 | 18.0355.0065 | Chụp cộng hưởng từ động mạch chi dưới có tiêm chất tương phản | 2.227.000 |
+58 | 18.0358.0066 | Chụp cộng hưởng từ tĩnh mạch (1.5T) | 1.322.000 |
+59 | 18.0359.0065 | Chụp cộng hưởng từ tĩnh mạch có tiêm tương phản (1.5T) | 2.227.000 |
+60 | 18.0360.0065 | Chụp cộng hưởng từ bạch mạch có tiêm tương phản không đặc hiệu | 2.227.000 |
+61 | 18.0361.0065 | Chụp cộng hưởng từ bạch mạch có tiêm tương phản có đặc hiệu | 2.227.000 |
+62 | 18.0364.0066 | Chụp cộng hưởng từ dây thần kinh ngoại biên | 1.322.000 |
+63 | 18.0365.0068 | Chụp cộng hưởng từ tưới máu các tạng (1.5T) | 3.191.000 |
+64 | 18.0297.0065 | Chụp cộng hưởng từ sọ não có tiêm chất tương phản (0.2-1.5T) | 2.227.000 |
+65 | 18.0338.0066 | Chụp cộng hưởng từ cột sống thắt lưng - cùng (0.2-1.5T) | 1.322.000 |
+66 | 18.0296.0066 | Chụp cộng hưởng từ sọ não (0.2-1.5T) | 1.322.000 |
+67 | 18.0313.0066 | Chụp cộng hưởng từ lồng ngực (0.2-1.5T) | 1.322.000 |
+68 | 18.0332.0066 | Chụp cộng hưởng từ thai nhi (0.2-1.5T) | 1.322.000 |
+69 | 18.0334.0066 | Chụp cộng hưởng từ cột sống cổ (0.2-1.5T) | 1.322.000 |
+70 | 18.0338.0066 | Chụp cộng hưởng từ cột sống thắt lưng - cùng (0.2-1.5T) | 1.322.000 |
+
+===================================================================
+5. BẢNG GIÁ BẢO HIỂM Y TẾ - CHỤP CẮT LỚP VI TÍNH
+===================================================================
+(Ghi chú: Bảng giá BHYT áp dụng theo Thông tư số 22/2023/TT-BYT và điều kiện thanh toán tại Thông tư số 13/2020 của Bộ Y tế hiện hành.)
+
+STT | Mã tương đương | DỊCH VỤ KỸ THUẬT | GIÁ BHYT CHI TRẢ TỐI ĐA | GHI CHÚ
+1 | 18.0207.0042 | Chụp cắt lớp vi tính động mạch vành, tim (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+2 | 18.0206.0042 | Chụp cắt lớp vi tính động mạch chủ ngực (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+3 | 18.0201.0042 | Chụp cắt lớp vi tính lồng ngực có tiêm thuốc cản quang (từ 64- 128 dãy) [NGƯỜI BỆNH KHÔNG SUY HÔ HẤP] | 643.000 | Chưa bao gồm thuốc cản quang.
+4 | 18.0201.0042 | Chụp cắt lớp vi tính lồng ngực có tiêm thuốc cản quang (từ 64- 128 dãy) [NGƯỜI BỆNH SUY HÔ HẤP, thời gian nhịn thở < 10 giây] | 1.712.000 | Chưa bao gồm thuốc cản quang.
+5 | 18.0200.0043 | Chụp cắt lớp vi tính lồng ngực không tiêm thuốc cản quang (từ 64- 128 dãy) [NGƯỜI BỆNH SUY HÔ HẤP, thời gian nhịn thở < 10 giây] | 1.461.000 |
+6 | 18.0200.0043 | Chụp cắt lớp vi tính lồng ngực không tiêm thuốc cản quang (từ 64- 128 dãy) [NGƯỜI BỆNH KHÔNG SUY HÔ HẤP] | 532.000 |
+7 | 18.0232.0042 | Chụp cắt lớp vi tính cột sống ngực có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+8 | 18.0270.0043 | Chụp cắt lớp vi tính cột sống ngực không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+9 | 18.0205.0042 | Chụp cắt lớp vi tính động mạch phổi (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+10 | 18.0231.0042 | Chụp cắt lớp vi tính tầng trên ổ bụng thường quy (gồm: chụp Cắt lớp vi tính gan-mật, tụy, lách, dạ dày-tá tràng.v.v.) (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+11 | 18.0233.0042 | Chụp cắt lớp vi tính tiểu khung thường quy (gồm: chụp cắt lớp vi tính từ cung-buồng trứng, tiền liệt tuyến, các khối u vùng tiểu khung.v.v.) (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+12 | 18.0235.0042 | Chụp cắt lớp vi tính tầng trên ổ bụng có khảo sát mạch các tạng có tiêm thuốc cản quang (bao gồm mạch: gan, tụy, lách và mạch khối u) (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+13 | 18.0236.0042 | Chụp cắt lớp vi tính hệ tiết niệu có khảo sát mạch thận và/hoặc dựng hình đường bài xuất (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+14 | 18.0274.0043 | Chụp cắt lớp vi tính khớp thường quy không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+15 | 18.0232.0042 | Chụp cắt lớp vi tính bụng-tiểu khung thường quy (từ 64-128 dãy) [có tiêm thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+16 | 18.0234.0042 | Chụp cắt lớp vi tính hệ tiết niệu thường quy (từ 64-128 dãy) [có tiêm thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+17 | 18.0237.0042 | Chụp cắt lớp vi tính gan có dựng hình đường mật (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+18 | 18.0269.0042 | Chụp cắt lớp vi tính cột sống cổ có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+19 | 18.0273.0042 | Chụp cắt lớp vi tính cột sống thắt lưng có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+20 | 18.0276.0042 | Chụp cắt lớp vi tính khớp có tiêm thuốc cản quang vào ổ khớp (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+21 | 18.0278.0042 | Chụp cắt lớp vi tính xương chi có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+22 | 18.0280.0042 | Chụp cắt lớp vi tính mạch máu chi trên (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+23 | 18.0281.0042 | Chụp cắt lớp vi tính mạch máu chi dưới (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+24 | 18.0202.0042 | Chụp cắt lớp vi tính phổi độ phân giải cao (từ 64- 128 dãy) có tiêm thuốc cản quang [BỆNH NHÂN KHÔNG SUY HÔ HẤP] | 643.000 | Chưa bao gồm thuốc cản quang.
+25 | 18.0204.0043 | Chụp cắt lớp vi tính nội soi ảo cây phế quản (từ 64- 128 dãy) | 532.000 |
+26 | 18.0208.0043 | Chụp cắt lớp vi tính tính điểm vôi hóa mạch vành (từ 64- 128 dãy) | 1.461.000 |
+27 | 18.0232.0043 | Chụp cắt lớp vi tính bụng - tiểu khung thường quy (từ 64-128 dãy) [không tiêm thuốc cản quang] | 532.000 |
+28 | 18.0268.0043 | Chụp cắt lớp vi tính cột sống cổ không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+29 | 18.0272.0043 | Chụp cắt lớp vi tính cột sống thắt lưng không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+30 | 18.0277.0043 | Chụp cắt lớp vi tính xương chi không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+31 | 18.0279.0044 | Chụp cắt lớp vi tính tầm soát toàn thân (từ 64- 128 dãy) [có tiêm thuốc cản quang] [Chụp đánh giá các giai đoạn của u hoặc đa chấn thương] | 3.467.000 | Chưa bao gồm thuốc cản quang.
+32 | 18.0279.0044 | Chụp cắt lớp vi tính tầm soát toàn thân (từ 64- 128 dãy) [có tiêm thuốc cản quang] [TRƯỜNG HỢP KHÔNG ĐÁNH GIÁ các giai đoạn của u hoặc đa chấn thương] | 643.000 | Chưa bao gồm thuốc cản quang.
+33 | 18.0231.0042 | Chụp cắt lớp vi tính tầng trên ổ bụng thường quy (gồm: chụp Cắt lớp vi tính gan-mật, tụy, lách, dạ dày-tá tràng.v.v.) (từ 64-128 dãy) [có tiêm thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+34 | 18.0233.0042 | Chụp cắt lớp vi tính tiểu khung thường quy (gồm: chụp cắt lớp vi tính từ cung-buồng trứng, tiền liệt tuyến, các khối u vùng tiểu khung.v.v.) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+35 | 18.0231.0042 | Chụp cắt lớp vi tính tầng trên ổ bụng thường quy (gồm: chụp Cắt lớp vi tính gan-mật, tụy, lách, dạ dày-tá tràng.v.v.) (từ 64-128 dãy) [giá 1-32 dãy] | 643.000 | Chưa bao gồm thuốc cản quang.
+36 | 18.0236.0042 | Chụp cắt lớp vi tính hệ tiết niệu có khảo sát mạch thận và/hoặc dựng hình đường bài xuất (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+37 | 18.0201.0042 | Chụp cắt lớp vi tính lồng ngực có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+38 | 18.0205.0042 | Chụp cắt lớp vi tính động mạch phổi (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+39 | 18.0206.0042 | Chụp cắt lớp vi tính động mạch chủ ngực (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+40 | 18.0207.0042 | Chụp cắt lớp vi tính động mạch vành, tim (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+41 | 18.0232.0042 | Chụp cắt lớp vi tính bụng-tiểu khung thường quy (từ 64-128 dãy) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+42 | 18.0237.0042 | Chụp cắt lớp vi tính gan có dựng hình đường mật (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+43 | 18.0269.0042 | Chụp cắt lớp vi tính cột sống cổ có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+44 | 18.0232.0042 | Chụp cắt lớp vi tính cột sống ngực có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+45 | 18.0273.0042 | Chụp cắt lớp vi tính cột sống thắt lưng có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+46 | 18.0201.0042 | Chụp cắt lớp vi tính khớp thường quy có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+47 | 18.0276.0042 | Chụp cắt lớp vi tính khớp có tiêm thuốc cản quang vào ổ khớp (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+48 | 18.0278.0042 | Chụp cắt lớp vi tính xương chi có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+49 | 18.0280.0042 | Chụp cắt lớp vi tính mạch máu chi trên (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+50 | 18.0281.0042 | Chụp cắt lớp vi tính mạch máu chi dưới (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+51 | 18.0202.0043 | Chụp cắt lớp vi tính phổi độ phân giải cao (từ 64- 128 dãy) không tiêm thuốc cản quang [BỆNH NHÂN KHÔNG SUY HÔ HẤP] | 532.000 |
+52 | 18.0204.0043 | Chụp cắt lớp vi tính nội soi ảo cây phế quản (từ 64- 128 dãy) | 532.000 |
+53 | 18.0232.0042 | Chụp cắt lớp vi tính bụng-tiểu khung thường quy (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+54 | 18.0268.0043 | Chụp cắt lớp vi tính cột sống cổ không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+55 | 18.0270.0043 | Chụp cắt lớp vi tính cột sống ngực không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+56 | 18.0272.0043 | Chụp cắt lớp vi tính cột sống thắt lưng không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+57 | 18.0274.0043 | Chụp cắt lớp vi tính khớp thường quy không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+58 | 18.0277.0043 | Chụp cắt lớp vi tính xương chi không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+59 | 18.0279.0044 | Chụp cắt lớp vi tính tầm soát toàn thân (từ 64- 128 dãy) (có tiêm thuốc cản quang) [đánh giá giai đoạn u hoặc đa chấn thương] | 3.467.000 | Chưa bao gồm thuốc cản quang.
+60 | 18.0204.0043 | Chụp cắt lớp vi tính nội soi ảo cây phế quản (từ 64- 128 dãy) | 532.000 |
+61 | 18.0206.0042 | Chụp cắt lớp vi tính động mạch chủ ngực (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+62 | 18.0206.0042 | Chụp cắt lớp vi tính động mạch chủ ngực (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+63 | 18.0277.0043 | Chụp cắt lớp vi tính xương chi có tiêm thuốc cản quang | 532.000 | Chưa bao gồm thuốc cản quang.
+64 | 18.0207.0042 | Chụp cắt lớp vi tính động mạch vành, tim (từ 64- 128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+65 | 18.0278.0042 | Chụp cắt lớp vi tính xương chi có tiêm thuốc cản quang (từ 64- 128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+66 | 18.0275.0043 | Chụp cắt lớp vi tính khớp thường quy không tiêm thuốc cản quang (từ 64- 128 dãy) | 532.000 |
+67 | 18.0242.0042 | Chụp CLVT động mạch chủ-chậu có tiêm thuốc cản quang | 1.712.000 | Chưa bao gồm thuốc cản quang.
+68 | 18.0176.0042 | Chụp CLVT hốc mắt (từ 64-128 dãy) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+69 | 18.0167.0042 | Chụp CLVT hệ động mạch cảnh có tiêm thuốc cản quang (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+70 | 18.0168.0042 | Chụp CLVT tưới máu não (CT perfusion) (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+71 | 18.0166.0042 | Chụp CLVT sọ não có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+72 | 18.0172.0042 | Chụp CLVT hàm-mặt có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+73 | 18.0175.0042 | Chụp CLVT tai-xương đá có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+74 | 18.0170.0042 | Chụp CLVT sọ não có dựng hình 3D (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+75 | 18.0241.0043 | Chụp CLVT đại tràng (colo-scan) dùng dịch hoặc hơi có nội soi ảo không tiêm thuốc cản quang (từ 64-128 dãy) | 532.000 |
+76 | 18.0241.0042 | Chụp CLVT đại tràng (colo-scan) dùng dịch hoặc hơi có nội soi ảo có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+77 | 18.0165.0043 | Chụp CLVT sọ não có dựng hình 3D (từ 64-128 dãy) (Không thuốc) | 532.000 |
+78 | 18.0171.0043 | Chụp CLVT hàm-mặt không tiêm thuốc cản quang (từ 64-128 dãy) | 532.000 |
+79 | 18.0173.0043 | Chụp CLVT hàm mặt có ứng dụng phần mềm nha khoa (từ 64-128 dãy) | 532.000 |
+80 | 18.0174.0043 | Chụp CLVT tai-xương đá không tiêm thuốc (từ 64-128 dãy) | 532.000 |
+81 | 18.0176.0043 | Chụp CLVT hốc mắt (Không thuốc) (từ 64-128 dãy) | 532.000 |
+82 | 18.0177.0042 | Chụp CLVT hàm mặt có dựng hình 3D (từ 64- 128 dãy) (Có thuốc) | 643.000 | Chưa bao gồm thuốc cản quang.
+83 | 18.0167.0042 | Chụp CLVT hệ động mạch cảnh có tiêm thuốc cản quang (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+84 | 18.0168.0042 | Chụp CLVT tưới máu não (CT perfusion) (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+85 | 18.0169.0042 | Chụp CLVT mạch máu não (từ 64-128 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+86 | 18.0166.0042 | Chụp CLVT sọ não có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+87 | 18.0172.0042 | Chụp CLVT hàm-mặt có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+88 | 18.0175.0042 | Chụp CLVT tai-xương đá có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+89 | 18.0176.0042 | Chụp CLVT hốc mắt (từ 64-128 dãy) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+90 | 18.0241.0042 | Chụp CLVT đại tràng (colo-scan) dùng dịch hoặc hơi có nội soi ảo có tiêm thuốc cản quang (từ 64-128 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+91 | 18.0242.0042 | Chụp CLVT động mạch chủ-chậu có tiêm thuốc cản quang | 1.712.000 | Chưa bao gồm thuốc cản quang.
+92 | 18.0165.0043 | Chụp CLVT sọ não có dựng hình 3D (từ 64-128 dãy) (Không thuốc) | 532.000 |
+93 | 18.0171.0043 | Chụp CLVT hàm-mặt không tiêm thuốc cản quang (từ 64-128 dãy) | 532.000 |
+94 | 18.0173.0043 | Chụp CLVT hàm mặt có ứng dụng phần mềm nha khoa (từ 64-128 dãy) | 532.000 |
+95 | 18.0174.0043 | Chụp CLVT tai-xương đá không tiêm thuốc (từ 64-128 dãy) | 532.000 |
+96 | 18.0160.0043 | Chụp CLVT hốc mắt (Không thuốc) (từ 64-128 dãy) | 532.000 |
+97 | 18.0177.0042 | Chụp CLVT hàm mặt có dựng hình 3D (từ 64- 128 dãy) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+98 | 18.0170.0042 | Chụp CLVT sọ não có dựng hình 3D (từ 64-128 dãy) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+99 | 18.0241.0043 | Chụp CLVT đại tràng (colo-scan) dùng dịch hoặc hơi có nội soi ảo không tiêm thuốc cản quang (từ 64-128 dãy) | 532.000 |
+100 | 18.0242.0042 | Chụp CLVT động mạch chủ-chậu có tiêm thuốc cản quang | 1.712.000 | Chưa bao gồm thuốc cản quang.
+101 | 18.0177.0042 | Chụp CLVT hàm mặt có dựng hình 3D (từ 64- 128 dãy) có tiêm thuốc cản quang | 643.000 | Chưa bao gồm thuốc cản quang.
+102 | 18.0165.0043 | Chụp CLVT sọ não có dựng hình 3D (từ 64-128 dãy) không tiêm thuốc cản quang | 532.000 |
+103 | 18.0178.0047 | Chụp CLVT sọ não không tiêm thuốc cản quang (từ ≥ 256 dãy) | 532.000 |
+104 | 18.0179.0046 | Chụp CLVT sọ não có tiêm thuốc cản quang (từ ≥ 256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+105 | 18.0180.0046 | Chụp CLVT hệ động mạch cảnh có tiêm thuốc cản quang (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+106 | 18.0181.0046 | Chụp CLVT tưới máu não (CT perfusion) (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+107 | 18.0182.0046 | Chụp CLVT mạch máu não (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+108 | 18.0183.0047 | Chụp CLVT sọ não có dựng hình 3D (từ ≥ 256 dãy) | 532.000 |
+109 | 18.0184.0047 | Chụp CLVT hàm-mặt không tiêm thuốc cản quang (từ ≥ 256 dãy) | 532.000 |
+110 | 18.0185.0046 | Chụp CLVT hàm-mặt có tiêm thuốc cản quang (từ ≥ 256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+111 | 18.0186.0047 | Chụp CLVT hàm mặt có ứng dụng phần mềm nha khoa (từ ≥ 256 dãy) | 532.000 |
+112 | 18.0187.0047 | Chụp CLVT tai-xương đá không tiêm thuốc (từ ≥ 256 dãy) | 532.000 |
+113 | 18.0188.0046 | Chụp CLVT tai-xương đá có tiêm thuốc cản quang (từ ≥ 256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+114 | 18.0189.0047 | Chụp CLVT hốc mắt (từ ≥ 256 dãy) | 532.000 |
+115 | 18.0190.0047 | Chụp CLVT hàm mặt có dựng hình 3D (từ ≥ 256 dãy) | 532.000 |
+116 | 18.0209.0047 | Chụp cắt lớp vi tính lồng ngực không tiêm thuốc cản quang (từ ≥ 256 dãy) [BỆNH NHÂN KHÔNG SUY HÔ HẤP] | 532.000 |
+117 | 18.0210.0046 | Chụp cắt lớp vi tính lồng ngực có tiêm thuốc cản quang (từ ≥ 256 dãy) [BỆNH NHÂN KHÔNG SUY HÔ HẤP] | 643.000 | Chưa bao gồm thuốc cản quang.
+118 | 18.0211.0047 | Chụp cắt lớp vi tính phổi độ phân giải cao (từ ≥ 256 dãy) | 532.000 |
+119 | 18.0212.0047 | Chụp cắt lớp vi tính phổi liều thấp tầm soát u (từ ≥ 256 dãy) | 532.000 |
+120 | 18.0213.0047 | Chụp cắt lớp vi tính nội soi ảo cây phế quản (từ ≥ 256 dãy) | 532.000 |
+121 | 18.0214.0046 | Chụp cắt lớp vi tính động mạch phổi (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+122 | 18.0215.0046 | Chụp cắt lớp vi tính động mạch chủ ngực (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+123 | 18.0216.0046 | Chụp cắt lớp vi tính động mạch vành, tim có dùng thuốc beta block (từ ≥ 256 dãy) [nhịp tim trên 70 chu kỳ/phút (sau khi đã dùng thuốc giảm nhịp tim, hoặc trên người bệnh có chống chỉ định dùng thuốc làm giảm nhịp tim) hoặc có bất thường nhịp; bệnh lý tim mạch bẩm sinh ở trẻ em dưới 06 tuổi; bệnh lý tim mạch ở người từ đủ 70 tuổi trở lên] | 3.004.000 | Chưa bao gồm thuốc cản quang.
+124 | 18.0217.0046 | Chụp cắt lớp vi tính động mạch vành, tim không dùng thuốc beta block (từ ≥ 256 dãy) [nhịp tim trên 70 chu kỳ/phút (sau khi đã dùng thuốc giảm nhịp tim, hoặc trên người bệnh có chống chỉ định dùng thuốc làm giảm nhịp tim) hoặc có bất thường nhịp; bệnh lý tim mạch bẩm sinh ở trẻ em dưới 06 tuổi; bệnh lý tim mạch ở người từ đủ 70 tuổi trở lên] | 3.004.000 | Chưa bao gồm thuốc cản quang.
+125 | 18.0218.0047 | Chụp cắt lớp vi tính tính điểm vôi hóa mạch vành (từ ≥ 256 dãy) | 1.461.000 |
+126 | 18.0243.0046 | Chụp cắt lớp vi tính tầng trên ổ bụng thường quy (gồm: chụp Cắt lớp vi tính gan-mật, tụy, lách, dạ dày-tá tràng.v.v.) (từ ≥ 256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+127 | 18.0243.0047 | Chụp cắt lớp vi tính tầng trên ổ bụng thường quy (gồm: chụp Cắt lớp vi tính gan-mật, tụy, lách, dạ dày-tá tràng.v.v.) (từ ≥ 256 dãy) | 532.000 |
+128 | 18.0244.0046 | Chụp cắt lớp vi tính bụng-tiểu khung thường quy (từ ≥ 256 dãy) [có thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+129 | 18.0244.0047 | Chụp cắt lớp vi tính bụng-tiểu khung thường quy (từ ≥ 256 dãy) | 532.000 |
+130 | 18.0246.0046 | Chụp cắt lớp vi tính hệ tiết niệu thường quy (từ ≥ 256 dãy) [có thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+131 | 18.0246.0047 | Chụp cắt lớp vi tính hệ tiết niệu thường quy (từ ≥ 256 dãy) | 532.000 |
+132 | 18.0247.0046 | Chụp cắt lớp vi tính tầng trên ổ bụng có khảo sát mạch các tạng (bao gồm mạch: gan, tụy, lách và mạch khối u) (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+133 | 18.0248.0046 | Chụp cắt lớp vi tính hệ tiết niệu có khảo sát mạch thận và/hoặc dựng hình đường bài xuất (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+134 | 18.0249.0046 | Chụp cắt lớp vi tính gan có dựng hình đường mật (từ ≥ 256 dãy) [có thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+135 | 18.0250.0046 | Chụp cắt lớp vi tính tạng khảo sát huyết động học khối u (CT perfusion) (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+136 | 18.0251.0047 | Chụp cắt lớp vi tính ruột non (entero-scan) không dùng sonde (từ ≥ 256 dãy) | 532.000 |
+137 | 18.0252.0046 | Chụp cắt lớp vi tính ruột non (entero-scan) có dùng sonde (từ ≥ 256 dãy) [có thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+138 | 18.0253.0046 | Chụp cắt lớp vi tính đại tràng (colo-scan) dùng dịch hoặc hơi có nội soi ảo (từ ≥ 256 dãy) [có thuốc cản quang] | 643.000 | Chưa bao gồm thuốc cản quang.
+139 | 18.0254.0046 | Chụp cắt lớp vi tính động mạch chủ-chậu (từ ≥ 256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+140 | 18.0282.0047 | Chụp cắt lớp vi tính cột sống cổ không tiêm thuốc cản quang (từ ≥256 dãy) | 532.000 |
+141 | 18.0283.0046 | Chụp cắt lớp vi tính cột sống cổ có tiêm thuốc cản quang (từ ≥256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+142 | 18.0284.0047 | Chụp cắt lớp vi tính cột sống ngực không tiêm thuốc cản quang (từ ≥256 dãy) | 532.000 |
+143 | 18.0285.0046 | Chụp cắt lớp vi tính cột sống ngực có tiêm thuốc cản quang (từ ≥256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+144 | 18.0286.0047 | Chụp cắt lớp vi tính cột sống thắt lưng không tiêm thuốc cản quang (từ ≥256 dãy) | 532.000 |
+145 | 18.0287.0046 | Chụp cắt lớp vi tính cột sống thắt lưng có tiêm thuốc cản quang (từ ≥256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+146 | 18.0288.0047 | Chụp cắt lớp vi tính khớp thường quy không tiêm thuốc cản quang (từ ≥256 dãy) | 532.000 |
+147 | 18.0289.0046 | Chụp cắt lớp vi tính khớp thường quy có tiêm thuốc cản quang (từ ≥256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+148 | 18.0290.0046 | Chụp cắt lớp vi tính khớp có tiêm thuốc cản quang vào ổ khớp (từ ≥256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+149 | 18.0291.0047 | Chụp cắt lớp vi tính xương chi không tiêm thuốc cản quang (từ ≥256 dãy) | 532.000 |
+150 | 18.0292.0046 | Chụp cắt lớp vi tính xương chi có tiêm thuốc cản quang (từ ≥256 dãy) | 643.000 | Chưa bao gồm thuốc cản quang.
+151 | 18.0293.0048 | Chụp cắt lớp vi tính tầm soát toàn thân (từ ≥256 dãy) [có thuốc cản quang] [đánh giá các giai đoạn của u hoặc đa chấn thương] | 3.467.000 | Chưa bao gồm thuốc cản quang.
+152 | 18.0293.0049 | Chụp cắt lớp vi tính tầm soát toàn thân (từ ≥256 dãy) [đánh giá các giai đoạn của u hoặc đa chấn thương] | 3.154.000 |
+153 | 18.0294.0046 | Chụp cắt lớp vi tính mạch máu chi trên (từ ≥256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+154 | 18.0295.0046 | Chụp cắt lớp vi tính mạch máu chi dưới (từ ≥256 dãy) | 1.712.000 | Chưa bao gồm thuốc cản quang.
+
+===================================================================
+6. BẢNG GIÁ BẢO HIỂM Y TẾ - CAN THIỆP TIM MẠCH
+===================================================================
+STT | Mã tương đương | DỊCH VỤ KỸ THUẬT | GIÁ BHYT CHI TRẢ TỐI ĐA | GHI CHÚ
+1 | 18.0501.0052 | Chụp động mạch não số hóa xóa nền (DSA) | 5.686.000 |
+2 | 18.0503.0052 | Chụp động mạch chủ số hóa xóa nền (DSA) | 5.686.000 |
+3 | 18.0504.0052 | Chụp động mạch chậu số hóa xóa nền (DSA) | 5.686.000 |
+4 | 18.0505.0052 | Chụp động mạch chi (trên, dưới) số hóa xóa nền (DSA) | 5.686.000 |
+5 | 18.0506.0052 | Chụp động mạch phổi số hóa xóa nền (DSA) | 5.686.000 |
+6 | 18.0509.0052 | Chụp động mạch tạng (gan, lách, thận, tử cung, sinh dục..) số hóa xóa nền (DSA) | 5.686.000 |
+7 | 18.0511.0052 | Chụp tĩnh mạch số hóa xóa nền (DSA) | 5.686.000 |
+8 | 18.0514.0052 | Chụp tĩnh mạch chi số hóa xóa nền (DSA) | 5.686.000 |
+9 | 18.0515.0052 | Chụp động mạch các loại chọc kim trực tiếp số hóa xóa nền (DSA) | 5.686.000 |
+10 | 18.0516.0055 | Chụp và can thiệp mạch chủ ngực số hóa xóa nền | 9.176.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp: bóng nong, bộ bơm áp lực, stent, keo nút mạch, các vật liệu nút mạch, các vi ống thông, vi dây dẫn, các vòng xoắn kim loại.
+11 | 18.0517.0055 | Chụp và can thiệp mạch chủ bụng số hóa xóa nền | 9.176.000 | (như trên)
+12 | 18.0518.0055 | Chụp, nong động mạch chi (trên, dưới) số hóa xóa nền | 9.176.000 | (như trên)
+13 | 18.0519.0055 | Chụp, nong và đặt Stent động mạch chi (trên, dưới) số hóa xóa nền | 9.176.000 | (như trên)
+14 | 18.0520.0055 | Chụp và nút mạch dị dạng mạch chi (trên, dưới) số hóa xóa nền | 9.176.000 | (như trên)
+15 | 18.0522.0055 | Chụp và can thiệp tĩnh mạch chi (trên, dưới) số hóa xóa nền | 9.176.000 | (như trên)
+16 | 18.0525.0055 | Chụp và điều trị lấy huyết khối qua ống thông điều trị tắc mạch chi số hóa xóa nền | 9.176.000 | (như trên)
+17 | 18.0543.0058 | Chụp, nong và đặt Stent động mạch thận số hóa xóa nền | 9.226.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp (bóng nong, bộ bơm áp lực, stent, keo nút mạch, các vật liệu nút mạch, các vi ống thông, vi dây dẫn, các vòng xoắn kim loại).
+18 | 18.0562.0057 | Chụp, nong và đặt stent điều trị hẹp động mạch ngoài sọ (mạch cảnh, đốt sống) số hóa xóa nền | 9.776.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp (bóng nong, bộ bơm áp lực, stent, keo nút mạch, các vật liệu nút mạch, các vi ống thông, vi dây dẫn, các vòng xoắn kim loại, dụng cụ lấy dị vật, hút huyết khối).
+19 | 18.0564.0057 | Chụp, nong và đặt Stent điều trị hẹp động mạch nội sọ số hóa xóa nền | 9.776.000 | (như trên)
+20 | 18.0566.0057 | Chụp và can thiệp lấy huyết khối động mạch não số hóa xóa nền | 9.776.000 | (như trên)
+21 | 18.0657.0053 | Chụp động mạch vành | 6.026.000 |
+22 | 18.0658.0054 | Chụp, nong động mạch vành bằng bóng | 6.926.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp: bóng nong, stent, các vật liệu nút mạch, các loại ống thông hoặc vi ống thông, các loại dây dẫn hoặc vi dây dẫn, các vòng xoắn kim loại, dụng cụ lấy dị vật, bộ dụng cụ lấy huyết khối, bộ dụng cụ bít (bộ thả dù, dù các loại).
+23 | 18.0659.0054 | Chụp, nong và đặt stent động mạch vành | 6.926.000 | (như trên)
+24 | 18.0662.0054 | Nong van hai lá [dưới DSA] | 6.926.000 | (như trên)
+25 | 18.0663.0054 | Nong van động mạch chủ [dưới DSA] | 6.926.000 | (như trên)
+26 | 18.0664.0054 | Nong van động mạch phổi [dưới DSA] | 6.926.000 | (như trên)
+27 | 18.0665.0054 | Bít thông liên nhĩ [dưới DSA] | 6.926.000 | (như trên)
+28 | 18.0666.0054 | Bít thông liên thất [dưới DSA] | 6.926.000 | (như trên)
+29 | 18.0667.0054 | Bít ống động mạch [dưới DSA] | 6.926.000 | (như trên)
+30 | 18.0669.0391 | Đặt máy tạo nhịp | 1.718.000 | Chưa bao gồm máy tạo nhịp, máy phá rung.
+31 | 18.0670.0391 | Đặt máy tạo nhịp phá rung | 1.718.000 | Chưa bao gồm máy tạo nhịp, máy phá rung.
+32 | 18.0671.1816 | Thăm dò điện sinh lý trong buồng tim | 1.997.000 | Chưa bao gồm bộ dụng cụ thăm dò điện sinh lý tim.
+33 | 18.0672.0055 | Chụp nong động mạch ngoại biên bằng bóng [dưới DSA] | 9.176.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp: bóng nong, bộ bơm áp lực, stent, keo nút mạch, các vật liệu nút mạch, các vi ống thông, vi dây dẫn, các vòng xoắn kim loại.
+34 | 18.0675.0055 | Đặt stent động mạch chủ [dưới DSA] | 9.176.000 | (như trên)
+35 | 18.0681.0058 | Chụp và nút mạch điều trị phì đại lành tính tuyến tiền liệt | 9.226.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp: bóng nong, bộ bơm áp lực, stent, các vật liệu nút mạch, các vi ống thông, vi dây dẫn, các vòng xoắn kim loại.
+36 | 02.0118.0009 | Siêu âm trong lòng mạch vành (iVUS) | 2.023.000 | Chưa bao gồm bộ đầu dò siêu âm, bộ dụng cụ đo dự trữ lưu lượng động mạch vành và các dụng cụ để đưa vào lòng mạch.
+37 | 03.2310.0054 | Khoan các tổn thương vôi hóa ở động mạch | 6.926.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp: bóng nong, stent, các vật liệu nút mạch, các loại ống thông hoặc vi ống thông, các loại dây dẫn hoặc vi dây dẫn, các vòng xoắn kim loại, dụng cụ lấy dị vật, bộ dụng cụ lấy huyết khối, bộ dụng cụ bít (bộ thả dù, dù các loại).
+38 | 02.0088.0107 | Điều trị suy tĩnh mạch bằng Laser nội mạch | 2.073.000 | Chưa bao gồm bộ dụng cụ mở mạch máu và ống thông điều trị laser.
+39 | 02.0089.0108 | Điều trị suy tĩnh mạch bằng năng lượng sóng tần số radio | 1.973.000 | Chưa bao gồm bộ dụng cụ mở mạch máu và ống thông điều trị RF.
+40 | 02.0092.0054 | Đóng các lỗ rò động mạch, tĩnh mạch | 6.926.000 | Chưa bao gồm vật tư chuyên dụng dùng để can thiệp: bóng nong, stent, các vật liệu nút mạch, các loại ống thông hoặc vi ống thông, các loại dây dẫn hoặc vi dây dẫn, các vòng xoắn kim loại, dụng cụ lấy dị vật, bộ dụng cụ lấy huyết khối, bộ dụng cụ bít (bộ thả dù, dù các loại).
+41 | 02.0464.0391 | Thay máy tạo nhịp tim, cập nhật máy tạo nhịp tim | 1.718.000 | Chưa bao gồm máy tạo nhịp, máy phá rung.
+
+===================================================================
+Ghi chú: Bảng giá BHYT áp dụng theo Thông tư số 22/2023/TT-BYT của Bộ Y tế hiện hành.
+Đơn vị tính: VNĐ
+===================================================================

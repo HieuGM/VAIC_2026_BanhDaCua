@@ -13,6 +13,7 @@ docs/
 ├── 00-team-working-guide.md         ← BẠN ĐANG ĐỌC (vận hành)
 ├── 00-competition-rubric-and-principles.md  ← tiêu chí chấm điểm (100đ)
 ├── 00-hospital-domain-rules.md      ← nghiệp vụ BV + 10 domain rule (R1–R10)
+├── 00-data-strategy.md              ← KB vs DB + map nguồn data + data còn thiếu
 ├── brainstorming.md                 ← nháp + danh sách VERIFY (chưa chốt)
 ├── 01-project-overview.md           ← tầm nhìn, scope, stack, team, metrics
 ├── 02-business-analysis.md          ← actor, use case, domain model
