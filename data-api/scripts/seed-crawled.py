@@ -99,12 +99,28 @@ def emit_departments() -> int:
 def emit_doctors() -> int:
     docs = json_or_die(CRAWLED / "doctors.json")
     deps = json_or_die(CRAWLED / "departments.json")
-    # Build name→code map for departments (normalize diacritics).
+
+    def norm_dept(s: str | None) -> str:
+        # Canonicalize a department label for matching crawled doctor department
+        # strings against department names. Reconciles three real inconsistencies
+        # between the official "lich lam viec bac sy" page and the departments
+        # page (both authoritative): (1) Vietnamese 'đ' is NOT decomposed by
+        # NFKD, so force 'd'; (2) synonym "Khu"/"Khoa" for the same clinical
+        # unit; (3) parenthetical qualifiers like "(Kham TN muc 3)". This is
+        # label reconciliation only — no value invented.
+        if not s:
+            return ""
+        s = re.sub(r"\([^)]*\)", " ", s)             # drop parentheticals
+        nfkd = unicodedata.normalize("NFKD", s)
+        plain = "".join(c for c in nfkd if not unicodedata.combining(c))
+        plain = plain.lower().replace("đ", "d")       # NFKD does not split 'đ'
+        plain = re.sub(r"\bkhu\b", "khoa", plain)     # unify synonym (same unit)
+        return re.sub(r"\s+", " ", plain).strip(" -")
+
+    # Build normalized name -> code index for departments.
     dept_name_to_code: dict[str, str] = {}
     for d in deps:
-        nfkd = unicodedata.normalize("NFKD", d["name"])
-        norm = re.sub(r"\s+", " ", "".join(c for c in nfkd if not unicodedata.combining(c)).lower()).strip()
-        dept_name_to_code[norm] = d["code"]
+        dept_name_to_code[norm_dept(d["name"])] = d["code"]
 
     # Build canonical list, deduping by normalized name; preserve richest record.
     by_key: dict[str, dict] = {}
@@ -117,12 +133,15 @@ def emit_doctors() -> int:
     def dept_code_from_name(dept_str: str | None) -> str | None:
         if not dept_str:
             return None
-        # crawled department field may be "Ban Giám đốc / Khoa Khám bệnh Tự nguyện 1"
-        # — take the LAST segment after "/" which usually holds the clinical unit.
-        last = dept_str.split("/")[-1].strip()
-        nfkd = unicodedata.normalize("NFKD", last)
-        norm = re.sub(r"\s+", " ", "".join(c for c in nfkd if not unicodedata.combining(c)).lower()).strip()
-        return dept_name_to_code.get(norm)
+        # crawled department may be compound, e.g.
+        # "Ban Giám đốc / Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1".
+        # Try the whole string, then each "/" segment, until one resolves.
+        norm = norm_dept(dept_str)
+        candidates = [norm] + [seg.strip() for seg in norm.split("/") if seg.strip()]
+        for cand in candidates:
+            if cand and cand in dept_name_to_code:
+                return dept_name_to_code[cand]
+        return None
 
     for d in docs:
         key = norm_name(d.get("fullName", ""))
@@ -134,6 +153,7 @@ def emit_doctors() -> int:
                 "fullName": d["fullName"],
                 "degree": d.get("degree") or "",
                 "title": d.get("title"),
+                "specialty": d.get("specialty"),
                 "bio": d.get("bio"),
                 "department": d.get("department"),
                 "sourceUrl": d.get("sourceUrl"),
@@ -145,6 +165,8 @@ def emit_doctors() -> int:
                 cur["degree"] = d["degree"]
             if not cur["title"] and d.get("title"):
                 cur["title"] = d["title"]
+            if not cur.get("specialty") and d.get("specialty"):
+                cur["specialty"] = d["specialty"]
             if not cur["bio"] and d.get("bio"):
                 cur["bio"] = d["bio"]
             if not cur["sourceUrl"] and d.get("sourceUrl"):
@@ -163,6 +185,7 @@ def emit_doctors() -> int:
             "fullName": e["fullName"],
             "degree": e.get("degree") or "",
             "title": None,
+            "specialty": None,
             "bio": None,
             "department": None,
             "sourceUrl": None,
@@ -175,6 +198,9 @@ def emit_doctors() -> int:
         "-- V3__seed_doctors.sql",
         "-- Sources: data/seed/crawled/doctors.json (authoritative) + schedule-only",
         "--          doctors parsed from raw schedule (not in crawled roster).",
+        "-- specialty: crawled chuyên ngành (Tim mạch, Tim mạch can thiệp, ...).",
+        "-- department_id: resolved from crawled dept string via label reconciliation",
+        "--   (đ→d, Khu=Khoa synonym, try each compound segment). See seed-crawled.py.",
         "-- No bio/avatar fabricated (R1). schedule-derived records flagged.",
         "-- =====================================================================",
         "",
@@ -209,10 +235,11 @@ def emit_doctors() -> int:
             dept_id_sql = f"(SELECT id FROM hospital.departments WHERE code = '{mapped}')"
         out.append(
             "INSERT INTO hospital.doctors "
-            "(code, full_name, degree, title, department_id, bio, avatar_url, is_active) "
+            "(code, full_name, degree, specialty, title, department_id, bio, avatar_url, is_active) "
             "VALUES ("
             f"{sql_escape(d['code'])}, {sql_escape(d['fullName'])}, "
-            f"{sql_escape(d['degree'])}, {sql_escape(d['title'])}, "
+            f"{sql_escape(d['degree'])}, {sql_escape(d.get('specialty'))}, "
+            f"{sql_escape(d['title'])}, "
             f"{dept_id_sql}, "
             f"{sql_escape(d['bio'])}, NULL, TRUE) "
             "ON CONFLICT (code) DO NOTHING;"

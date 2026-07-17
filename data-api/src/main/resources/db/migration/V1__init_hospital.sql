@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS hospital.doctors (
     code          VARCHAR(128) NOT NULL UNIQUE,
     full_name     TEXT         NOT NULL,
     degree        VARCHAR(16),
+    specialty     TEXT,
     title         TEXT,
     department_id BIGINT REFERENCES hospital.departments (id),
     bio           TEXT,
