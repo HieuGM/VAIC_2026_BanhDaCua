@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     openai_api_key: str | None = None
     openai_base_url: str | None = None
     llm_request_timeout_seconds: float = 20
+    use_llm_router: bool = True
+    llm_router_min_confidence: float = 0.65
+    llm_router_timeout_seconds: float = 10
+    model_route: str | None = None
 
     fhir_base_url: str = "http://localhost:8080/fhir"
     fhir_request_timeout_seconds: float = 20

@@ -1,7 +1,12 @@
 from core.state import ChatState
+from fhir.formatter import generate_fhir_answer
 
 
 async def generate_grounded_answer(state: ChatState) -> str:
+    fhir_answer = generate_fhir_answer(state)
+    if fhir_answer:
+        return fhir_answer
+
     evidence = state.get("evidence") or []
     if not evidence:
         return (
