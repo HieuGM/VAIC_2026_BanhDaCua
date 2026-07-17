@@ -1,0 +1,263 @@
+[
+  {
+    "code": "kham-benh-tu-nguyen",
+    "name": "Khoa Khám bệnh (Tự nguyện)",
+    "description": "Khoa lâm sàng. Tiếp nhận khám ngoại trú khu Tự nguyện 1, 2 (CS1) và Tự nguyện (CS2). Bao gồm Đơn nguyên Khám và điều trị tự nguyện. Đặt lịch hẹn trước qua hotline/website/Zalo Mini App.",
+    "workingHours": "TN1/TN2 CS1: 7:00-16:30 (Thứ 2-Thứ 7), Chủ nhật theo lịch bác sĩ trực. TN CS2: 7:00-16:30.",
+    "phone": "19001082",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "kham-benh-tu-nguyen-1",
+    "name": "Khu Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "description": "Khu Khám bệnh Tự nguyện 1 tại CS1 (92 Trần Hưng Đạo). Từ 8 phòng khám chính + phòng tăng cường. Lịch khám công bố công khai trên trang 'Lịch làm việc của Bác sỹ'.",
+    "floor": "Tầng 1 (Khu TN1), Tầng 2 (cận lâm sàng cho TN1)",
+    "workingHours": "7:00/7:30 - 16:00/16:30 (Thứ 2-Thứ 7)",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "code": "kham-benh-tu-nguyen-3",
+    "name": "Khu Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "description": "Khu Khám bệnh Tự nguyện 3 tại CS1. 9 phòng khám + 2 phòng tăng cường.",
+    "workingHours": "6:30/7:30 - 16:30 (Thứ 2-Thứ 7)",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-noi",
+    "name": "Khoa Nội",
+    "description": "Khoa lâm sàng. Chẩn đoán, điều trị nội khoa Tim mạch - chuyển hóa.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-noi-nhi",
+    "name": "Khoa Nội Nhi",
+    "description": "Khoa lâm sàng. Tim mạch nhi - điều trị nội trú nhi.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-tim-mach-chuyen-hoa",
+    "name": "Khoa Tim mạch chuyển hóa",
+    "description": "Khoa lâm sàng. Khám và điều trị đái tháo đường, rối loạn mỡ máu, quản lý bệnh mạn tính, điều trị bàn chân đái tháo đường.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-hoi-suc-tich-cuc-nhi",
+    "name": "Khoa Hồi sức tích cực Nhi",
+    "description": "Khoa lâm sàng. Đơn vị hồi sức tích cực nhi với 12 giường bệnh.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-gay-me-hoi-suc",
+    "name": "Khoa Gây mê hồi sức",
+    "description": "Khoa lâm sàng. Gây mê hồi sức cho phẫu thuật tim mạch.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-hoi-suc-tich-cuc",
+    "name": "Khoa Hồi sức tích cực",
+    "description": "Khoa lâm sàng. Hồi sức tích cực người lớn.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-ngoai",
+    "name": "Khoa Ngoại",
+    "description": "Khoa lâm sàng. Phẫu thuật tim mạch (tim bẩm sinh phức tạp, tim mắc phải, mạch máu ngoại vi).",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-tim-mach-can-thiep",
+    "name": "Khoa Tim mạch can thiệp",
+    "description": "Khoa lâm sàng. Can thiệp ĐMC vành, nong van hai lá, stent graft ĐMC chủ, thay van ĐMC qua da (TAVI), điện sinh lý tim, đặt máy tạo nhịp/CRT/ICD, RF. Đơn vị chăm sóc mạch vành. 3 phòng Cathlab.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-cap-cuu",
+    "name": "Khoa Cấp cứu",
+    "description": "Khoa lâm sàng. Tiếp nhận cấp cứu 24/7. Bệnh nhân cần can thiệp cấp cứu được thực hiện trong vòng 1 tiếng từ khi đến bệnh viện.",
+    "workingHours": "24/7",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-cac-benh-mach-mau",
+    "name": "Khoa Các bệnh mạch máu",
+    "description": "Khoa lâm sàng. Phồng động mạch chủ bụng, hẹp động mạch cảnh, bệnh lý mạch máu các chi.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-xet-nghiem",
+    "name": "Khoa Xét nghiệm",
+    "description": "Khoa cận lâm sàng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-duoc",
+    "name": "Khoa Dược",
+    "description": "Khoa cận lâm sàng. Bao gồm nhà thuốc dịch vụ và quầy thuốc bảo hiểm.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-kiem-soat-nhiem-khuan",
+    "name": "Khoa Kiểm soát nhiễm khuẩn",
+    "description": "Khoa cận lâm sàng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-chan-doan-hinh-anh",
+    "name": "Khoa Chẩn đoán hình ảnh",
+    "description": "Khoa cận lâm sàng. MSCT 128 dãy, MRI 1.5 Tesla, 25 máy siêu âm tim (4D). Đơn nguyên Chẩn đoán hình ảnh kỹ thuật cao.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-dinh-duong",
+    "name": "Khoa Dinh dưỡng",
+    "description": "Khoa cận lâm sàng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "khoa-dieu-tri-ban-ngay",
+    "name": "Khoa Điều trị ban ngày",
+    "description": "Khoa điều trị ngoại trú ban ngày. Tiếp nhận bệnh nhân chuyển từ phòng khám theo chỉ định bác sĩ.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "medium"
+  },
+  {
+    "code": "don-vien-kham-dieu-tri-tu-nguyen",
+    "name": "Đơn nguyên Khám và điều trị tự nguyện",
+    "description": "Đơn nguyên thuộc nhóm lâm sàng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "don-vien-dien-sinh-ly-roi-loan-nhit",
+    "name": "Đơn nguyên Thăm dò điện sinh lý và rối loạn nhịp",
+    "description": "Đơn nguyên lâm sàng. Đặt máy tạo nhịp, CRT, ICD, RF.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "don-vien-so-sinh",
+    "name": "Đơn nguyên Sơ sinh",
+    "description": "Đơn nguyên sơ sinh.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "don-vien-tim-mach-can-thiep-cs2",
+    "name": "Đơn nguyên Tim mạch can thiệp cơ sở 2",
+    "description": "Đơn nguyên can thiệp tim mạch tại CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "don-vien-can-thiep-tinh-mach",
+    "name": "Đơn nguyên Can thiệp tĩnh mạch",
+    "description": "Đơn nguyên can thiệp tĩnh mạch.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "don-vien-chan-doan-hinh-anh-ky-thuat-cao",
+    "name": "Đơn nguyên Chẩn đoán hình ảnh kỹ thuật cao",
+    "description": "Đơn nguyên chẩn đoán hình ảnh kỹ thuật cao.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-kham-da-khoa-cs2",
+    "name": "Phòng khám đa khoa - Cơ sở 2",
+    "description": "Phòng khám đa khoa tại CS2 (695 Lạc Long Quân). Chuyên khoa: Tim mạch, Nhi khoa, Mắt, Tai mũi họng, Răng hàm mặt, Hô hấp, Cơ xương khớp, Y học cổ truyền, Phục hồi chức năng, Sản, Da liễu.",
+    "workingHours": "7:30-16:30 (Thứ 2-Thứ 6, một số khoa nghỉ Thứ 7-CN)",
+    "phone": "02437589090, 0961972097",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "trung-tam-dao-tao-chi-dao-tuyen",
+    "name": "Trung tâm Đào tạo và Chỉ đạo tuyến",
+    "description": "Trung tâm đào tạo, chỉ đạo tuyến và chuyển giao kỹ thuật.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-ke-hoach-tong-hop",
+    "name": "Phòng Kế hoạch tổng hợp",
+    "description": "Phòng chức năng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-to-chuc-can-bo",
+    "name": "Phòng Tổ chức cán bộ",
+    "description": "Phòng chức năng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-hanh-chinh-quan-tri",
+    "name": "Phòng Hành chính quản trị",
+    "description": "Phòng chức năng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-vat-tu-thiet-bi-y-te",
+    "name": "Phòng Vật tư - Thiết bị y tế",
+    "description": "Phòng chức năng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-cong-nghe-thong-tin",
+    "name": "Phòng Công nghệ thông tin",
+    "description": "Phòng chức năng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-tai-chinh-ke-toan",
+    "name": "Phòng Tài chính kế toán",
+    "description": "Phòng chức năng. Thu phí, duyệt BHYT, đồng chi trả.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-cong-tac-xa-hoi",
+    "name": "Phòng Công tác xã hội",
+    "description": "Phòng chức năng. Tổ chăm sóc khách hàng, tư vấn đặt lịch. Điện thoại 02439425880.",
+    "phone": "02439425880",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-dieu-duong",
+    "name": "Phòng Điều dưỡng",
+    "description": "Phòng chức năng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  },
+  {
+    "code": "phong-quan-ly-chat-luong-benh-vien",
+    "name": "Phòng Quản lý chất lượng Bệnh viện",
+    "description": "Phòng chức năng. ISO 9001:2008.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "high"
+  }
+]

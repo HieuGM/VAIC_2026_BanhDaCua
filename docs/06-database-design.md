@@ -95,7 +95,7 @@ erDiagram
 
 ```
 FastAPI ──▶ HospitalDataProvider (interface)
-              ├─ DemoHospitalDataProvider  ──REST──▶ Spring Boot /api/v1/* ──▶ PG (hospital)
+              ├─ DemoHospitalDataProvider  ──REST──▶ Spring Boot /data/v1/* ──▶ PG (hospital)
               └─ HisHospitalDataProvider   ──▶ Hospital HIS API (prod)
 ```
 - Interface ổn định; demo/prod swap qua env `DATA_PROVIDER=demo|his`.

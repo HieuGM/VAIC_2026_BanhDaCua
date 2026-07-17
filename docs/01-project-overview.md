@@ -63,7 +63,7 @@ Chatbot web (text + ASR/TTS tiếng Việt *bonus*) trên kiến trúc **RAG gro
 | Framework | **Java 21 + Spring Boot 3** (Spring Web/Data JPA) |
 | DB | **PostgreSQL** (schema `hospital`) |
 | Migration | Flyway (`V1__init` + `V2__seed`) |
-| API | REST `/api/v1/*` (departments, doctors, schedules, services, prices, bhyt, procedures, kb/articles, faqs, channels, emergency, appointment-slots mock) |
+| API | REST `/data/v1/*` (departments, doctors, schedules, services, prices, bhyt, procedures, channels, appointment-slots mock) — khớp contract `07-api-design`; kb/articles·faqs·emergency thuộc scope AI team (xem `07` §B.3) |
 | Seed | `data/seed/*.json|csv` loader (`SPRING_PROFILES=seed`) |
 | Deploy | Docker (cùng compose với api/qdrant/caddy) |
 

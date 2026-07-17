@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: hanoi-heart-postgres
+    environment:
+      POSTGRES_DB: ${DB:-hanoi_heart}
+      POSTGRES_USER: ${DB_USER:-hanoiheart}
+      POSTGRES_PASSWORD: ${DB_PASS:-hanoiheart}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-hanoiheart} -d ${DB:-hanoi_heart}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  data-api:
+    build:
+      context: ./data-api
+    container_name: hanoi-heart-data-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB: ${DB:-hanoi_heart}
+      DB_USER: ${DB_USER:-hanoiheart}
+      DB_PASS: ${DB_PASS:-hanoiheart}
+      SERVER_PORT: 8081
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
+    ports:
+      - "8081:8081"
+
+volumes:
+  pgdata:
