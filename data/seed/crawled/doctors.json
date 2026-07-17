@@ -1,0 +1,572 @@
+[
+  {
+    "fullName": "Nguyễn Sinh Hiền",
+    "degree": "PGS.TS.BS",
+    "title": "Giám đốc Bệnh viện",
+    "department": "Ban Giám đốc",
+    "specialty": "Tim mạch",
+    "bio": "PGS.TS.BS Nguyễn Sinh Hiền - thành viên Ban lãnh đạo hiển thị trên trang 'Ban lãnh đạo'. Là người phê duyệt QT.25.01 (Quy trình đón tiếp bệnh nhân khu TN1-CS1) với vai trò Giám đốc.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/ban-lanh-dao",
+    "confidence": "medium",
+    "notes": "Trang ban-lanh-dao chỉ hiển thị tên, không hiển thị chức danh bằng văn bản. Chức danh 'Giám đốc' được suy ra từ chữ ký phê duyệt QT.25.01 (dữ liệu nội bộ, không phải trang công khai)."
+  },
+  {
+    "fullName": "Vũ Quỳnh Nga",
+    "degree": "TS.BS",
+    "title": null,
+    "department": "Ban Giám đốc / Khoa Khám bệnh Tự nguyện 1",
+    "specialty": "Tim mạch",
+    "bio": "Thành viên Ban lãnh đạo hiển thị trên trang 'Ban lãnh đạo'. Cũng trực phòng khám số 2 khu TN1-CS1 trong lịch khám.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/ban-lanh-dao",
+    "confidence": "medium"
+  },
+  {
+    "fullName": "Phạm Như Hùng",
+    "degree": "TS.BS",
+    "title": null,
+    "department": "Ban Giám đốc / Khoa Khám bệnh Tự nguyện 1",
+    "specialty": "Tim mạch",
+    "bio": "Thành viên Ban lãnh đạo hiển thị trên trang 'Ban lãnh đạo'. Trực phòng khám số 1 khu TN1-CS1 trong lịch khám.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/ban-lanh-dao",
+    "confidence": "medium"
+  },
+  {
+    "fullName": "Hoàng Văn",
+    "degree": "TS.BS",
+    "title": "Phó Giám đốc Bệnh viện",
+    "department": "Ban Giám đốc / Khoa Tim mạch can thiệp",
+    "specialty": "Tim mạch can thiệp",
+    "bio": "Trang 'Giới thiệu chung' mô tả: 'TS.BS Hoàng Văn – Phó Giám đốc Bệnh viện, chuyên gia hàng đầu về can thiệp tim mạch cùng đội ngũ chuyên gia giỏi nhất trong lĩnh vực tim mạch can thiệp thực hiện.' Cũng trực phòng khám số 4 khu TN1-CS1.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vn/cong/thong-tin/gioi-thieu-chung",
+    "confidence": "medium"
+  },
+  {
+    "fullName": "Phạm Như Hùng",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám số 1 khu TN1-CS1 (7:30-16:30).",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Ngọc Dũng",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Vũ Quỳnh Nga",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám số 2 khu TN1-CS1.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Sinh Cường",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Bùi Thị Thanh Hà",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Xuân Tuấn",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Đinh Quang Huy",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Hoàng Văn",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch can thiệp",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Hà Mai Hương",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phạm Thị An",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Quỳnh Trang",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Thị Ngọc Lan",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Xuân Tú",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Văn Dần",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Việt Nga",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Ngô Văn Thanh",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Thị An",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Vũ Thị Trang",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Thu Thủy",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phạm Quang Huy",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Văn Thực",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện 1 / Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Đăng Dương",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 1 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Võ Thị Ngọc Anh",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Danh Sen",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lê Thế Kiên",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Thị Thanh Hà",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thế Nam Huy",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Đinh Hải Nam",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phạm Đăng Anh",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Toàn Thắng",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Đắc Long",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Quốc Hùng",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Đào Thị Thu Hà",
+    "degree": "BSCKI",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Thanh Hoa",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Đình Hồng Phúc",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lê Thị Thảo",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Minh Nguyệt",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Phương Liên",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Hoàng Minh Lợi",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Đỗ Thị Vân Anh",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phạm Văn Tùng",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Mai Hương",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lê Quang Huy",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Ngọc Tân",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Chu Thị Hằng",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phạm Thị Hoa",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Trung Hiếu",
+    "degree": "BSCKI",
+    "department": "Khoa Khám bệnh Tự nguyện 3 - Cơ sở 1",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lê Thị Hoài Thu",
+    "degree": "BSCKII",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám 306 CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Duy Chinh",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám 309 CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Thị Linh Tú",
+    "degree": "TS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám 308 CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Đình Phúc",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2 (Khám TN mức 3)",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám TN mức 3 thứ 7 CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lê Thuý Ngọc",
+    "degree": "ThS.BS",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2",
+    "specialty": "Tim mạch",
+    "bio": "Trực phòng khám 311 CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phan Thành Nam",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2 (Khám TN mức 3)",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lê Thanh Nam",
+    "degree": "BS",
+    "department": "Khoa Khám bệnh Tự nguyện - Cơ sở 2 (Khám TN mức 3)",
+    "specialty": "Tim mạch",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thanh Trà",
+    "degree": "BS",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Răng Hàm Mặt",
+    "bio": "Trực phòng RHM (P401) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Trần Thị Quỳnh Nga",
+    "degree": "BSNT",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Phục hồi chức năng",
+    "bio": "Trực phòng PHCN (P401) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Linh Thế Cường",
+    "degree": "ThS.BS",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Tai Mũi Họng",
+    "bio": "Trực phòng TMH (P402) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Dương Thị Thúy Nga",
+    "degree": "ThS.BS",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Nhi khoa",
+    "bio": "Trực phòng PK Nhi (P402) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Minh Hoa",
+    "degree": "ThS.BS",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Da liễu",
+    "bio": "Trực phòng Da liễu (P403) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Tuyết Mai",
+    "degree": "BSCKII",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Sản - Phụ khoa",
+    "bio": "Trực phòng Sản (P403) CS2, sáng.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Thuận",
+    "degree": "BSNT",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Y học cổ truyền",
+    "bio": "Trực phòng YHCT (P404) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Lại Thị Bạch Yến",
+    "degree": "ThS.BS",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Nội chung - Hô hấp",
+    "bio": "Trực phòng P405.A CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Phạm Thị Oanh",
+    "degree": "ThS.BSNT",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Nội chung - Cơ xương khớp",
+    "bio": "Trực phòng P405.B CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  },
+  {
+    "fullName": "Nguyễn Thị Huyền",
+    "degree": "BSCKI",
+    "department": "Phòng khám đa khoa - Cơ sở 2",
+    "specialty": "Mắt",
+    "bio": "Trực phòng Mắt (P405.D) CS2.",
+    "sourceUrl": "https://benhvientimhanoi.vn/vi/chuyen-de/lich-lam-viec-cua-bac-sy/trang-1",
+    "confidence": "high"
+  }
+]

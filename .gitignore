@@ -25,3 +25,8 @@ dist/
 build/
 .next/
 .venv/
+# === Java/Maven build ===
+target/
+*.class
+pgdata/
+*.log

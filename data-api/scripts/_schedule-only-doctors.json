@@ -1,0 +1,38 @@
+[
+  {
+    "code": "ths-bs-tran-ac-long",
+    "fullName": "ThS. BS Trần Đắc Long",
+    "degree": "",
+    "source": "schedule-derived (not in crawled roster)",
+    "departmentCodes": [
+      "KBTN3_CS1"
+    ]
+  },
+  {
+    "code": "sths-bs-nguyen-inh-hong-phuc",
+    "fullName": "SThS.BS Nguyễn Đình Hồng Phúc",
+    "degree": "",
+    "source": "schedule-derived (not in crawled roster)",
+    "departmentCodes": [
+      "KBTN3_CS1"
+    ]
+  },
+  {
+    "code": "le-thi-kien",
+    "fullName": "Lê Thị Kiến",
+    "degree": "ThS.BS",
+    "source": "schedule-derived (not in crawled roster)",
+    "departmentCodes": [
+      "KBTN3_CS1"
+    ]
+  },
+  {
+    "code": "ths-bsnt-pham-thi-oanh",
+    "fullName": "ThS.BSNT Phạm Thị Oanh",
+    "degree": "",
+    "source": "schedule-derived (not in crawled roster)",
+    "departmentCodes": [
+      "NOI_CXK_CS2"
+    ]
+  }
+]
