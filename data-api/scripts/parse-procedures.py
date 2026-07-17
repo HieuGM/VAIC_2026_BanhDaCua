@@ -44,18 +44,15 @@ STEPS = [
     (8,  "Khám bệnh và kê đơn",
          "Bác sĩ gọi lần lượt theo số khám, thực hiện khám và kê đơn trên phần mềm: khai thác dịch tễ, bệnh sử, triệu chứng cơ năng và thực thể; giải thích tình trạng, chỉ định CLS, kê đơn; hướng dẫn sử dụng thuốc, chế độ ăn uống, tập luyện; thông báo lịch khám lại; in phiếu vào viện/chuyển viện nếu cần (theo HD.25.01).",
          "Bác sĩ tại các phòng khám", None),
-    (9,  "Hẹn khám lại và đóng dấu chương trình",
-         "ĐD kiểm tra đơn thuốc (đủ thuốc, đúng ngày). BN dịch vụ: hướng dẫn tái khám và mua thuốc tại nhà thuốc bệnh viện. BN BHYT: đóng dấu Kiểm soát BHYT; đóng dấu chương trình quản lý bệnh mạn tính hoặc đóng dấu hẹn khám lần 2 + ngày chuyển tuyến tùy hồ sơ ngoại trú.",
-         "Điều dưỡng bàn hẹn khám lại", None),
-    (10, "Thủ tục hành chính",
-         "Nếu BN có chỉ định nhập viện: hướng dẫn và làm thủ tục nhập viện theo quy trình tiếp nhận BN nhập viện điều trị nội trú (QT.25.04). Làm thủ tục chuyển tuyến, cấp giấy nghỉ ốm theo yêu cầu bác sĩ phòng khám và các thủ tục hành chính khác.",
-         "Điều dưỡng viên bàn làm thủ tục hành chính", None),
-    (11, "Duyệt đơn thuốc BHYT và thu phí chênh lệch",
+    (9,  "Hẹn tái khám và hướng dẫn thủ tục hành chính",
+         "ĐD kiểm tra đơn thuốc (đủ thuốc, đúng ngày). BN dịch vụ: hướng dẫn tái khám và mua thuốc tại nhà thuốc bệnh viện. BN BHYT: đóng dấu Kiểm soát BHYT; đóng dấu chương trình quản lý bệnh mạn tính hoặc đóng dấu hẹn khám lần 2 + ngày chuyển tuyến tùy hồ sơ ngoại trú. Nếu có chỉ định nhập viện/chuyển tuyến: hướng dẫn làm thủ tục tương ứng (QT.25.04), cấp giấy nghỉ ốm theo yêu cầu bác sĩ.",
+         "Điều dưỡng bàn khám / Điều dưỡng viên bàn làm thủ tục hành chính", None),
+    (10, "Duyệt đơn thuốc BHYT và thu phí chênh lệch",
          "Kế toán thu tiền đồng chi trả theo mức hưởng của thẻ BHYT và số tiền chênh lệch với đơn thuốc BHYT (nếu có). BN mua thuốc dịch vụ thanh toán tiền thuốc cho kế toán tại quầy thuốc dịch vụ. Đóng dấu đã thu tiền vào đơn thuốc.",
-         "Kế toán", None),
-    (12, "BN lĩnh thuốc / mua thuốc - kết thúc",
+         "Kế toán thuốc", None),
+    (11, "BN lĩnh thuốc / mua thuốc - kết thúc",
          "BN ký tên vào đơn thuốc. Nhân viên quầy thuốc kiểm tra (số lượng tương ứng liều dùng, ngày hẹn khám). Khoa Dược duyệt xuất thuốc BHYT. Phát thuốc theo đơn, đóng dấu đã phát thuốc. BN kết thúc quá trình khám và ra về.",
-         "Nhà thuốc dịch vụ, quầy thuốc bảo hiểm", "BM.25.01.01"),
+         "Nhà dịch vụ, quầy thuốc bảo hiểm", "BM.25.01.01"),
 ]
 
 
@@ -72,7 +69,9 @@ out = [
     "-- =====================================================================",
     "-- V8__seed_procedures.sql",
     "-- MANUALLY CURATED from data/raw/QUY_TRINH_DON_TIEP_BENH_NHAN_KHU_TU_NGUYEN_1_CS1.txt",
-    "-- (raw text has 12 numbered steps; docs/06 says 11 - we seed all 12 from source).",
+    "-- Canonical 11 steps per docs/06-database-design.md §3.3 + docs/refer/Quytrinh.md §V",
+    "-- (11 responsibility rows: step 9 merges 'Hẹn tái khám' + 'Thủ tục hành chính'",
+    "--  which share the same responsible role in the canonical SOP table).",
     "-- =====================================================================",
     "",
     "-- procedures (QT.25.01)",
@@ -87,7 +86,7 @@ for step_no, name, desc, role, form in STEPS:
     )
 
 out.append("")
-out.append(f"-- stats: procedures=12 (QT.25.01)")
+out.append(f"-- stats: procedures=11 (QT.25.01)")
 
 OUT.write_text("\n".join(out) + "\n", encoding="utf-8")
-print(f"OK -> {OUT}  (12 steps)")
+print(f"OK -> {OUT}  (11 steps)")

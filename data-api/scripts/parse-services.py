@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """
-parse-services.py — Parse service + price data from BHYT price table
-(data/raw/banggiaBHYT.txt) and emit V5__seed_services_and_prices.sql.
+parse-services.py — Parse service + price data and emit V5__seed_services_and_prices.sql.
 
-Source: banggiaBHYT.txt is well-structured as `STT | mã | tên | giá | ghi chú`.
-Six categories per the file's own section headers:
-  1. Khám bệnh + ngày giường      -> consultation
-  2. Xét nghiệm                    -> lab
-  3. Thủ thuật & CĐHA              -> procedure
-  4. Chụp cộng hưởng từ (CNT)      -> mri
-  5. Chụp cắt lớp vi tính (CLVT)   -> ct
-  6. Can thiệp tim mạch            -> intervention
+Sources:
+  BHYT ceiling prices:  data/raw/banggiaBHYT.txt        (audience=BHYT)
+  No-BHYT service prices: data/raw/GiaDVBV_tim_HN.txt   (audience=no_bhyt, NQ45/2024)
 
-The BHYT file is used because it has stable codes (mã tương đương) and a single
-audience (BHYT ceiling). The no_bhyt price table (GiaDVBV_tim_HN.txt) lacks
-codes and is harder to match row-for-row; we extract a few high-signal rows
-(Khám bệnh, ngày giường) for audience=no_bhyt to demonstrate both audiences.
+GiaDVBV structure (page-scrambled PDF text, ~24K lines, 200 pages, 4 sections):
+  Section 1 (line ~62):   KHÁM BỆNH VÀ NGÀY GIƯỜNG ĐIỀU TRỊ      -> consultation
+  Section 2 (line ~170):  DỊCH VỤ KỸ THUẬT VÀ XÉT NGHIỆM          -> mixed (code-prefix routed)
+  Section 3 (line ~23791): KHÁM SỨC KHỎE LAO ĐỘNG/LÁI XE         -> consultation (health check)
+  Section 4 (line ~23819): VÔ CẢM GÂY TÊ                          -> procedure
+
+Each entry: STT line -> mã+name (multi-line) -> price CS1 -> price CS2 (optional) -> note.
+We capture: code, name, price CS1, price CS2, section, page-number for confidence tracking.
 """
 from __future__ import annotations
 import re
@@ -30,19 +28,15 @@ OUT = (REPO / "data-api" / "src" / "main" / "resources" / "db" / "migration"
 
 SOURCE_URL = "https://benhvientimhanoi.vn/vn/huong-dan-kham-benh/bang-gia-dich-vu"
 EFFECTIVE_DATE = "2026-07-17"
+NOBHYT_LAW = "Phụ lục 06 NQ 45/2024/NQ-HĐND Hà Nội (10/12/2024)"
 
-CATEGORY_BY_SECTION = {
-    "1": "consultation",   # Khám bệnh + ngày giường
-    "2": "lab",            # Xét nghiệm
-    "3": "procedure",      # Thủ thuật & Chẩn đoán hình ảnh
-    "4": "mri",            # Chụp cộng hưởng từ
-    "5": "ct",             # Chụp cắt lớp vi tính
-    "6": "intervention",   # Can thiệp tim mạch
+CATEGORY_BY_BHYT_SECTION = {
+    "1": "consultation", "2": "lab", "3": "procedure",
+    "4": "mri", "5": "ct", "6": "intervention",
 }
 
 
 def parse_price(s: str) -> int | None:
-    """'42.100' -> 42100 ; '1.712.000' -> 1712000."""
     s = s.strip().replace(".", "").replace(",", "").replace(" ", "")
     if not s.isdigit():
         return None
@@ -58,15 +52,32 @@ def sql_escape(s) -> str:
     return "'" + s.replace("'", "''") + "'"
 
 
-# ---------------- BHYT ----------------
+def category_from_code(code: str, section: str) -> str:
+    """Best-effort category routing for section 2 entries (mixed)."""
+    if section in {"consultation", "consultation_checkup"}:
+        return "consultation"
+    if section == "procedure_anesthesia":
+        return "procedure"
+    prefix = code.split(".")[0] if code else ""
+    if prefix in {"22", "23", "24", "25", "26", "27", "28"}:
+        return "lab"
+    if prefix == "18":
+        sub = code.split(".")[1] if "." in code else ""
+        if sub and sub[:2] in {"05", "06"}:
+            return "intervention"
+        if sub and sub[:2] == "02":
+            return "mri"
+        return "ct"
+    return "procedure"
+
+
+# ============================ BHYT parser ============================
 def parse_bhyt(path: Path) -> list[dict]:
-    """Return list of {code, name, category, price_vnd, note} from banggiaBHYT."""
     if not path.exists():
         print(f"ERROR: missing {path}", file=sys.stderr); sys.exit(1)
     text = path.read_text(encoding="utf-8")
     services: list[dict] = []
     current_cat = None
-    # Header lines like: "1. BẢNG GIÁ BẢO HIỂM Y TẾ - KHÁM BỆNH VÀ NGÀY GIƯỜNG ĐIỀU TRỊ"
     for line in text.splitlines():
         s = line.strip()
         if not s:
@@ -74,32 +85,24 @@ def parse_bhyt(path: Path) -> list[dict]:
         up = s.upper()
         m_sec = re.match(r"^(\d)\.\s*BẢNG GIÁ BẢO HIỂM Y TẾ", up)
         if m_sec:
-            current_cat = CATEGORY_BY_SECTION.get(m_sec.group(1))
+            current_cat = CATEGORY_BY_BHYT_SECTION.get(m_sec.group(1))
             continue
-        # Section 1 has no "mã tương đương" column: "STT | DỊCH VỤ | GIÁ | GHI CHÚ"
-        # Sections 2..6: "STT | mã | DỊCH VỤ | GIÁ | GHI CHÚ"
         parts = [p.strip() for p in re.split(r"\s*\|\s*", s)]
-        # skip header rows and separators
         if not parts or parts[0].upper().startswith("STT") or "---" in s:
             continue
-        # Must start with a number (STT)
         if not re.match(r"^\d+$", parts[0]):
             continue
         if current_cat == "consultation":
-            # parts: [STT, tên, giá, ghi chú]
             if len(parts) < 3:
                 continue
-            name = parts[1]
-            price = parse_price(parts[2])
+            name = parts[1]; price = parse_price(parts[2])
             note = parts[3] if len(parts) >= 4 else ""
             code = f"KB-{int(parts[0]):04d}"
         else:
-            # parts: [STT, mã, tên, giá, ghi chú]
             if len(parts) < 4:
                 continue
             code = parts[1] or f"{current_cat.upper()}-{int(parts[0]):04d}"
-            name = parts[2]
-            price = parse_price(parts[3])
+            name = parts[2]; price = parse_price(parts[3])
             note = parts[4] if len(parts) >= 5 else ""
         if price is None or not name:
             continue
@@ -108,57 +111,176 @@ def parse_bhyt(path: Path) -> list[dict]:
     return services
 
 
-# ---------------- no_bhyt (subset) ----------------
-def parse_no_bhyt_subset(path: Path) -> list[dict]:
-    """Extract the 'Khám bệnh + ngày giường' rows from GiaDVBV for no_bhyt prices."""
+# ============================ No-BHYT parser ============================
+NOBHYT_SECTION_STARTS = [
+    (62,    "consultation",          "KHÁM BỆNH VÀ NGÀY GIƯỜNG ĐIỀU TRỊ"),
+    (170,   "dvkt_xn",               "DỊCH VỤ KỸ THUẬT VÀ XÉT NGHIỆM"),
+    (23791, "consultation_checkup",  "KHÁM SỨC KHỎE LAO ĐỘNG/LÁI XE"),
+    (23819, "procedure_anesthesia",  "VÔ CẢM GÂY TÊ"),
+]
+
+
+def parse_no_bhyt_full(path: Path) -> tuple[list[dict], list[dict]]:
+    """Return (new_services, prices). new_services carries services whose code
+    is NOT already in the BHYT set (caller dedupes). prices has all no_bhyt rows."""
     if not path.exists():
-        return []
-    text = path.read_text(encoding="utf-8")
-    out: list[dict] = []
-    # These appear as "1 / Giá Khám bệnh / 50.600 / 50.600 /" patterns.
-    # Walk lines and capture: STT, name (may span lines), price CS1, price CS2.
-    # Simpler approach: scan for known service tokens.
-    targets = [
-        ("Giá Khám bệnh", "KB-0001", "Khám bệnh"),
-        ("Hội chẩn để xác định ca bệnh khó", "KB-0002", "Hội chẩn ca bệnh khó"),
-        ("Ngày điều trị Hồi sức tích cực", "KB-0003", "Ngày điều trị Hồi sức tích cực (ICU)"),
-        ("Ngày giường bệnh Hồi sức cấp cứu", "KB-0004", "Ngày giường Hồi sức cấp cứu"),
-    ]
-    lines = text.splitlines()
-    for needle, code, label in targets:
-        for i, ln in enumerate(lines):
-            if needle in ln:
-                # next numeric token after the needle, scanning next ~5 lines
-                window = " ".join(lines[i:i + 6])
-                m = re.search(r"(\d[\d\.]{3,})", window)
-                if m:
-                    price = parse_price(m.group(1))
-                    if price:
-                        out.append({"code": code, "name": label,
-                                    "category": "consultation",
-                                    "price_vnd": price, "note": "",
-                                    "audience": "no_bhyt",
-                                    "campus": None})
-                break
-    return out
+        return [], []
+    lines = path.read_text(encoding="utf-8").splitlines()
+
+    def section_for(line_no: int) -> str:
+        cur = "consultation"
+        for start, sid, _ in NOBHYT_SECTION_STARTS:
+            if line_no >= start:
+                cur = sid
+        return cur
+
+    page_no = 1
+    entries: list[dict] = []
+    buf: dict | None = None
+    name_buf: list[str] = []
+    expect = "stt"
+
+    def flush():
+        nonlocal buf, name_buf
+        # Accept entries with or without code; code-less ones get a synthetic
+        # code in the emit pass (for KHÁM BỆNH/giường section-1 rows).
+        if buf and buf.get("price_cs1") is not None and (buf.get("code") or name_buf):
+            full_name = re.sub(r"\s+", " ", " ".join(name_buf).strip())
+            buf["name"] = full_name
+            entries.append(buf)
+        buf = None
+        name_buf = []
+
+    for i, raw in enumerate(lines, start=1):
+        line = raw.rstrip()
+        if not line.strip():
+            if buf and expect == "note":
+                flush(); expect = "stt"
+            continue
+        m_page = re.match(r"^--- Page (\d+) ---", line.strip())
+        if m_page:
+            page_no = int(m_page.group(1))
+            continue
+        up = line.upper().strip()
+        if up.startswith("BẢNG GIÁ DỊCH VỤ KỸ THUẬT"):
+            flush(); expect = "stt"; continue
+        if (up.startswith("ĐƠN VỊ TÍNH") or up.startswith("GHI CHÚ: BẢNG GIÁ")
+                or up.startswith("SỞ Y TẾ") or up.startswith("BỆNH VIỆN TIM")
+                or up == "STT" or up.startswith("STT ") or up.startswith("MÃ TƯƠNG")
+                or up == "DỊCH VỤ KỸ THUẬT" or up == "CƠ SỞ 1"
+                or up == "CƠ SỞ 2" or up == "GHI CHÚ" or up.startswith("MỤC LỤC")
+                or up.startswith("DANH MỤC") or up.startswith("CHỈ MÀU")):
+            continue
+        s = line.strip()
+
+        # Lone number = STT (flush previous entry, start new)
+        if re.match(r"^\d{1,4}$", s):
+            flush()
+            buf = {"stt": int(s), "code": None, "price_cs1": None,
+                   "price_cs2": None, "note": "", "page": page_no,
+                   "section": section_for(i)}
+            name_buf = []
+            expect = "name_or_code"
+            continue
+
+        # Compact form: "<STT>  <code>  <name-part>" all on one line
+        m_compact = re.match(r"^(\d{1,4})\s+(\d{2}\.\d{4}\.\d{4}(?:\.[A-Z0-9]+)?)\s*(.*)$", s)
+        if m_compact:
+            flush()
+            buf = {"stt": int(m_compact.group(1)), "code": m_compact.group(2),
+                   "price_cs1": None, "price_cs2": None, "note": "",
+                   "page": page_no, "section": section_for(i)}
+            name_buf = []
+            if m_compact.group(3):
+                name_buf.append(m_compact.group(3))
+            expect = "name"
+            continue
+
+        if buf is None:
+            continue
+
+        # Price line
+        if re.match(r"^[\d\.]+$", s):
+            price = parse_price(s)
+            if price is None:
+                continue
+            if buf["price_cs1"] is None:
+                buf["price_cs1"] = price
+                expect = "price2_or_note"
+            elif buf["price_cs2"] is None and expect == "price2_or_note":
+                buf["price_cs2"] = price
+                expect = "note"
+            continue
+
+        # Code at start of a name line
+        m_code = re.match(r"^(\d{2}\.\d{4}\.\d{4}(?:\.[A-Z0-9]+)?)\s+(.*)$", s)
+        if m_code and buf.get("code") is None:
+            buf["code"] = m_code.group(1)
+            if m_code.group(2):
+                name_buf.append(m_code.group(2))
+            expect = "name"
+            continue
+
+        # Continuation
+        if expect in {"name", "name_or_code", "note", "price2_or_note"}:
+            if expect == "note":
+                buf["note"] = (buf["note"] + " " + s).strip()
+            else:
+                name_buf.append(s)
+
+    flush()
+
+    prices: list[dict] = []
+    new_services: list[dict] = []
+    seen_codes: set[str] = set()
+
+    def synthetic_code(section: str, stt: int) -> str:
+        """For section-1 entries that have no mã (KHÁM BỆNH/giường, KSK, gây tê)."""
+        prefix = {
+            "consultation": "NV-KB-",          # No_bhyt Khám/giường
+            "consultation_checkup": "NV-KSK-", # Khám sức khỏe
+            "procedure_anesthesia": "NV-GT-",  # Gây tê
+            "dvkt_xn": "NV-DV-",               # DVKT fallback (rare)
+        }.get(section, "NV-XX-")
+        return f"{prefix}{stt:04d}"
+
+    for e in entries:
+        if e["price_cs1"] is None:
+            continue
+        code = e["code"] or synthetic_code(e["section"], e["stt"])
+        cat = (category_from_code(code, e["section"])
+               if e["code"] else
+               {"consultation": "consultation",
+                "consultation_checkup": "consultation",
+                "procedure_anesthesia": "procedure"}.get(e["section"], "procedure"))
+        if code not in seen_codes:
+            seen_codes.add(code)
+            new_services.append({"code": code, "name": e["name"] or f"(entry #{e['stt']})",
+                                 "category": cat})
+        confidence = "high" if (e["price_cs1"] and e["price_cs2"]) else "medium"
+        note_prefix = (e["note"] + " ") if e["note"] else ""
+        note_full = f"{note_prefix}[NQ45/2024; page {e['page']}; confidence={confidence}]"
+        prices.append({"code": code, "price_vnd": e["price_cs1"], "audience": "no_bhyt",
+                       "campus": "CS1", "note": note_full})
+        if e["price_cs2"] is not None:
+            prices.append({"code": code, "price_vnd": e["price_cs2"], "audience": "no_bhyt",
+                           "campus": "CS2", "note": note_full})
+    return new_services, prices
 
 
+# ============================ main ============================
 def main():
     bhyt = parse_bhyt(SRC_BHYT)
-    nobhyt = parse_no_bhyt_subset(SRC_NOBHYT)
+    new_svcs, nobhyt_prices = parse_no_bhyt_full(SRC_NOBHYT)
 
-    # Build canonical services keyed by code (consultation rows from BHYT use
-    # synthetic KB-0001..N which we mirror for no_bhyt).
     services: dict[str, dict] = {}
     for r in bhyt:
-        services[r["code"]] = {
-            "code": r["code"], "name": r["name"], "category": r["category"],
-        }
-    for r in nobhyt:
-        if r["code"] not in services:
-            services[r["code"]] = {
-                "code": r["code"], "name": r["name"], "category": r["category"],
-            }
+        services[r["code"]] = {"code": r["code"], "name": r["name"], "category": r["category"]}
+    new_only = 0
+    for s in new_svcs:
+        if s["code"] not in services:
+            services[s["code"]] = s
+            new_only += 1
 
     out = [
         "-- =====================================================================",
@@ -166,13 +288,15 @@ def main():
         "-- AUTO-GENERATED by data-api/scripts/parse-services.py",
         "-- Sources:",
         "--   BHYT ceiling prices: data/raw/banggiaBHYT.txt (audience=BHYT)",
-        "--   Service price (no BHYT) subset: data/raw/GiaDVBV_tim_HN.txt",
+        "--   no_bhyt service prices: data/raw/GiaDVBV_tim_HN.txt (NQ45/2024;",
+        "--     page-scrambled PDF; per-row page + confidence flag in note field).",
+        f"-- Law basis (no_bhyt): {NOBHYT_LAW}",
         "-- Source URL: " + SOURCE_URL,
         "-- =====================================================================",
         "",
         "-- services",
     ]
-    for s in sorted(services.values(), key=lambda x: (x["category"], x["code"])):
+    for s in sorted(services.values(), key=lambda x: (x["category"] or "", x["code"])):
         out.append(
             "INSERT INTO hospital.services "
             "(code, name, category, department_id, description, is_active) "
@@ -182,8 +306,7 @@ def main():
         )
 
     out.append("")
-    out.append("-- service_prices")
-    # BHYT prices
+    out.append("-- service_prices (BHYT)")
     for r in bhyt:
         out.append(
             "INSERT INTO hospital.service_prices "
@@ -193,24 +316,28 @@ def main():
             f"{r['price_vnd']}, 'BHYT', NULL, '{EFFECTIVE_DATE}', "
             f"{sql_escape(SOURCE_URL)}, {sql_escape(r['note'])});"
         )
-    # no_bhyt prices
-    for r in nobhyt:
+
+    out.append("")
+    out.append("-- service_prices (no_bhyt — NQ45/2024; page+confidence annotated)")
+    for r in nobhyt_prices:
         out.append(
             "INSERT INTO hospital.service_prices "
             "(service_id, price_vnd, audience, campus, effective_date, source_url, note) "
             "VALUES ("
             f"(SELECT id FROM hospital.services WHERE code = {sql_escape(r['code'])}), "
-            f"{r['price_vnd']}, 'no_bhyt', NULL, '{EFFECTIVE_DATE}', "
-            f"{sql_escape(SOURCE_URL)}, {sql_escape(r.get('note', ''))});"
+            f"{r['price_vnd']}, 'no_bhyt', {sql_escape(r['campus'])}, '{EFFECTIVE_DATE}', "
+            f"{sql_escape(SOURCE_URL)}, {sql_escape(r['note'])});"
         )
 
     out.append("")
-    out.append(f"-- stats: services={len(services)} bhyt_prices={len(bhyt)} "
-               f"no_bhyt_prices={len(nobhyt)}")
+    out.append(f"-- stats: services={len(services)} (bhyt={len(services) - new_only}, "
+               f"no_bhyt_only={new_only})  bhyt_prices={len(bhyt)}  "
+               f"no_bhyt_prices={len(nobhyt_prices)}")
 
     OUT.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"OK -> {OUT}")
-    print(f"   services={len(services)}  bhyt_prices={len(bhyt)}  no_bhyt_prices={len(nobhyt)}")
+    print(f"   services={len(services)} (bhyt={len(services)-new_only}, no_bhyt_only={new_only})  "
+          f"bhyt_prices={len(bhyt)}  no_bhyt_prices={len(nobhyt_prices)}")
 
 
 if __name__ == "__main__":
