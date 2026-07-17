@@ -2,6 +2,8 @@ package com.hanoiheart.dataapi.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +34,10 @@ import java.util.NoSuchElementException;
  *   <li><b>500 internal_error</b> — fallback {@link Exception}</li>
  * </ul>
  */
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.hanoiheart.dataapi.controller")
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /** 404 — resource lookup returned empty. */
     @ExceptionHandler({
@@ -84,6 +88,7 @@ public class GlobalExceptionHandler {
     /** 500 — catch-all for unexpected server errors (message not leaked). */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> internal(Exception ex) {
+        log.error("Unhandled exception propagated to advice", ex);
         return body(HttpStatus.INTERNAL_SERVER_ERROR, "internal_error", "Unexpected server error");
     }
 
