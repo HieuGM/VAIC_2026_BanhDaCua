@@ -31,11 +31,10 @@ public class DoctorService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public PageResponse<DoctorDto> list(Long departmentId, int page, int size) {
+    public PageResponse<DoctorDto> list(Long departmentId, String specialty, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Doctor> result = (departmentId == null)
-                ? doctorRepository.findByIsActiveTrue(pageable)
-                : doctorRepository.findByDepartmentIdAndIsActiveTrue(departmentId, pageable);
+        String spec = (specialty == null || specialty.isBlank()) ? null : specialty;
+        Page<Doctor> result = doctorRepository.findByFilter(departmentId, spec, pageable);
         return PageResponse.of(result.map(this::toDto));
     }
 
@@ -55,6 +54,7 @@ public class DoctorService {
     public DoctorDto toDto(Doctor d) {
         Department dept = d.getDepartment();
         return new DoctorDto(d.getId(), d.getCode(), d.getFullName(), d.getDegree(),
+                d.getSpecialty(),
                 d.getTitle(),
                 dept == null ? null : dept.getId(),
                 dept == null ? null : dept.getCode(),

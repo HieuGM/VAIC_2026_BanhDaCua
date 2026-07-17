@@ -25,6 +25,10 @@ public class Doctor extends BaseEntity {
     @Column(name = "degree", length = 16)
     private String degree;
 
+    /** Chuyên khoa (crawled từ site chính thức): Tim mạch, Nhi khoa, ... */
+    @Column(name = "specialty")
+    private String specialty;
+
     @Column(name = "title")
     private String title;
 
@@ -47,6 +51,8 @@ public class Doctor extends BaseEntity {
     public void setFullName(String n) { this.fullName = n; }
     public String getDegree() { return degree; }
     public void setDegree(String d) { this.degree = d; }
+    public String getSpecialty() { return specialty; }
+    public void setSpecialty(String s) { this.specialty = s; }
     public String getTitle() { return title; }
     public void setTitle(String t) { this.title = t; }
     public Department getDepartment() { return department; }

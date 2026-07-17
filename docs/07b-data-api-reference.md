@@ -205,19 +205,20 @@ curl -s "http://localhost:8081/data/v1/departments?active=true&page=0&size=20" |
 
 ### `GET /data/v1/doctors`
 
-List active doctors, optionally filtered by department. Paginated. Controller: `DoctorController`.
+List active doctors, optionally filtered by department and/or specialty (chuyên khoa). Paginated. Controller: `DoctorController`.
 
 **Query params:**
 
 | Param | Type | Required | Default | Example | Notes |
 |---|---|---|---|---|---|
 | `department` | Long | no | (all) | `1` | Department id; only active doctors in that department |
+| `specialty` | String | no | (all) | `Tim` | Case-insensitive substring on chuyên khoa — `Tim` matches "Tim mạch" + "Tim mạch can thiệp"; `Nhi` matches "Nhi khoa" |
 | `page` | int | no | `0` | `0` | Zero-indexed |
 | `size` | int | no | `20` | `20` | Page size |
 
 **Path params:** none. **Auth:** §0.
 
-> **Behavior:** Always filters `isActive = true` (see `DoctorRepository.findByIsActiveTrue` / `findByDepartmentIdAndIsActiveTrue`). No way to list inactive doctors via this endpoint.
+> **Behavior:** Always filters `isActive = true`. `department` and `specialty` are optional predicates combined with AND (`DoctorRepository.findByFilter` — both null ⇒ all active doctors). `specialty` is a case-insensitive substring match on Vietnamese free-text. No way to list inactive doctors via this endpoint.
 
 **200 Response** — `PageResponse<DoctorDto>`:
 
@@ -226,35 +227,37 @@ List active doctors, optionally filtered by department. Paginated. Controller: `
 | Field | Type | Notes |
 |---|---|---|
 | `id` | Long | |
-| `code` | String | Doctor code, e.g. `BS.00012` |
-| `fullName` | String | e.g. `Nguyễn Văn A` (without title prefix) |
-| `degree` | String\|null | e.g. `Tiến sĩ`, `Thạc sĩ` |
-| `title` | String\|null | e.g. `Phó Giáo sư`, `Bác sĩ` |
-| `departmentId` | Long\|null | |
+| `code` | String | Doctor code, slug of full name, e.g. `bui-thi-thanh-ha` |
+| `fullName` | String | e.g. `Bùi Thị Thanh Hà` (without degree prefix) |
+| `degree` | String\|null | Degree prefix, e.g. `TS.BS`, `ThS.BS`, `BSCKII`, `BS` |
+| `specialty` | String\|null | Chuyên khoa (crawled), e.g. `Tim mạch`, `Nhi khoa`, `Tim mạch can thiệp` |
+| `title` | String\|null | Leadership title only, e.g. `Phó Giám đốc Bệnh viện` (null for most) |
+| `departmentId` | Long\|null | Resolved from crawled department (label reconciliation) |
 | `departmentCode` | String\|null | |
 | `departmentName` | String\|null | |
-| `bio` | String\|null | Biography markdown |
-| `avatarUrl` | String\|null | |
+| `bio` | String\|null | Biography markdown (only ~21 doctors have one) |
+| `avatarUrl` | String\|null | Always null — no photo in source (R1: not fabricated) |
 
 **Example 200:**
 ```json
 {
-  "total": 1,
+  "total": 69,
   "page": 0,
   "size": 20,
-  "totalPages": 1,
+  "totalPages": 4,
   "items": [
     {
-      "id": 12,
-      "code": "BS.00012",
-      "fullName": "Nguyễn Văn A",
-      "degree": "Tiến sĩ Y học",
-      "title": "Phó Giáo sư, Bác sĩ CKII",
-      "departmentId": 1,
-      "departmentCode": "KHKBTN",
-      "departmentName": "Khoa Khám bệnh Tự nguyện",
-      "bio": "Hơn 25 năm kinh nghiệm nội tim mạch.",
-      "avatarUrl": "https://cdn.benhvienhuunghihanoi.vn/doctors/12.jpg"
+      "id": 1,
+      "code": "bui-thi-thanh-ha",
+      "fullName": "Bùi Thị Thanh Hà",
+      "degree": "TS.BS",
+      "specialty": "Tim mạch",
+      "title": null,
+      "departmentId": 2,
+      "departmentCode": "kham-benh-tu-nguyen-1",
+      "departmentName": "Khu Khám bệnh Tự nguyện 1 - Cơ sở 1",
+      "bio": null,
+      "avatarUrl": null
     }
   ]
 }
@@ -264,6 +267,9 @@ List active doctors, optionally filtered by department. Paginated. Controller: `
 
 **curl:**
 ```bash
+# by specialty (chuyên khoa)
+curl -s "http://localhost:8081/data/v1/doctors?specialty=Tim&size=5" | jq
+# by department
 curl -s "http://localhost:8081/data/v1/doctors?department=1&page=0&size=20" | jq
 ```
 

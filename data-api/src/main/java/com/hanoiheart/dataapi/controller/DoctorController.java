@@ -27,9 +27,10 @@ public class DoctorController {
     @GetMapping
     public PageResponse<DoctorDto> list(
             @RequestParam(name = "department", required = false) Long departmentId,
+            @RequestParam(name = "specialty", required = false) String specialty,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "20") int size) {
-        return service.list(departmentId, page, size);
+        return service.list(departmentId, specialty, page, size);
     }
 
     @GetMapping("/{id}")

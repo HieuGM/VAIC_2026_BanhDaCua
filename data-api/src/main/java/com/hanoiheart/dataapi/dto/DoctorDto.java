@@ -5,6 +5,7 @@ public record DoctorDto(
         String code,
         String fullName,
         String degree,
+        String specialty,
         String title,
         Long departmentId,
         String departmentCode,
