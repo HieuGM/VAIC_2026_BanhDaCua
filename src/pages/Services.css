@@ -1,0 +1,657 @@
+/* ============ SERVICES PAGE ============ */
+
+/* Tabs Nav */
+.service-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3.6rem;
+  padding: 0.6rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.service-tab {
+  flex: 1;
+  min-width: 15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.service-tab:hover {
+  background: var(--white);
+  color: var(--primary);
+}
+
+.service-tab.active {
+  background: var(--white);
+  color: var(--primary);
+  border-color: rgba(192,57,43,0.2);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+}
+
+.tab-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+/* Detail */
+.service-detail {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 4rem;
+  box-shadow: var(--shadow-md);
+}
+
+/* Rich service layout styles */
+.service-detail-rich {
+  text-align: left;
+}
+
+.rich-header {
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 2rem;
+}
+
+.rich-date {
+  display: inline-block;
+  font-size: 1.3rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 0.4rem 1.2rem;
+  border-radius: var(--border-radius-full);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.rich-header h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.rich-intro {
+  font-size: 1.6rem;
+  color: var(--text-main);
+  line-height: 1.8;
+}
+
+.rich-inline-link {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.rich-inline-link:hover {
+  color: var(--primary-dark);
+}
+
+/* Rich Section styling */
+.rich-section {
+  margin-bottom: 4rem;
+}
+
+.rich-section:last-child {
+  margin-bottom: 0;
+}
+
+.rich-section h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-bottom: 2px solid var(--primary-bg);
+  padding-bottom: 0.8rem;
+}
+
+.rich-section h3 svg {
+  color: var(--primary);
+}
+
+.section-title-sub {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.4rem;
+}
+
+/* Doctor list in Voluntary Section */
+.doc-list-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.doc-item {
+  padding: 1.2rem 1.6rem;
+  background: var(--bg-secondary);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 0.8rem 0.8rem 0;
+  font-size: 1.45rem;
+  color: var(--text-main);
+}
+
+.rich-text-note {
+  font-size: 1.45rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-style: italic;
+  margin-top: 1.6rem;
+}
+
+.rich-highlight-box {
+  background: var(--primary-bg);
+  border: 1px solid rgba(192, 57, 43, 0.15);
+  border-radius: var(--border-radius);
+  padding: 2.4rem;
+  margin-top: 2rem;
+}
+
+.rich-highlight-box strong {
+  display: block;
+  font-size: 1.55rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.rich-highlight-box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rich-highlight-box li {
+  position: relative;
+  padding-left: 2rem;
+  font-size: 1.45rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.rich-highlight-box li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 1.8rem;
+  line-height: 1.4;
+}
+
+.slogan-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 1.6rem;
+  border-radius: var(--border-radius);
+  font-size: 1.6rem;
+  text-align: center;
+  color: var(--secondary);
+  margin-bottom: 2.4rem;
+}
+
+/* Service sub list */
+.service-sub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+}
+
+.service-sub-item h4 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.8rem;
+  border-left: 3px solid var(--primary-light);
+  padding-left: 1rem;
+}
+
+.service-sub-item p {
+  font-size: 1.45rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.service-sub-item ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.service-sub-item li {
+  position: relative;
+  padding-left: 1.8rem;
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+.service-sub-item li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Tests grid layout */
+.test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin: 1.6rem 0;
+}
+
+.test-grid h5 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.test-grid ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.test-grid li {
+  position: relative;
+  padding-left: 1.8rem;
+  font-size: 1.35rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.test-grid li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.pricing-link-text {
+  font-size: 1.45rem;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Leader info and department tags for Pharmacy */
+.leader-info-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 1.8rem;
+  border-radius: var(--border-radius);
+  margin: 1.6rem 0;
+}
+
+.leader-info-box h4 {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.leader-info-box ul {
+  list-style: none;
+}
+
+.leader-info-box li {
+  font-size: 1.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.sub-depts {
+  margin: 2rem 0;
+}
+
+.sub-depts h4 {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-bottom: 1.2rem;
+}
+
+.dept-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dept-tag {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: 1px solid rgba(192, 57, 43, 0.15);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--border-radius-full);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.pharmacy-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.task-block h4 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1.2rem;
+}
+
+.task-block ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.task-block li {
+  position: relative;
+  padding-left: 2rem;
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.task-block li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.sub-tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.sub-task-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.sub-task-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.sub-task-card h5 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.8rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.6rem;
+}
+
+.sub-task-card p {
+  font-size: 1.35rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 !important;
+}
+
+/* Corporate health checkup section styling */
+.rich-slogan-sub {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--primary);
+  font-weight: 600;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin: 3rem 0;
+}
+
+.adv-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 2.4rem;
+  border-radius: var(--border-radius-lg);
+}
+
+.adv-card h4 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1.4rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.8rem;
+}
+
+.adv-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.adv-card li {
+  position: relative;
+  padding-left: 2rem;
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.adv-card li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 1.8rem;
+}
+
+.benefits-table-wrap {
+  margin: 3rem 0;
+  overflow-x: auto;
+}
+
+.benefits-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.benefits-table th {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 1.4rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.benefits-table td {
+  padding: 1.4rem;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  line-height: 1.6;
+  width: 50%;
+}
+
+.benefits-table tr:nth-child(even) td {
+  background: var(--bg-secondary);
+}
+
+/* Process flow diagram */
+.process-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.flow-step:hover {
+  transform: translateX(6px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.flow-num {
+  width: 4.5rem;
+  height: 4.5rem;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.flow-step strong {
+  font-size: 1.55rem;
+  color: var(--secondary);
+  min-width: 20rem;
+}
+
+.flow-step p {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin: 0 !important;
+  line-height: 1.6;
+}
+
+/* Contact box */
+.contact-box-rich {
+  background: var(--primary-bg);
+  border: 1px solid rgba(192, 57, 43, 0.2);
+  padding: 2.4rem;
+  border-radius: var(--border-radius-lg);
+  margin-top: 3rem;
+}
+
+.contact-box-rich h4 {
+  font-size: 1.6rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.contact-box-rich p {
+  font-size: 1.45rem;
+  color: var(--text-main);
+  margin-bottom: 0.8rem;
+}
+
+.contact-box-rich a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* All Services Cards link offset */
+.all-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.all-service-card {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 2.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.all-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.all-service-icon {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.all-service-card h3 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.8rem;
+}
+
+.all-service-card p {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.4rem;
+}
+
+.all-service-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .service-tabs { flex-direction: column; }
+  .service-tab { flex: none; }
+  .all-services-grid { grid-template-columns: repeat(2, 1fr); }
+  .test-grid, .sub-tasks-grid, .advantages-grid { grid-template-columns: 1fr; }
+  .flow-step { flex-direction: column; text-align: center; }
+  .flow-step strong { min-width: auto; }
+}
+
+@media (max-width: 768px) {
+  .service-detail { padding: 2.4rem; }
+}
+
+@media (max-width: 600px) {
+  .all-services-grid { grid-template-columns: 1fr; }
+}
