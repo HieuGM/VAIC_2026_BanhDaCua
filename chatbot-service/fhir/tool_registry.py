@@ -1,8 +1,9 @@
 FHIR_TOOL_ALLOWLIST = {
+    "get_patient_profile",
     "get_patient_appointments",
+    "get_patient_encounters",
     "get_lab_results",
     "get_medications",
-    "get_encounters",
 }
 
 
