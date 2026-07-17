@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+langgraph>=1.2,<2
+httpx
+qdrant-client
+fastembed
+openai
