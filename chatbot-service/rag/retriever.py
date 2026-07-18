@@ -2,11 +2,14 @@
 
 Pipeline (design backed by rag/eval/measure_retrieval.py on the real corpus):
   normalize query
+  -> semantic cache exact-match : hit → cached Evidence (no embed/Qdrant/rerank)
+  -> embed query (dense vector)
+  -> semantic cache similarity  : hit → cached Evidence (skips Qdrant/rerank)
   -> dense-only search  : calibrated cosine → relevance gate + confidence
   -> if top cosine < dense_min_score: return []  (safe fallback, no weak evidence)
   -> hybrid search (dense+BM25 RRF, filtered): recall into the candidate set
   -> map hits to Evidence (source_type ALWAYS RAG; chunk type lives in Citation)
-  -> rerank (phase 5; passthrough today) → threshold → top_k
+  -> rerank → threshold → top_k → cache the result
 
 Never returns answer strings, never raises into the graph (any error → []).
 """
@@ -26,6 +29,7 @@ from rag.config import RagSettings, get_settings
 from rag.embedding import get_embedder
 from rag.kb_store import get_store
 from rag.reranker import rerank_evidence
+from rag.semantic_cache import get_cache
 
 _log = logging.getLogger(__name__)
 _bm25: SparseTextEmbedding | None = None
@@ -97,10 +101,11 @@ def _hit_to_evidence(hit: models.ScoredPoint, confidence: float) -> Evidence:
     )
 
 
-def _search(query: str, settings: RagSettings) -> list[Evidence]:
-    """Sync Qdrant work (run in a thread by the async entrypoint)."""
+def _search(query: str, dense_vec: list[float], settings: RagSettings) -> list[Evidence]:
+    """Sync Qdrant work (run in a thread by the async entrypoint). The dense
+    vector is precomputed by the caller so it can be reused for the semantic
+    cache lookup — one embed call per query, not two."""
     store = get_store(settings)
-    dense_vec = get_embedder(settings).embed_query(query)
     query_filter = build_filter(_today_int())
 
     dense_hits = store.dense_search(
@@ -127,14 +132,33 @@ async def retrieve_public_knowledge(state: ChatState) -> list[Evidence]:
         if not query:
             return []
         settings = get_settings()
-        candidates = await asyncio.to_thread(_search, query, settings)
+        cache = get_cache(settings)
+
+        # L1 exact-match: identical repeat → no embed, no Qdrant, no rerank.
+        cached = cache.get_exact(query)
+        if cached is not None:
+            return cached
+
+        # The dense vector is needed for both the semantic-cache lookup and the
+        # search, so compute it once here and pass it down.
+        dense_vec = await asyncio.to_thread(get_embedder(settings).embed_query, query)
+
+        # L2 semantic: a close paraphrase → reuse result, skip Qdrant + rerank.
+        cached = cache.get_semantic(dense_vec)
+        if cached is not None:
+            cache.put(query, dense_vec, cached)  # promote this phrasing to L1
+            return cached
+
+        candidates = await asyncio.to_thread(_search, query, dense_vec, settings)
         if not candidates:
-            return []
+            return []  # off-topic/below-gate results are intentionally not cached
         ranked = await rerank_evidence(candidates, query)
         ranked.sort(key=lambda e: e.confidence, reverse=True)
-        return [e for e in ranked if e.confidence >= settings.rerank_min_score][
+        final = [e for e in ranked if e.confidence >= settings.rerank_min_score][
             : settings.rerank_top_k
         ]
+        cache.put(query, dense_vec, final)
+        return final
     except Exception:  # never propagate into the graph
         _log.exception("retrieve_public_knowledge failed; returning no evidence")
         return []
