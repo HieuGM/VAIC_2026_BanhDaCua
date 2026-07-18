@@ -26,7 +26,7 @@ fi
 say "Install FE deps + build (same-origin API)"
 cd frontend
 npm ci
-REACT_APP_API_BASE_URL=/ npm run build
+EXTEND_ESLINT=true REACT_APP_API_BASE_URL=/ npm run build
 cd ..
 
 say "Copy bundle to $DEST"

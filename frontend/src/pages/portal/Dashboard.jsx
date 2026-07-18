@@ -53,7 +53,6 @@ const Dashboard = () => {
   );
   const total = appointments.length;
   const completed = appointments.filter((a) => a.status === 'COMPLETED').length;
-  const cancelled = appointments.filter((a) => a.status === 'CANCELLED').length;
 
   const firstName = currentUser?.fullName?.split(' ').pop() || 'bạn';
 
