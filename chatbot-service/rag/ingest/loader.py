@@ -56,6 +56,44 @@ REGISTRY: list[dict] = [
         "effective_from": "2026-06-29",
         "effective_to": "2026-07-19",
     },
+    # Crawled seed data (data/seed/crawled/) — structured directory info added
+    # later; evergreen (no effective dates), so it always passes the date filter.
+    {
+        "file": "doctors.json",
+        "source_type": "document",
+        "parser": "doctors",
+        "title": "Danh sách bác sĩ Bệnh viện Tim Hà Nội",
+        "updated_at": "2026-07-17",
+    },
+    {
+        "file": "departments.json",
+        "source_type": "document",
+        "parser": "departments",
+        "title": "Các khoa/phòng Bệnh viện Tim Hà Nội",
+        "updated_at": "2026-07-17",
+    },
+    {
+        "file": "bhyt-policies.json",
+        "source_type": "document",
+        "parser": "bhyt_policy",
+        "title": "Chính sách BHYT Bệnh viện Tim Hà Nội",
+        "updated_at": "2026-07-17",
+    },
+    {
+        "file": "channels.json",
+        "source_type": "document",
+        "parser": "channels",
+        "title": "Kênh liên hệ Bệnh viện Tim Hà Nội",
+        "updated_at": "2026-07-17",
+    },
+    {
+        "file": "working-hours.md",
+        "source_type": "document",
+        "parser": "working_hours",
+        "title": "Giờ làm việc Bệnh viện Tim Hà Nội",
+        "url": "https://benhvientimhanoi.vn/",
+        "updated_at": "2026-07-17",
+    },
 ]
 
 
@@ -102,7 +140,10 @@ def missing_sources(data_dir: str | Path | None = None) -> list[str]:
 
 
 def _source_path(root: Path, filename: str) -> Path:
-    direct = root / filename
-    if direct.exists():
-        return direct
-    return root / "raw" / filename
+    # Search the known source locations in order; the crawled seed data lives in
+    # seed/crawled while the original corpus is flat or under raw/.
+    for rel in (filename, f"raw/{filename}", f"seed/crawled/{filename}"):
+        candidate = root / rel
+        if candidate.exists():
+            return candidate
+    return root / filename  # missing → reported by missing_sources()
