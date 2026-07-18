@@ -1,8 +1,9 @@
 name: ci-cd
 
-# Build+push tự động khi code vào develop. PR → develop: chỉ chạy test (không push
-# image). Deploy = manual `workflow_dispatch` (pull + up -d on VPS). Broken code
-# KHÔNG tự live — deploy luôn cần chủ ý.
+# Push → develop: test → build → push GHCR → AUTO-DEPLOY VPS (pull + up -d).
+# PR → develop: chỉ chạy test (không push image, không deploy).
+# Dispatch: force redeploy (deploy=true) hoặc FE-only (deploy_fe=true).
+# Test gate chặn code hỏng trước khi build/deploy.
 on:
   push:
     branches: [develop]
@@ -25,11 +26,13 @@ on:
         type: boolean
         default: false
 
-# push cancel nhau (nhiều commit liên tiếp), nhưng deploy (dispatch) KHÔNG bị cancel
-# → không kill deploy giữa chừng (half-applied / rsync --delete giữa chừng).
+# Auto-deploy trên push:develop → deploy KHÔNG được cancel giữa chừng (rsync --delete /
+# half-applied nguy hiểm). Group dùng riêng ref (KHÔNG kèm event_name) → push & dispatch
+# CÙNG serialize, 2 deploy không đụng VPS cùng lúc. Trade-off: mất fast-feedback cancel
+# (commit liên tiếp → queue, không cancel build cũ) — chấp nhận cho demo.
 concurrency:
-  group: cicd-${{ github.event_name }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+  group: cicd-${{ github.ref }}
+  cancel-in-progress: false
 
 # GHCR: GITHUB_TOKEN cần packages:write. Cần CẢ HAI: YAML permission + repo setting
 # Settings→Actions→General→Workflow permissions = "Read and write" (read-only clamp → 403).
@@ -181,7 +184,11 @@ jobs:
 
   # ───────────── BUILD FE (chỉ khi dispatch + deploy_fe) ─────────────
   build-frontend:
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy_fe
+    needs: [changes]
+    # Push develop + FE đổi → auto build FE. Dispatch deploy_fe → force build FE.
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/develop' && needs.changes.outputs.fe == 'true') ||
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_fe)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -200,15 +207,21 @@ jobs:
           name: fe-build
           path: frontend/build/
 
-  # ───────────── DEPLOY (manual dispatch only — KHÔNG chạy trên push/PR/merge) ─────────────
+  # ───────────── DEPLOY (auto trên push:develop + manual dispatch) ─────────────
   deploy:
-    needs: [build-data-api, build-chatbot, build-frontend, ensure-packages-public]
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    needs: [build-data-api, build-chatbot, build-frontend, ensure-packages-public, changes]
+    # AUTO push:develop → deploy VPS. Dispatch deploy hoặc deploy_fe → force. needs chặn
+    # deploy khi test/build/ensure-public chưa green.
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
+      (github.event_name == 'workflow_dispatch' && (inputs.deploy || inputs.deploy_fe))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Download FE artifact
-        if: inputs.deploy_fe
+        if: |
+          (github.event_name == 'push' && needs.changes.outputs.fe == 'true') ||
+          (github.event_name == 'workflow_dispatch' && inputs.deploy_fe)
         uses: actions/download-artifact@v4
         with:
           name: fe-build
@@ -259,7 +272,9 @@ jobs:
             docker image prune -f
             echo "BACKEND DEPLOY OK"
       - name: Rsync FE (sau backend healthy; guard empty build trước --delete)
-        if: inputs.deploy_fe
+        if: |
+          (github.event_name == 'push' && needs.changes.outputs.fe == 'true') ||
+          (github.event_name == 'workflow_dispatch' && inputs.deploy_fe)
         run: |
           [ -s frontend/build/index.html ] || { echo "::error::empty FE build — abort trước khi wipe live SPA"; exit 1; }
           rsync -avz --delete \
