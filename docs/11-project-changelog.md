@@ -5,6 +5,7 @@
 
 ## [Unreleased]
 ### Added
+- **Docs (2026-07-18):** căn chỉnh FE/chatbot theo code thật (React 18 + CRA, JSON blocking, không persist, không SSE) + chốt **data-api làm chat BFF + persistence** (Recommendation A, ADR-008) — cập nhật `01` §6.1/§7, `05` §1–§3+ADR, `06` §4+§4b, `07` A/B.5/D, `00` §1/§3.
 - Bộ tài liệu nền tảng (`docs/`): `00` rubric + domain rules, `01` overview, `02` business analysis, `03` FR, `04` NFR.
 - Stub `05`–`11` (architecture, DB, API contract v0, dev guide, deploy, roadmap, changelog).
 - `.gitignore` (loại trừ toolkit & artifact).

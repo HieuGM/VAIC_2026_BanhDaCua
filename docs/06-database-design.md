@@ -69,7 +69,9 @@ erDiagram
 
 ## 4. Schema `ai` (FastAPI — session/guardrail/eval, share PG container)
 
-> Trả lời câu hỏi "có cần DB conversation không?" → **CÓ, nhưng thuộc lớp AI**, không phải Spring Boot. Lý do: TTL/xoá (R5) + coupling eval + guardrail là concern AI.
+> ⚠️ **Trạng thái thực tế (2026-07-18):** schema `ai` hiện **CHƯA implement**. `chatbot-service/memory/session_memory.py` là **STUB no-op** (TODO) — `session_id` opaque, không lưu conversation, không có bảng nào tồn tại. Các bảng `chat_sessions`/`chat_messages` dưới đây (theo đề xuất gốc ADR-006/007) **chưa được tạo**.
+>
+> **Quyết định mới — Recommendation A / ADR-008 (lead-approved):** **chat persistence chuyển sang data-api, schema `hospital`** (Spring Boot + Flyway, đã có infra). Xem §4b bên dưới. Các bảng `guardrail_events` / `retrieval_logs` / `feedback` (concern AI eval) có thể vẫn nằm schema `ai` khi AI team cần — nhưng KHÔNG triển khai 48h (YAGNI).
 
 | Bảng | Mục đích | Cột chính |
 |---|---|---|
@@ -80,6 +82,21 @@ erDiagram
 | `feedback` | Đánh giá BN (optional) | id, session_id(fk), message_id, rating, note, created_at |
 
 **Retention job:** cron xoá `chat_sessions` + cascade khi `expires_at < now()` (R5). PII không bao giờ lưu.
+
+---
+
+## 4b. Schema `hospital` — **Chat persistence (ADR-008, Recommendation A)** — sở hữu data dev
+
+> ⚠️ **MỚI (2026-07-18):** chat persistence do data-api sở hữu (Spring Boot, Flyway). Thay thế phần "chat thuộc schema `ai`" của ADR-006/007.
+
+| Bảng | Mục đích | Cột chính |
+|---|---|---|
+| `chat_sessions` | Phiên chat (FE → data-api BFF) | `id` (uuid), `created_at`, `updated_at`, `lang`, `anon_token?` (nullable, cho phép re-load history ở trình duyệt khác), `user_id?` (nullable, khi có auth sau), `expires_at` (≤24h, NFR-2 / R5), `deleted_at?` |
+| `chat_messages` | Tin nhắn phiên | `id`, `session_id` (fk→chat_sessions), `role` (user/assistant/system), `content` (text), `citations` (jsonb), `intent`, `route`, `guardrail_flags` (jsonb), `confidence`, `created_at` |
+
+**Index:** `chat_sessions(anon_token)`, `chat_messages(session_id, created_at)`.
+**Retention/TTL:** cron xoá `chat_sessions` + cascade khi `expires_at < now()` — theo NFR-2 / R5 (≤24h, anonymous, deletable). PII không bao giờ lưu (không CCCD/HS/chẩn đoán).
+**Migration:** Flyway `V{n}__init_chat_tables.sql` trong `data-api/src/main/resources/db/migration`.
 
 ---
 

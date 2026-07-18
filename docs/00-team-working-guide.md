@@ -19,17 +19,17 @@ docs/
 ├── 02-business-analysis.md          ← actor, use case, domain model
 ├── 03-functional-requirements.md    ← FR + MoSCoW + acceptance criteria
 ├── 04-non-functional-requirements.md ← perf, security, compliance
-├── 05-system-architecture.md        ← (stub) component/dataflow/deploy + ADR
-├── 06-database-design.md            ← (stub) ERD, vector schema
+├── 05-system-architecture.md        ← component/dataflow/deploy + ADR
+├── 06-database-design.md            ← ERD, vector schema
 ├── 07-api-design.md                 ← CONTRACT v0 — chốt giờ đầu
-├── 08-development-guide.md          ← (stub) setup, git, coding standards
-├── 09-deployment-guide.md           ← (stub) Docker, CI/CD, on-prem path
-├── 10-development-roadmap.md        ← (stub) phase 48h + % tiến độ
+├── 08-development-guide.md          ← setup, git, coding standards
+├── 09-deployment-guide.md           ← Docker, CI/CD, on-prem path
+├── 10-development-roadmap.md        ← phase 48h + % tiến độ
 ├── 11-project-changelog.md          ← version history
 └── refer/                            ← nguồn: Đề tài.md + SOP Quytrinh.md + PDF
 ```
 
-**Thứ tự đọc khuyến nghị:** `00-team-working-guide` → `00-competition-rubric` → `00-hospital-domain-rules` → `brainstorming` → `01`→`04`. Stub `05–11` đọc khi vào phase đó.
+**Thứ tự đọc khuyến nghị:** `00-team-working-guide` → `00-competition-rubric` → `00-hospital-domain-rules` → `brainstorming` → `01`→`04`. Stub `08–10` đọc khi vào phase đó; `05/06/07` đã filled v1.0.
 
 ---
 
@@ -44,14 +44,17 @@ docs/
 
 ## 3. Vai trò & sở hữu (RACI rút gọn)
 
+> ⚠️ **Headcount (2026-07-18):** Có mâu thuẫn giữa docs về số Web FE — `01` §7 ghi **(2)**, bảng đây ghi **(3)**. Lead chốt số cuối. Tạm quy ước bảng dưới = **3 web FE** (theo `00`). Ngoài ra, **Data Backend (1)** được thêm làm luồng riêng — sở hữu `data-api/` và **chat BFF + persistence** (ADR-008), tách khỏi BA.
+
 | Luồng | Role | Sở hữu docs | Sở hữu code |
 |---|---|---|---|
-| **Web FE** (3) | FE | `04` (UX phần FE), góp ý `07` | `web/` (Next.js) |
-| **AI/Backend** (2) | AI | `05`, `06`, `07`, `09` (AI phần) | `api/`, `ingest/`, `eval/`, guardrail |
+| **Web FE** (3) | FE | `04` (UX phần FE), góp ý `07` | `frontend/` (React 18 + CRA — không phải `web/`/Next.js) |
+| **Data Backend** (1) | Data dev | `06` (phần hospital + chat tables), `07` (B.5 chat BFF) | `data-api/` (Spring Boot + PG `hospital`) + **chat BFF + persistence** (ADR-008) |
+| **AI/Backend** (2) | AI | `05`, `06` (phần ai/Qdrant), `07` (A.1 FastAPI chat), `09` (AI phần) | `chatbot-service/` (FastAPI), `ingest/`, `eval/`, guardrail |
 | **Data/Demo** (1) | BA | `02`, `brainstorming` (verify), KB content, golden Q&A | data/KB files, slide, kịch bản |
 | **Lead** (1 trong 6) | — | `01`, `03`, `10`, `11`, chốt scope | repo + Docker + deploy |
 
-> Mỗi FR/NFR gán 1 người chịu trách nhiệm chính (assign trong §FR `03`).
+> Mỗi FR/NFR gán 1 người chịu trách nhiệm chính (assign trong §FR `03`). Code FE dir thực tế = **`frontend/`** (không phải `web/`).
 
 ---
 
@@ -108,7 +111,8 @@ docs/
 | `03-functional-requirements` | Lead + AI + FE | MoSCoW hợp lý; AC test được; map đủ 6 yêu cầu đề bài | Mỗi FR có AC + owner |
 | `04-non-functional` | Lead + DevOps | Mục tiêu perf/security/compliance khả thi với VPS | Số liệu thực tế, không viển vông |
 | `07-api-design` | AI + FE | Contract đủ để FE mock + AI implement | Cả 2 bên ký duyệt contract |
-| `05/06/08/09/10/11` (stub) | Owner tương ứng | Điền đủ khi vào phase | Theo roadmap |
+| `05/06` (đã filled v1.0) | Owner tương ứng | Diagram/ADR đúng code thật (xem ⚠️ notes 2026-07-18) | ADR-008 chốt, reality notes có mặt |
+| `08/09/10` (stub) | Owner tương ứng | Điền đủ khi vào phase | Theo roadmap |
 
 **Quy trình verify 1 doc:** đọc → ghi nhận sửa vào `brainstorming.md` §Verify hoặc comment trong file → owner update → commit `docs:`. Lặp đến khi đạt "Done khi".
 

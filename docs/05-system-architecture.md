@@ -8,31 +8,40 @@
 
 ## 1. Kiến trúc 3 lớp (3-tier, swappable)
 
+> ⚠️ **Trạng thái thực tế (2026-07-18):**
+> - **Web FE** thực tế = **React 18.2 + Create React App** (JSX, không TypeScript, port 3000, dir `frontend/`) — **KHÔNG phải Next.js 15**.
+> - **Chat contract** thực tế = **plain JSON blocking** qua `POST /api/v1/chat` (chatbot-service, port 8000) — **KHÔNG có SSE, KHÔNG streaming, KHÔNG token events**.
+> - **Chatbot memory** (`chatbot-service/memory/session_memory.py`) là **STUB no-op**, `session_id` opaque/chưa dùng — **KHÔNG persist** conversation ở lớp AI.
+> - **Quyết định mới (Recommendation A / ADR-008, lead-approved):** **data-api làm chat BFF + persistence**. Flow thực tế đề xuất: FE → `data-api POST /data/v1/chat` (JSON) → data-api persist session+message (bảng mới `chat_sessions`/`chat_messages` trong schema `hospital`, Flyway) → proxy `chatbot-service POST /api/v1/chat` (JSON) → lưu assistant reply+citations → trả `{answer, citations, ...}` cho FE. Không streaming (YAGNI). `GET /data/v1/chat/sessions` + `GET /data/v1/chat/sessions/{id}/messages` để FE load lại lịch sử.
+> - Sơ đồ và bảng dưới đây (Next.js / SSE / FastAPI-owns-chat) = **đề xuất gốc, chưa hiện thực**, giữ làm roadmap.
+
 ```
-Next.js FE ──SSE──▶ FastAPI (AI) ──REST──▶ Spring Boot (data) ──▶ PostgreSQL (hospital)
-    │                    │                        │                    
-    └──REST (data)──▶ Spring Boot ◀── ingest ─── FastAPI (chunk+embed) ──▶ Qdrant (kb_chunks)
-                                              (session/guardrail) ──▶ PostgreSQL (ai schema)
+React FE ──JSON──▶ data-api (chat BFF+persist) ──JSON──▶ chatbot-service (FastAPI AI) ──REST──▶ Spring Boot data ──▶ PostgreSQL (hospital)
+    │                       │                              │                                         │
+    └──REST (data)──────────┘                              └─retrieve──▶ Qdrant (kb_chunks)            ▼
+       (cũng /data/v1/*)                                       (session stub — KHÔNG persist)     schema hospital (chat_sessions/chat_messages mới)
 ```
 
 | Lớp | Tech | Sở hữu | Vai trò |
 |---|---|---|---|
-| **Web FE** | Next.js 15 | 2 web | chat UI, data lookup, citation, ASR/TTS |
-| **AI Gateway** | FastAPI | 2 AI | chat SSE, intent/emergency guardrail, RAG retrieve+rerank+LLM, ingest→Qdrant, eval |
+| **Web FE** | React 18 + CRA (thực tế) · Next.js 15 (đề xuất) | 2 web | chat UI, data lookup, citation, ASR/TTS |
+| **Chat BFF + Persistence** | Spring Boot (data-api, port 8081) | data dev | **ADR-008** persist chat session/message (schema `hospital`), proxy JSON → chatbot-service |
+| **AI Gateway** | FastAPI (chatbot-service, port 8000) | 2 AI | chat JSON (không SSE thực tế), intent/emergency guardrail, RAG retrieve+rerank+LLM, ingest→Qdrant, eval |
 | **Data Service** | Spring Boot + JPA | data dev | business data REST, PG `hospital`, seed loader |
-| **DB** | PostgreSQL | shared | schema `hospital` (Spring Boot) + `ai` (FastAPI) |
+| **DB** | PostgreSQL | shared | schema `hospital` (Spring Boot — incl. chat persistence ADR-008) + `ai` (FastAPI — chưa triển khai, memory stub) |
 | **Vector** | Qdrant | AI | `kb_chunks` (BGE-M3) |
 
 ## 2. Component diagram
 
 ```mermaid
 flowchart LR
-    FE[Next.js FE] -->|SSE /api/v1/chat| AI[FastAPI AI Gateway]
-    FE -->|REST /data/v1/*| SB[Spring Boot Data]
-    AI -->|REST adapter| SB
+    FE[React FE CRA port 3000] -->|JSON POST /data/v1/chat BFF| SB[Spring Boot data-api 8081]
+    FE -->|REST /data/v1/* data lookup| SB
+    SB -->|JSON POST /api/v1/chat proxy| AI[chatbot-service FastAPI 8000]
+    AI -->|REST adapter GET| SB
     AI -->|retrieve| QD[(Qdrant)]
-    AI -->|session/guardrail| PGA[(PG schema ai)]
-    SB -->|JPA| PGH[(PG schema hospital)]
+    SB -->|JPA persist chat_sessions/chat_messages| PGH[(PG schema hospital)]
+    AI -.session/guardrail stub.-> PGA[(PG schema ai - CHUA implement)]
     ING[Ingest job] -->|read kb_articles| SB
     ING -->|chunk+embed| QD
     LLM[LLM cloud/on-prem] <--> AI
@@ -41,14 +50,24 @@ flowchart LR
     Caddy --> SB
 ```
 
+> ⚠️ Sơ đồ trên = **kiến trúc thực tế (2026-07-18) + Recommendation A (ADR-008)**: data-api làm chat BFF + persistence. Đường `FE ──SSE──▶ FastAPI` trong sơ đồ gốc (đề xuất ADR-005/006) là **proposed-not-built** — chưa có SSE, chưa wire FE↔chatbot trực tiếp.
+
 ## 3. Data flow — chat request
-1. FE `POST /api/v1/chat` (SSE) → FastAPI.
-2. **Intent router** → phân loại (faq/booking/bhyt/pricing/emergency/oos).
-3. **Emergency check** (rule+LLM, R2 kill switch) → dương: ngắt, trả cảnh báo + redirect 115/Cấp cứu (fail-safe).
-4. **Retrieve** Qdrant top-k → **rerank** (BGE-reranker) → ngưỡng score? không → FR-7 refusal.
-5. **LLM grounded** (system prompt cứng + chunks context + R4 no-advice) → answer + citations.
-6. Assemble `final` event {answer, citations[], confidence, guardrailFlags, intent, redirection?}.
-7. Log `chat_messages` + `guardrail_events` + `retrieval_logs` (schema `ai`).
+
+> ⚠️ **Thực tế (2026-07-18) + Recommendation A (ADR-008):** data flow mới, FE không gọi thẳng FastAPI.
+
+1. **FE** `POST /data/v1/chat` (plain JSON: `{sessionId?, text, lang?}`) → **data-api** (port 8081).
+2. **data-api (BFF)** persist user message vào `chat_messages` (schema `hospital`), tạo/s-dụng `chat_sessions`.
+3. **data-api** proxy `POST /api/v1/chat` (JSON: `ChatRequest{sessionId, text, lang, userId, userRole, allowedPatientIds[], context{}}`) → **chatbot-service** (FastAPI, port 8000).
+4. **Intent router** → phân loại (faq/booking/bhyt/pricing/emergency/oos).
+5. **Emergency check** (rule+LLM, R2 kill switch) → dương: ngắt, trả cảnh báo + redirect 115/Cấp cứu (fail-safe).
+6. **Retrieve** Qdrant top-k → **rerank** (BGE-reranker) → ngưỡng score? không → FR-7 refusal.
+7. **LLM grounded** (system prompt cứng + chunks context + R4 no-advice) → answer + citations.
+8. **chatbot-service** trả `ChatResponse{answer, citations[], confidence, guardrailFlags[], intent, route, redirection, needsHandoff, metadata}` (JSON blocking, không SSE).
+9. **data-api** persist assistant reply + citations vào `chat_messages`; trả về FE gọn gàng cùng `sessionId`.
+10. **Observability/logging** giờ ở schema `hospital` (qua data-api); schema `ai` hiện chưa triển khai (chatbot memory stub).
+
+> Lịch sử: `GET /data/v1/chat/sessions` (list) + `GET /data/v1/chat/sessions/{id}/messages` (detail). Retention/TTL theo NFR-2 / R5 (≤24h, anonymous, deletable).
 
 ## 4. KB ingest flow
 `data/raw/*.txt` → parse → Spring Boot `kb_articles`/`faqs`/`procedures` (PG `hospital`) → ingest job **chunk + embed (BGE-M3)** → upsert Qdrant `kb_chunks` (payload: source/url/category/tags/form_code). Re-embed khi `hash` đổi.
@@ -76,6 +95,9 @@ Env `DATA_PROVIDER=demo|his`. Interface ổn định → prod chỉ swap adapter
 | ADR-005 | FE: Next.js (App Router) | Team React, BFF proxy, streaming, Docker |
 | ADR-006 | 3-tier: Spring Boot data tách FastAPI AI | Swappable HIS (ô 03), ownership rõ |
 | ADR-007 | 1 PG container, 2 schema (hospital+ai) | DRY infra, conversation thuộc AI |
+| **ADR-008** | **data-api = chat BFF + persistence** (FE → `POST /data/v1/chat` → data-api persist + proxy chatbot `/api/v1/chat` JSON). Bảng `chat_sessions`/`chat_messages` ở schema `hospital`, Flyway. | Recommendation A (lead-approved 2026-07-18): YAGNI (không SSE), conversation persistence thuộc Spring Boot layer (đã có Flyway + JPA), chatbot-service giữ stateless RAG/guardrail. **Supersedes** phần "chat owned by FastAPI / session persistence in `ai` schema" của ADR-006/007. |
+
+> ⚠️ **ADR-005 NOT followed (2026-07-18):** FE thực tế = React 18 + CRA (không Next.js). Lý do thay đổi: dev team đã chạy được CRA, không cần SSR/Route Handler BFF vì **data-api đã là BFF** (ADR-008). Next.js giữ roadmap nếu cần SSR/SEO.
 
 ## 8. Liên quan
 - [[01-project-overview]] · [[06-database-design]] · [[07-api-design]] · [[09-deployment-guide]] · [[00-data-strategy]]
