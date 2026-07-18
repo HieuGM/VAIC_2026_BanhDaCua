@@ -1,0 +1,18 @@
+$kind: collection
+name: 'BV Hữu nghị Hà Nội — Data API'
+description: |-
+  Collection test cho Spring Boot Data Service (`data-api` module).
+  Base URL: http://localhost:8081
+  Route prefix: /data/v1
+  Auth: Không cần (internal service)
+variables:
+  - key: base_url
+    value: 'http://localhost:8081'
+  - key: dept_id
+    value: ''
+  - key: doctor_id
+    value: ''
+  - key: service_id
+    value: ''
+auth:
+  type: noauth

@@ -18,7 +18,7 @@
 
 ### Authentication — none
 
-No auth / no login (matches đề tài scope). The data-api is an **internal** service (Docker network, behind the FastAPI gateway / Caddy) — network isolation is the boundary. The earlier demo `X-API-Key` filter was removed (out of scope; it was a no-op by default). No headers required to call `/data/v1/*`.
+No auth / no login (matches đề tài scope). The data-api is an **internal** service (Docker network, behind the FastAPI gateway / Caddy) — network isolation is the boundary. No headers required to call `/data/v1/*`.
 
 ### CORS
 
@@ -70,7 +70,7 @@ Used by paginated list endpoints (`/departments`, `/doctors`, `/services`). Non-
 
 Returns the single configured hospital info row. Controller: `HospitalInfoController`.
 
-**Auth:** See §0 (optional `X-API-Key`). **Query params:** none. **Path params:** none.
+**Auth:** none. **Query params:** none. **Path params:** none.
 
 **200 Response** — `HospitalInfoDto` when a row is seeded. **404 `not_found`** if no row configured.
 
@@ -727,13 +727,12 @@ curl -s "http://localhost:8081/data/v1/appointment-slots?doctor=12&date=2026-07-
 
 ## 9. Postman Quick-Start
 
-**Environment variables:** `base_url` = `http://localhost:8081`; `api_key` = `demo-key-123` (leave blank if server `DATA_API_KEY` env is unset).
+**Environment variables:** `base_url` = `http://localhost:8081`.
 
 **Collection-level headers:**
 
 | Key | Value |
 |---|---|
-| `X-API-Key` | `{{api_key}}` |
 | `Accept` | `application/json` |
 | `Accept-Language` | `vi` (optional; per docs/07 §B intent) |
 
@@ -743,8 +742,7 @@ curl -s "http://localhost:8081/data/v1/appointment-slots?doctor=12&date=2026-07-
 {
   "info": { "name": "BV Hữu nghị Hà Nội — Data API", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
   "variable": [
-    { "key": "base_url", "value": "http://localhost:8081" },
-    { "key": "api_key", "value": "" }
+    { "key": "base_url", "value": "http://localhost:8081" }
   ],
   "item": [
     { "name": "Hospital Info",     "request": { "method": "GET", "url": "{{base_url}}/data/v1/hospital-info" } },
@@ -779,9 +777,8 @@ Items below are observations, not bugs. Code is source of truth.
 | 7 | Channels list | `{ channelType, label, url, phone }` | Adds `id, campus, sortOrder`; only returns `isActive=true` | Extra fields additive; non-active hidden |
 | 8 | Extra fields in DTOs | (Various) | DTOs add `description`, `note`, `sourceDoc`, `effectiveDate`, etc. — all additive | FE-facing, non-breaking |
 | 9 | Endpoints not implemented | docs/07 §B.3 also lists `/kb/articles`, `/faqs`, `/emergency-protocols` | **No controllers exist** for these 3 endpoints | KB / FAQ / emergency-protocol retrieval not yet wired in data-api (likely owned by AI/FastAPI side instead) |
-| 10 | Auth | ~~`X-API-Key` (demo)~~ | **Removed** (out of scope — no auth in đề tài; data-api internal). Network = boundary | None |
-| 11 | Admin CRUD | docs/07 §B note: "Admin CRUD … guard `X-API-Key`, MVP có thể skip" | No POST/PUT/DELETE controllers | Matches MVP scope (seed via Flyway) |
-| 12 | CORS exposed header | (Not specified) | `X-Total-Count` exposed but **not set** by any controller (pagination metadata is in body via `PageResponse`) | Header is a no-op today |
+| 10 | Admin CRUD | docs/07 §B note: "Admin CRUD … MVP có thể skip" | No POST/PUT/DELETE controllers | Matches MVP scope (seed via Flyway) |
+| 11 | CORS exposed header | (Not specified) | `X-Total-Count` exposed but **not set** by any controller (pagination metadata is in body via `PageResponse`) | Header is a no-op today |
 
 ---
 

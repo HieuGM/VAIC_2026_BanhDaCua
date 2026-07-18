@@ -1,0 +1,31 @@
+$kind: http-request
+name: 'GET Procedures'
+method: GET
+url: '{{base_url}}/data/v1/procedures'
+order: 1000
+queryParams:
+  - key: code
+    value: 'QT.25.01'
+    disabled: true
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          pm.expect(pm.response.json()).to.be.an("array");
+      });
+      pm.test("ProcedureDto has required fields", function () {
+          const arr = pm.response.json();
+          if (arr.length > 0) {
+              const p = arr[0];
+              pm.expect(p).to.have.property("id");
+              pm.expect(p).to.have.property("code");
+              pm.expect(p).to.have.property("stepNo");
+          }
+      });

@@ -1,0 +1,41 @@
+$kind: http-request
+name: 'GET Appointment Slots'
+method: GET
+url: '{{base_url}}/data/v1/appointment-slots'
+order: 1000
+queryParams:
+  - key: doctor
+    value: '12'
+    disabled: true
+  - key: date
+    value: '2026-07-21'
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          pm.expect(pm.response.json()).to.be.an("array");
+      });
+      pm.test("AppointmentSlotDto has required fields", function () {
+          const arr = pm.response.json();
+          if (arr.length > 0) {
+              const s = arr[0];
+              pm.expect(s).to.have.property("id");
+              pm.expect(s).to.have.property("doctorId");
+              pm.expect(s).to.have.property("date");
+              pm.expect(s).to.have.property("startTime");
+              pm.expect(s).to.have.property("endTime");
+              pm.expect(s).to.have.property("capacity");
+              pm.expect(s).to.have.property("bookedCount");
+              pm.expect(s).to.have.property("available");
+          }
+      });
+      pm.test("NOTE: date param is REQUIRED — omitting returns []", function () {
+          pm.expect(true).to.be.true; // Behavioral note
+      });

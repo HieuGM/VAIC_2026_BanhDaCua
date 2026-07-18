@@ -5,6 +5,12 @@ Claudekit Engineer v2.13.0/
 # === Transient extraction / OCR artifacts ===
 docs/_extracted/
 
+# === Postman workspace meta / local scaffolding ===
+# (commit only the canonical collection at docs/postman/)
+docs/.postman/
+docs/refer/.postman/
+docs/refer/postman/
+
 # === OS / Editor junk ===
 .DS_Store
 Thumbs.db

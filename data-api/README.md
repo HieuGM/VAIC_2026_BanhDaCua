@@ -54,7 +54,6 @@ mvn spring-boot:run
 | `DB_PASS` | hanoiheart | DB password |
 | `SERVER_PORT` | 8081 | HTTP port |
 | `CORS_ALLOWED_ORIGINS` | http://localhost:3000 | Comma-separated FE origins |
-| `DATA_API_KEY` | (empty) | If set, requires `X-API-Key` header |
 
 ## Database migrations
 
