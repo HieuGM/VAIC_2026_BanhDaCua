@@ -1,0 +1,17 @@
+{
+  "name": "openai-vietnamese-stt-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "zipformer:setup": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-zipformer.ps1",
+    "zipformer:service": "powershell -ExecutionPolicy Bypass -File ./scripts/run-zipformer.ps1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^2.2.0"
+  }
+}

@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+
+zipformer-service/.venv/
+zipformer-service/__pycache__/
+zipformer-service/models/
+tools/ffmpeg/
+*.wav
+*.webm
+*.mp4

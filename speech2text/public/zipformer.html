@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vietnamese Zipformer STT Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="card" aria-labelledby="pageTitle">
+        <header>
+          <p class="eyebrow">LOCAL SPEECH-TO-TEXT</p>
+          <h1 id="pageTitle">Zipformer tiếng Việt</h1>
+          <p class="description">
+            Ghi âm trên trình duyệt và nhận dạng local bằng sherpa-onnx
+            Zipformer INT8 chạy CPU.
+          </p>
+        </header>
+
+        <nav class="demo-nav" aria-label="Chọn bản demo">
+          <a href="./index.html">OpenAI</a>
+          <a class="active" href="./zipformer.html">Zipformer local</a>
+        </nav>
+
+        <div class="status-row" aria-live="polite">
+          <span id="statusDot" class="status-dot" aria-hidden="true"></span>
+          <span id="statusText">Đang kiểm tra Zipformer service...</span>
+          <span id="timer" class="timer">00:00</span>
+        </div>
+
+        <section class="device-panel">
+          <label class="field-label" for="micSelect">Thiết bị thu âm</label>
+          <select id="micSelect" class="mic-select">
+            <option value="">Đang kiểm tra microphone...</option>
+          </select>
+          <p id="micHint" class="device-hint">
+            Nếu dùng tai nghe Bluetooth, hãy chọn thiết bị có chữ Bluetooth,
+            Headset hoặc Hands-Free.
+          </p>
+          <div class="input-level">
+            <span>Tín hiệu micro</span>
+            <div class="level-meter" aria-hidden="true">
+              <div id="inputLevelBar" class="level-meter__bar"></div>
+            </div>
+            <span id="inputLevelText" class="level-text">Chưa kiểm tra</span>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button id="startButton" class="button primary" type="button" disabled>
+            Bắt đầu ghi âm
+          </button>
+          <button id="stopButton" class="button danger" type="button" disabled>
+            Dừng và nhận dạng
+          </button>
+        </div>
+
+        <section class="result-section recording-section">
+          <div class="result-heading">
+            <h2>Bản ghi âm</h2>
+            <span class="badge neutral">Nghe lại</span>
+          </div>
+          <div class="recording-panel">
+            <p id="recordingInfo" class="recording-info muted">
+              Chưa có bản ghi.
+            </p>
+            <audio id="recordingAudio" class="recording-audio" controls hidden></audio>
+            <a
+              id="downloadRecordingLink"
+              class="download-link"
+              href="#"
+              download
+              hidden
+            >
+              Tải bản ghi
+            </a>
+          </div>
+        </section>
+
+        <section class="result-section">
+          <div class="result-heading">
+            <h2>Kết quả Zipformer</h2>
+            <span class="badge final">Realtime mô phỏng</span>
+          </div>
+          <div id="transcript" class="transcript muted">
+            Kết quả xuất hiện sau khi bạn bấm dừng.
+          </div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Chỉ số xử lý">
+          <article class="metric-card">
+            <span>Audio</span>
+            <strong id="audioDuration">—</strong>
+          </article>
+          <article class="metric-card">
+            <span>Inference</span>
+            <strong id="inferenceTime">—</strong>
+          </article>
+          <article class="metric-card">
+            <span>Tổng thời gian</span>
+            <strong id="totalTime">—</strong>
+          </article>
+          <article class="metric-card">
+            <span>RTF</span>
+            <strong id="realTimeFactor">—</strong>
+          </article>
+        </section>
+
+        <div id="errorBox" class="error-box" role="alert" hidden></div>
+
+        <p class="hint">
+          Hãy thử nói: "Tôi muốn đặt lịch khám tim mạch vào sáng thứ Hai."
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./zipformer.js"></script>
+  </body>
+</html>

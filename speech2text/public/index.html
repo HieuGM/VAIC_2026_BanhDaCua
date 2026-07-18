@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vietnamese Speech-to-Text Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="card" aria-labelledby="pageTitle">
+        <header>
+          <p class="eyebrow">OPENAI SPEECH-TO-TEXT</p>
+          <h1 id="pageTitle">Nhận dạng giọng nói tiếng Việt</h1>
+          <p class="description">
+            Realtime bằng gpt-realtime-whisper, kết quả cuối bằng
+            gpt-4o-transcribe.
+          </p>
+        </header>
+
+        <nav class="demo-nav" aria-label="Chọn bản demo">
+          <a class="active" href="./index.html">OpenAI</a>
+          <a href="./zipformer.html">Zipformer local</a>
+        </nav>
+
+        <div class="status-row" aria-live="polite">
+          <span id="statusDot" class="status-dot" aria-hidden="true"></span>
+          <span id="statusText">Chưa bắt đầu</span>
+          <span id="timer" class="timer">00:00</span>
+        </div>
+
+        <section class="device-panel">
+          <label class="field-label" for="micSelect">Thiết bị thu âm</label>
+          <select id="micSelect" class="mic-select">
+            <option value="">Đang kiểm tra microphone...</option>
+          </select>
+          <p id="micHint" class="device-hint">
+            Nếu dùng tai nghe Bluetooth, hãy chọn thiết bị có chữ Bluetooth,
+            Headset hoặc Hands-Free.
+          </p>
+          <div class="input-level">
+            <span>Tín hiệu micro</span>
+            <div class="level-meter" aria-hidden="true">
+              <div id="inputLevelBar" class="level-meter__bar"></div>
+            </div>
+            <span id="inputLevelText" class="level-text">Chưa kiểm tra</span>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button id="startButton" class="button primary" type="button">
+            Bắt đầu ghi âm
+          </button>
+          <button
+            id="stopButton"
+            class="button danger"
+            type="button"
+            disabled
+          >
+            Dừng và xử lý
+          </button>
+        </div>
+
+        <section class="result-section recording-section">
+          <div class="result-heading">
+            <h2>Bản ghi âm</h2>
+            <span class="badge neutral">Nghe lại</span>
+          </div>
+          <div class="recording-panel">
+            <p id="recordingInfo" class="recording-info muted">
+              Chưa có bản ghi.
+            </p>
+            <audio id="recordingAudio" class="recording-audio" controls hidden></audio>
+            <a
+              id="downloadRecordingLink"
+              class="download-link"
+              href="#"
+              download
+              hidden
+            >
+              Tải bản ghi
+            </a>
+          </div>
+        </section>
+
+        <section class="result-section">
+          <div class="result-heading">
+            <h2>Kết quả realtime</h2>
+            <span class="badge">Tạm thời</span>
+          </div>
+          <div id="liveTranscript" class="transcript muted">
+            Văn bản sẽ xuất hiện khi bạn bắt đầu nói.
+          </div>
+        </section>
+
+        <section class="result-section">
+          <div class="result-heading">
+            <h2>Kết quả cuối</h2>
+            <span class="badge final">Chính xác hơn</span>
+          </div>
+          <div id="finalTranscript" class="transcript muted">
+            Kết quả cuối xuất hiện sau khi bạn bấm dừng.
+          </div>
+        </section>
+
+        <div id="errorBox" class="error-box" role="alert" hidden></div>
+
+        <p class="hint">
+          Hãy thử nói: "Tôi muốn đặt lịch khám tim mạch vào sáng thứ Hai."
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
