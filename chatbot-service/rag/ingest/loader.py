@@ -84,7 +84,7 @@ def load_sources(data_dir: str | Path | None = None) -> list[dict]:
     root = Path(data_dir or get_settings().data_dir)
     sources = []
     for entry in REGISTRY:
-        path = root / entry["file"]
+        path = _source_path(root, entry["file"])
         if not path.exists():
             continue
         sources.append(
@@ -98,4 +98,11 @@ def load_sources(data_dir: str | Path | None = None) -> list[dict]:
 
 def missing_sources(data_dir: str | Path | None = None) -> list[str]:
     root = Path(data_dir or get_settings().data_dir)
-    return [e["file"] for e in REGISTRY if not (root / e["file"]).exists()]
+    return [e["file"] for e in REGISTRY if not _source_path(root, e["file"]).exists()]
+
+
+def _source_path(root: Path, filename: str) -> Path:
+    direct = root / filename
+    if direct.exists():
+        return direct
+    return root / "raw" / filename
