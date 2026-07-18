@@ -270,9 +270,14 @@ jobs:
               sleep 2
             done
             [ "$ok" = 1 ] || { echo "::error::data-api not healthy"; docker compose logs --tail=50 data-api; exit 1; }
-            # chatbot health (slim image không có curl → exec python urllib).
-            docker compose exec -T chatbot python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3).status==200 else 1)" \
-              || { echo "::error::chatbot not healthy"; docker compose logs --tail=50 chatbot; exit 1; }
+            # chatbot health (FastAPI+LangGraph boot ~20s → retry như data-api;
+            # slim image không có curl → exec python urllib trong loop, không 1 phát).
+            ok=0
+            for i in $(seq 1 30); do
+              if docker compose exec -T chatbot python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3).status==200 else 1)" >/dev/null 2>&1; then ok=1; break; fi
+              sleep 2
+            done
+            [ "$ok" = 1 ] || { echo "::error::chatbot not healthy"; docker compose logs --tail=50 chatbot; exit 1; }
             # reclaim old image layers (dual-tag tích đầy disk trên 40GB SSD).
             docker image prune -f
             echo "BACKEND DEPLOY OK"
