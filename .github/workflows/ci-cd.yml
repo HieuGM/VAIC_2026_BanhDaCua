@@ -1,0 +1,220 @@
+name: ci-cd
+
+# Build+push tự động khi code vào develop. PR → develop: chỉ chạy test (không push
+# image). Deploy = manual `workflow_dispatch` (pull + up -d on VPS). Broken code
+# KHÔNG tự live — deploy luôn cần chủ ý.
+on:
+  push:
+    branches: [develop]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  pull_request:
+    branches: [develop]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'SSH deploy VPS sau build (pull + up -d)'
+        type: boolean
+        default: false
+      deploy_fe:
+        description: 'Build + rsync frontend luôn'
+        type: boolean
+        default: false
+
+# push cancel nhau (nhiều commit liên tiếp), nhưng deploy (dispatch) KHÔNG bị cancel
+# → không kill deploy giữa chừng (half-applied / rsync --delete giữa chừng).
+concurrency:
+  group: cicd-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
+# GHCR: GITHUB_TOKEN cần packages:write. Cần CẢ HAI: YAML permission + repo setting
+# Settings→Actions→General→Workflow permissions = "Read and write" (read-only clamp → 403).
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  OWNER: hieugm          # HieuGM→lowercase (GHCR yêu cầu lowercase). KHỚP docker-compose.yml image: ghcr.io/hieugm/* (drift→pull fail).
+
+jobs:
+  # ───────────── TEST data-api (mvn test — GATE build) ─────────────
+  # Đã verify local: 11/11 green, H2 in-mem (MODE=PostgreSQL) qua @TestPropertySource,
+  # không Testcontainers, không service container → runner sạch sẽ pass.
+  test-data-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21', cache: maven }
+      - name: mvn -B test
+        working-directory: data-api
+        run: mvn -B test
+
+  # ───────────── TEST chatbot (syntax gate — KHÔNG pull torch) ─────────────
+  # compileall = bytecode compile, syntax-only, không execute import → không cần deps.
+  test-chatbot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: compileall (syntax-only, không torch)
+        working-directory: chatbot-service
+        run: python -m compileall -q app
+
+  # ───────────── BUILD data-api (skip trên PR — không push image từ PR) ─────────────
+  build-data-api:
+    needs: [test-data-api]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./data-api
+          platforms: linux/amd64      # VPS arch (demo live = amd64)
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.OWNER }}/vaic-data-api:latest
+            ${{ env.REGISTRY }}/${{ env.OWNER }}/vaic-data-api:${{ github.sha }}
+          cache-from: type=gha,scope=data-api
+          cache-to: type=gha,mode=max,scope=data-api
+
+  # ───────────── BUILD chatbot (FastAPI) + torch CPU gate ─────────────
+  build-chatbot:
+    needs: [test-chatbot]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: chatbot-service/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.OWNER }}/vaic-chatbot:latest
+            ${{ env.REGISTRY }}/${{ env.OWNER }}/vaic-chatbot:${{ github.sha }}
+          cache-from: type=gha,scope=chatbot
+          cache-to: type=gha,mode=max,scope=chatbot
+      # GATE torch CPU-only: grep nvidia-* (ĐÚNG — runner không GPU nên
+      # torch.cuda.is_available() false-positive, KHÔNG dùng nó). buildx push-only →
+      # image KHÔNG ở local daemon → phải `docker pull` trước `docker run`.
+      - name: Gate — torch CPU-only (no CUDA bloat)
+        run: |
+          set -e
+          IMG="${{ env.REGISTRY }}/${{ env.OWNER }}/vaic-chatbot:${{ github.sha }}"
+          docker pull "$IMG"
+          docker run --rm "$IMG" /opt/venv/bin/pip list 2>/dev/null | tee pkgs.txt
+          if grep -qiE '^nvidia-' pkgs.txt; then
+            echo "::error::CUDA/nvidia packages leaked — CPU-torch fix FAILED. Abort."
+            grep -iE '^nvidia-' pkgs.txt; exit 1
+          fi
+          echo "torch version:"; grep -iE '^torch ' pkgs.txt || echo "(torch missing?)"
+
+  # ───────────── BUILD FE (chỉ khi dispatch + deploy_fe) ─────────────
+  build-frontend:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy_fe
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - name: Build CRA (same-origin API — khớp deploy/build-frontend.sh live)
+        run: |
+          cd frontend
+          npm ci
+          REACT_APP_API_BASE_URL=/ npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fe-build
+          path: frontend/build/
+
+  # ───────────── DEPLOY (manual dispatch only — KHÔNG chạy trên push/PR/merge) ─────────────
+  deploy:
+    needs: [build-data-api, build-chatbot, build-frontend]   # build-frontend skipped=ok khi deploy_fe=false
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download FE artifact
+        if: inputs.deploy_fe
+        uses: actions/download-artifact@v4
+        with:
+          name: fe-build
+          path: frontend/build
+      - name: Configure SSH key + known_hosts
+        env:
+          VPS_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$VPS_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+      - name: Sync compose to VPS (commit chính xác đang deploy; VPS giữ .env riêng)
+        # VPS có thể đang giữ compose CŨ (không có image: GHCR) → runner scp compose mới
+        # lên TRƯỚC pull. Không phụ thuộc git/protocol/branch trên VPS. .env KHÔNG đụng.
+        run: |
+          scp -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+            docker-compose.yml \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_PATH }}/docker-compose.yml
+      # Backend deploy + health TRƯỚC, FE rsync SAU (new FE + old backend window tránh).
+      - name: SSH deploy backend (preflight .env + named pull + up + health poll + chatbot health + prune)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ secrets.VPS_PATH }}
+            # preflight: compose env_file hard-fail nếu thiếu → check trước pull.
+            test -f .env || { echo "::error::.env missing on VPS"; exit 1; }
+            test -f chatbot-service/.env || { echo "::error::chatbot-service/.env missing on VPS"; exit 1; }
+            # named pull theo SERVICE name (data-api, chatbot) — compose nhận service name,
+            # KHÔNG phải image suffix. Skip postgres (Docker Hub rate-limit, image bên thứ 3).
+            docker compose pull data-api chatbot
+            docker compose up -d --no-build --remove-orphans
+            # health poll data-api (JVM startup 15-30s, endpoint verified tồn tại).
+            ok=0
+            for i in $(seq 1 30); do
+              if curl -sf http://127.0.0.1:8081/data/v1/departments >/dev/null; then ok=1; break; fi
+              sleep 2
+            done
+            [ "$ok" = 1 ] || { echo "::error::data-api not healthy"; docker compose logs --tail=50 data-api; exit 1; }
+            # chatbot health (slim image không có curl → exec python urllib).
+            docker compose exec -T chatbot python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3).status==200 else 1)" \
+              || { echo "::error::chatbot not healthy"; docker compose logs --tail=50 chatbot; exit 1; }
+            # reclaim old image layers (dual-tag tích đầy disk trên 40GB SSD).
+            docker image prune -f
+            echo "BACKEND DEPLOY OK"
+      - name: Rsync FE (sau backend healthy; guard empty build trước --delete)
+        if: inputs.deploy_fe
+        run: |
+          [ -s frontend/build/index.html ] || { echo "::error::empty FE build — abort trước khi wipe live SPA"; exit 1; }
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new" \
+            frontend/build/ \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/heca/build/
+          echo "FE DEPLOY OK"
