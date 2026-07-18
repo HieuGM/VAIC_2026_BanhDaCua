@@ -45,9 +45,8 @@ flowchart LR
     ING[Ingest job] -->|read kb_articles| SB
     ING -->|chunk+embed| QD
     LLM[LLM cloud/on-prem] <--> AI
-    Caddy[Caddy TLS] --> FE
-    Caddy --> AI
-    Caddy --> SB
+    NGX[host nginx :80 TLS] -->|serve SPA /var/www + proxy /data/ to 8081| FE
+    NGX --> SB
 ```
 
 > ⚠️ Sơ đồ trên = **kiến trúc thực tế (2026-07-18) + Recommendation A (ADR-008)**: data-api làm chat BFF + persistence. Đường `FE ──SSE──▶ FastAPI` trong sơ đồ gốc (đề xuất ADR-005/006) là **proposed-not-built** — chưa có SSE, chưa wire FE↔chatbot trực tiếp.
@@ -80,10 +79,11 @@ FastAPI → HospitalDataProvider (interface)
 ```
 Env `DATA_PROVIDER=demo|his`. Interface ổn định → prod chỉ swap adapter + Docker.
 
-## 6. Deployment (demo — 1 VPS, Docker Compose)
-- Services: `web` (Next standalone) · `api` (FastAPI) · `data-api` (Spring Boot) · `postgres` · `qdrant` · `caddy`.
-- Caddy auto-TLS, route: `/`→web, `/api/*`→api, `/data/*`→data-api.
-- 1 lệnh `docker compose up -d`. Pilot: cùng image sang infra BV, LLM on-prem (Qwen2.5/Vistral), không data egress.
+## 6. Deployment (Option B — host nginx + docker backend, 2026-07-18 LIVE)
+- **Host nginx :80** serve SPA (`/var/www/heca/build`, rsync từ CRA build) + proxy `location /data/` → `127.0.0.1:8081` (data-api, host-local only). TLS qua certbot host nginx (Cloudflare edge ở demo).
+- **Docker backend** (3 service): `postgres` (`postgres:16-alpine`) + `data-api` (build, `127.0.0.1:8081`) + `chatbot` (build root context, volume `qdrant_data`). FE **không** container.
+- Deploy: `bash deploy/deploy.sh` (backend) + `bash deploy/build-frontend.sh` (FE) + enable nginx site. Runbook đầy đủ: [`../DEPLOY.md`](../DEPLOY.md), tóm tắt `[[09-deployment-guide]]`.
+- Pilot: cùng image sang infra BV, LLM on-prem (Qwen2.5/Vistral), không data egress.
 
 ## 7. ADR (Architecture Decision Records)
 | ID | Quyết định | Lý do |
@@ -96,6 +96,7 @@ Env `DATA_PROVIDER=demo|his`. Interface ổn định → prod chỉ swap adapter
 | ADR-006 | 3-tier: Spring Boot data tách FastAPI AI | Swappable HIS (ô 03), ownership rõ |
 | ADR-007 | 1 PG container, 2 schema (hospital+ai) | DRY infra, conversation thuộc AI |
 | **ADR-008** | **data-api = chat BFF + persistence** (FE → `POST /data/v1/chat` → data-api persist + proxy chatbot `/api/v1/chat` JSON). Bảng `chat_sessions`/`chat_messages` ở schema `hospital`, Flyway `V10`. | Recommendation A (lead-approved 2026-07-18): YAGNI (không SSE), conversation persistence thuộc Spring Boot layer (đã có Flyway + JPA), chatbot-service giữ stateless RAG/guardrail. **Supersedes** phần "chat owned by FastAPI / session persistence in `ai` schema" của ADR-006/007. **Status: IMPLEMENTED (2026-07-18, commit `de120e2`)** — Flyway V10 applied PG, `ChatSession`/`ChatMessage` entity, `ChatService.handleMessage`, `ChatbotClient` (RestClient), `ChatController` 3 endpoints; 11/11 tests pass. Pending: real-chatbot E2E + merge `develop`. |
+| **ADR-009** | **Option B deploy: host nginx + docker backend** — FE host-built, nginx serve SPA + proxy `/data/`→`127.0.0.1:8081`; docker chỉ postgres+data-api+chatbot. KHÔNG all-in-docker, KHÔNG Caddy. | VPS đã chạy nginx host multi-site trên :80 → nginx container sẽ xung đột cổng. Host nginx quen thuộc (certbot, `/var/www`). Backend nội bộ compose network, chỉ data-api expose host-local. **Status: DEPLOYED LIVE (2026-07-18, `heca.tolalinhne.site`, PR #6 `bd6eef8`).** |
 
 > ⚠️ **ADR-005 NOT followed (2026-07-18):** FE thực tế = React 18 + CRA (không Next.js). Lý do thay đổi: dev team đã chạy được CRA, không cần SSR/Route Handler BFF vì **data-api đã là BFF** (ADR-008). Next.js giữ roadmap nếu cần SSR/SEO.
 
