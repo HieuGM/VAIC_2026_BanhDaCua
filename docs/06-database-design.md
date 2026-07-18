@@ -2,7 +2,7 @@
 
 > **Mục đích:** lược đồ PostgreSQL (business data Spring Boot + session AI) + vector store Qdrant.
 > **Đọc sau:** `00-hospital-domain-rules`, `02-business-analysis`, `01-project-overview` §6.
-> Cập nhật: 2026-07-17 · Phiên bản: **v1.0** · Trạng thái: **Review** (owner: Spring Boot + AI).
+> Cập nhật: 2026-07-18 · Phiên bản: **v1.1** · Trạng thái: **Review** (owner: Spring Boot + AI).
 
 ---
 
@@ -69,9 +69,9 @@ erDiagram
 
 ## 4. Schema `ai` (FastAPI — session/guardrail/eval, share PG container)
 
-> ⚠️ **Trạng thái thực tế (2026-07-18):** schema `ai` hiện **CHƯA implement**. `chatbot-service/memory/session_memory.py` là **STUB no-op** (TODO) — `session_id` opaque, không lưu conversation, không có bảng nào tồn tại. Các bảng `chat_sessions`/`chat_messages` dưới đây (theo đề xuất gốc ADR-006/007) **chưa được tạo**.
+> ⚠️ **Trạng thái thực tế (2026-07-18):** schema `ai` hiện **CHƯA implement**. `chatbot-service/memory/session_memory.py` là **STUB no-op** (TODO) — `session_id` opaque, không lưu conversation, không có bảng nào tồn tại. Các bảng `chat_sessions`/`chat_messages` dưới đây (theo đề xuất gốc ADR-006/007) **chưa được tạo** ở schema `ai`.
 >
-> **Quyết định mới — Recommendation A / ADR-008 (lead-approved):** **chat persistence chuyển sang data-api, schema `hospital`** (Spring Boot + Flyway, đã có infra). Xem §4b bên dưới. Các bảng `guardrail_events` / `retrieval_logs` / `feedback` (concern AI eval) có thể vẫn nằm schema `ai` khi AI team cần — nhưng KHÔNG triển khai 48h (YAGNI).
+> **Quyết định mới — Recommendation A / ADR-008 (lead-approved, IMPLEMENTED):** **chat persistence chuyển sang data-api, schema `hospital`** (Spring Boot + Flyway V10, đã apply local PG). Xem §4b bên dưới. Các bảng `guardrail_events` / `retrieval_logs` / `feedback` (concern AI eval) có thể vẫn nằm schema `ai` khi AI team cần — nhưng KHÔNG triển khai 48h (YAGNI).
 
 | Bảng | Mục đích | Cột chính |
 |---|---|---|
@@ -87,16 +87,18 @@ erDiagram
 
 ## 4b. Schema `hospital` — **Chat persistence (ADR-008, Recommendation A)** — sở hữu data dev
 
-> ⚠️ **MỚI (2026-07-18):** chat persistence do data-api sở hữu (Spring Boot, Flyway). Thay thế phần "chat thuộc schema `ai`" của ADR-006/007.
+> ✅ **IMPLEMENTED (2026-07-18, commit `de120e2`):** chat persistence do data-api sở hữu (Spring Boot, Flyway). Migration `V10__create_chat_sessions_and_messages.sql` **đã apply PG**. Thay thế phần "chat thuộc schema `ai`" của ADR-006/007.
 
-| Bảng | Mục đích | Cột chính |
+| Bảng | Mục đích | Cột chính (verified against V10) |
 |---|---|---|
-| `chat_sessions` | Phiên chat (FE → data-api BFF) | `id` (uuid), `created_at`, `updated_at`, `lang`, `anon_token?` (nullable, cho phép re-load history ở trình duyệt khác), `user_id?` (nullable, khi có auth sau), `expires_at` (≤24h, NFR-2 / R5), `deleted_at?` |
-| `chat_messages` | Tin nhắn phiên | `id`, `session_id` (fk→chat_sessions), `role` (user/assistant/system), `content` (text), `citations` (jsonb), `intent`, `route`, `guardrail_flags` (jsonb), `confidence`, `created_at` |
+| `chat_sessions` | Phiên chat (FE → data-api BFF) | `id` UUID PK, `created_at` TIMESTAMPTZ default `now()`, `updated_at` TIMESTAMPTZ default `now()`, `lang` VARCHAR(8), `anon_token` UUID, `expires_at` TIMESTAMPTZ, `deleted_at` TIMESTAMPTZ |
+| `chat_messages` | Tin nhắn phiên | `id` BIGSERIAL PK, `session_id` UUID FK→`chat_sessions(id)` ON DELETE CASCADE, `role` VARCHAR(16) CHECK in (`user`,`assistant`,`system`), `content` TEXT NOT NULL, `citations` JSONB, `intent` VARCHAR(64), `route` VARCHAR(64), `guardrail_flags` JSONB, `confidence` REAL, `created_at` TIMESTAMPTZ default `now()` |
 
 **Index:** `chat_sessions(anon_token)`, `chat_messages(session_id, created_at)`.
+**FK cascade:** xoá session → cascade xoá messages (DB-level, không cần application code).
+**Entity mapping:** `ChatSession` (UUID id, own timestamps — **không** extend `BaseEntity`); `ChatMessage` (extends `BaseEntity`, `@ManyToOne` ChatSession, jsonb via Hibernate `@JdbcTypeCode(SqlTypes.JSON)`).
 **Retention/TTL:** cron xoá `chat_sessions` + cascade khi `expires_at < now()` — theo NFR-2 / R5 (≤24h, anonymous, deletable). PII không bao giờ lưu (không CCCD/HS/chẩn đoán).
-**Migration:** Flyway `V{n}__init_chat_tables.sql` trong `data-api/src/main/resources/db/migration`.
+**Migration:** Flyway `V10__create_chat_sessions_and_messages.sql` trong `data-api/src/main/resources/db/migration` (đã apply local PG).
 
 ---
 

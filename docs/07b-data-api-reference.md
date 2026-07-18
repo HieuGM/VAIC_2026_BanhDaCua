@@ -725,7 +725,197 @@ curl -s "http://localhost:8081/data/v1/appointment-slots?doctor=12&date=2026-07-
 
 ---
 
-## 9. Postman Quick-Start
+## 9. Chat BFF + Persistence (ADR-008 — **Implemented** commit `de120e2`)
+
+> **Status (2026-07-18):** Implemented + unit/integration tested local (11/11: `ChatServiceTest` 4 + `ChatControllerTest` 6 `@WebMvcTest` + 1). Pending: real-chatbot E2E + browser E2E + merge `develop`.
+> Controller: `ChatController`. Service: `ChatService`. Upstream client: `ChatbotClient` (RestClient). Persistence: `ChatSession`/`ChatMessage` (Flyway `V10`, schema `hospital`).
+> **No auth.** Anonymous identity via optional `X-Anon-Token` header. **No streaming** (JSON blocking). Proxy target: `chatbot-service POST /api/v1/chat` (`hanoi-heart.chatbot.base-url`, default `http://localhost:8000`).
+
+### 9.1 Error envelope additions
+
+| HTTP | `code` | Trigger (chat-specific) |
+|---|---|---|
+| 400 | `bad_request` | `text` blank (fails `@NotBlank`) OR body malformed |
+| 404 | `not_found` | `sessionId` provided in body but NOT found in DB (`ChatSessionNotFoundException extends ResourceNotFoundException`) |
+
+### 9.2 `POST /data/v1/chat`
+
+Send a chat message; receive grounded answer + citations. Side-effects: persist user message → proxy chatbot → persist assistant reply (or fallback).
+
+**Path params:** none. **Auth:** §0 (none). **Optional header:** `X-Anon-Token: <UUID>` (pseudo-identity; if missing/invalid UUID → server generates one, stored on session).
+
+**Request body** — `ChatRequest`:
+
+| Field | Type | Required | Default | Notes |
+|---|---|---|---|---|
+| `sessionId` | UUID string | no | (null → new session) | If provided but NOT found → **404 `not_found`** (deviation from "create-on-miss" — see §11 #6) |
+| `text` | String | **yes** (`@NotBlank`) | — | User message; empty/blank → 400 |
+| `lang` | String | no | `"vi"` | Language code (VARCHAR(8)) |
+
+> **Behavioral notes:**
+> - `sessionId` null/empty → data-api creates a new `chat_sessions` row, returns its UUID in response.
+> - User message is persisted to `chat_messages` (role=`user`) **BEFORE** the chatbot call, so it survives upstream failures.
+> - On chatbot unavailable (network/timeout/5xx/parse), data-api persists a **fallback** assistant message and returns **HTTP 200** (not 5xx) — see §9.4.
+
+**200 Response** — `ChatResponse`:
+
+| Field | Type | Notes |
+|---|---|---|
+| `sessionId` | UUID string | Echoes existing or newly-created session id |
+| `answer` | String | Assistant reply text (Vietnamese UTF-8 safe) |
+| `citations` | Array | `[{ source, url, snippet }]` — may be empty `[]` |
+| `confidence` | Float | `0.0`–`1.0` from chatbot; `0.0` on fallback |
+| `intent` | String | e.g. `faq`, `booking`, `bhyt`, `pricing`, `emergency`, `out_of_scope`, `UNKNOWN` (fallback) |
+| `guardrailFlags` | Array | e.g. `["emergency"]`, `["upstream_error"]` (fallback), `[]` |
+| `redirection` | Object\|null | `{ channelType, url }` if chatbot routes to a channel |
+| `needsHandoff` | Boolean | From chatbot |
+| `metadata` | Object | Free-form passthrough from chatbot |
+
+**Example 200 (happy path):**
+```json
+{
+  "sessionId": "a1b2c3d4-....-....-....-............",
+  "answer": "Bệnh viện có khoa Tim mạch ở Tầng 2, Khu B...",
+  "citations": [
+    { "source": "benhvientimhanoi.vn", "url": "https://...", "snippet": "Khoa Khám bệnh Tự nguyện..." }
+  ],
+  "confidence": 0.82,
+  "intent": "faq",
+  "guardrailFlags": [],
+  "redirection": null,
+  "needsHandoff": false,
+  "metadata": {}
+}
+```
+
+**Example 200 (fallback — chatbot down):** see §9.4.
+
+**Errors:**
+- `400 bad_request` — `text` blank: `{"error":{"code":"bad_request","message":"text must not be blank"}}`.
+- `404 not_found` — `sessionId` provided but missing: `{"error":{"code":"not_found","message":"Chat session not found: <id>"}}`.
+
+**curl:**
+```bash
+# new session
+curl -s -X POST "http://localhost:8081/data/v1/chat" \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Khoa Tim mạch ở tầng mấy?","lang":"vi"}' | jq
+
+# existing session, with anon token
+curl -s -X POST "http://localhost:8081/data/v1/chat" \
+  -H "Content-Type: application/json" \
+  -H "X-Anon-Token: 11111111-2222-3333-4444-555555555555" \
+  -d '{"sessionId":"a1b2c3d4-0000-0000-0000-000000000001","text":"Giá khám BHYT?"}' | jq
+```
+
+---
+
+### 9.3 `GET /data/v1/chat/sessions`
+
+List chat sessions, filtered by anonymous token. Paginated. Controller: `ChatController`.
+
+**Header:** `X-Anon-Token: <UUID>` (optional; if absent → returns empty or unscoped list per current behavior).
+
+**Query params:**
+
+| Param | Type | Required | Default | Notes |
+|---|---|---|---|---|
+| `page` | int | no | `0` | Zero-indexed |
+| `size` | int | no | endpoint default | Page size |
+
+**Path params:** none. **Auth:** §0.
+
+**200 Response** — `PageResponse<ChatSessionDto>`:
+
+`ChatSessionDto` fields:
+
+| Field | Type | Notes |
+|---|---|---|
+| `id` | UUID string | |
+| `createdAt` | Timestamp | ISO-8601 with TZ |
+| `updatedAt` | Timestamp | |
+| `lang` | String\|null | e.g. `vi` |
+| `anonToken` | UUID string\|null | |
+| `messageCount` | Integer | Derived count of `chat_messages` for the session |
+| `lastSnippet` | String\|null | Preview of most recent message |
+
+**curl:**
+```bash
+curl -s "http://localhost:8081/data/v1/chat/sessions?page=0&size=20" \
+  -H "X-Anon-Token: 11111111-2222-3333-4444-555555555555" | jq
+```
+
+---
+
+### 9.4 `GET /data/v1/chat/sessions/{sessionId}/messages`
+
+List messages of a single session, ASC by `created_at`. Paginated.
+
+**Path params:** `sessionId` (UUID, required). **Auth:** §0.
+
+**Query params:** `page`, `size` (see §9.3).
+
+**200 Response** — `PageResponse<ChatMessageDto>`:
+
+`ChatMessageDto` fields:
+
+| Field | Type | Notes |
+|---|---|---|
+| `id` | Long | BIGSERIAL |
+| `sessionId` | UUID string | |
+| `role` | String | `user` \| `assistant` \| `system` |
+| `content` | String | Message text |
+| `citations` | Array\|null | JSONB — `[{ source, url, snippet }]` |
+| `intent` | String\|null | e.g. `faq`, `UNKNOWN` (fallback) |
+| `route` | String\|null | |
+| `guardrailFlags` | Array\|null | JSONB — e.g. `["upstream_error"]` |
+| `confidence` | Float\|null | |
+| `createdAt` | Timestamp | ISO-8601 with TZ |
+
+**Fallback assistant row shape** (persisted when chatbot unavailable):
+
+```json
+{
+  "role": "assistant",
+  "content": "Tạm thời không kết nối được tới trợ lý. Vui lòng thử lại.",
+  "citations": null,
+  "intent": "UNKNOWN",
+  "guardrailFlags": ["upstream_error"],
+  "confidence": 0.0
+}
+```
+
+**curl:**
+```bash
+curl -s "http://localhost:8081/data/v1/chat/sessions/a1b2c3d4-0000-0000-0000-000000000001/messages?page=0&size=50" | jq
+```
+
+---
+
+### 9.5 Fallback contract (chatbot upstream error)
+
+When `ChatbotClient` cannot reach `chatbot-service` (network error, connect/read timeout, HTTP 5xx, or response parse failure) → throws `ChatbotUnavailableException`. `ChatService.handleMessage` then:
+
+1. Persists a **fallback assistant message** to `chat_messages` with the shape in §9.4.
+2. Returns **HTTP 200** with `ChatResponse` mirroring the fallback row.
+
+Rationale: FE does not need to branch on a separate error path for upstream-down; the user sees a clear Vietnamese retry message and the conversation history remains consistent. The user message itself was already persisted before the chatbot call, so it is not lost.
+
+---
+
+### 9.6 Config
+
+| Key (`application.yml`) | Env var | Default | Notes |
+|---|---|---|---|
+| `hanoi-heart.chatbot.base-url` | `CHATBOT_BASE_URL` | `http://localhost:8000` | chatbot-service root URL |
+| `hanoi-heart.chatbot.connect-timeout-ms` | (yml) | (RestClient default) | TCP connect timeout |
+| `hanoi-heart.chatbot.read-timeout-ms` | (yml) | (RestClient default) | Read timeout — set ≥ chatbot p99 (retrieve + LLM) |
+
+**Contract verified:** `ChatbotClient` request payload matches `chatbot-service/api/chat_schemas.py` (`sessionId`, `text`, `lang`, `userRole=ANONYMOUS` sent; omitted fields rely on chatbot defaults). Response fields match `ChatResponse`.
+
+---
+
+## 10. Postman Quick-Start
 
 **Environment variables:** `base_url` = `http://localhost:8081`.
 
@@ -755,14 +945,19 @@ curl -s "http://localhost:8081/data/v1/appointment-slots?doctor=12&date=2026-07-
     { "name": "BHYT policies",     "request": { "method": "GET", "url": "{{base_url}}/data/v1/bhyt-policies" } },
     { "name": "Procedures",        "request": { "method": "GET", "url": "{{base_url}}/data/v1/procedures?code=QT.25.01" } },
     { "name": "Channels",          "request": { "method": "GET", "url": "{{base_url}}/data/v1/channels" } },
-    { "name": "Appointment slots", "request": { "method": "GET", "url": "{{base_url}}/data/v1/appointment-slots?doctor=12&date=2026-07-21" } }
+    { "name": "Appointment slots", "request": { "method": "GET", "url": "{{base_url}}/data/v1/appointment-slots?doctor=12&date=2026-07-21" } },
+    { "name": "Chat (new session)",  "request": { "method": "POST", "url": "{{base_url}}/data/v1/chat", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"text\":\"Khoa Tim mạch ở tầng mấy?\",\"lang\":\"vi\"}" } } },
+    { "name": "Chat sessions list", "request": { "method": "GET",  "url": "{{base_url}}/data/v1/chat/sessions?page=0&size=20" } },
+    { "name": "Chat history",       "request": { "method": "GET",  "url": "{{base_url}}/data/v1/chat/sessions/a1b2c3d4-0000-0000-0000-000000000001/messages" } }
   ]
 }
 ```
 
+> Chat endpoints require header `Content-Type: application/json` on POST and optional `X-Anon-Token: <UUID>` for session scoping.
+
 ---
 
-## 10. Contract-vs-Code Mismatches (vs `docs/07-api-design.md` §B)
+## 11. Contract-vs-Code Mismatches (vs `docs/07-api-design.md` §B)
 
 Items below are observations, not bugs. Code is source of truth.
 
@@ -779,10 +974,12 @@ Items below are observations, not bugs. Code is source of truth.
 | 9 | Endpoints not implemented | docs/07 §B.3 also lists `/kb/articles`, `/faqs`, `/emergency-protocols` | **No controllers exist** for these 3 endpoints | KB / FAQ / emergency-protocol retrieval not yet wired in data-api (likely owned by AI/FastAPI side instead) |
 | 10 | Admin CRUD | docs/07 §B note: "Admin CRUD … MVP có thể skip" | No POST/PUT/DELETE controllers | Matches MVP scope (seed via Flyway) |
 | 11 | CORS exposed header | (Not specified) | `X-Total-Count` exposed but **not set** by any controller (pagination metadata is in body via `PageResponse`) | Header is a no-op today |
+| 12 | Chat session id semantics (§B.5 / §9) | Original plan: `sessionId` provided-but-missing → "create new session" | Code returns **404 `not_found`** when `sessionId` not found in DB | FE must NOT reuse arbitrary/local-fabricated UUIDs; only reuse id returned by prior `POST /data/v1/chat` |
+| 13 | Chat upstream failure (§B.5 / §9.4) | (Not specified) | Chatbot down → **HTTP 200** with fallback assistant row (`intent=UNKNOWN`, `guardrailFlags=["upstream_error"]`) | FE does not branch on 5xx for upstream-down; render `answer` as usual |
 
 ---
 
-## 11. Unresolved Questions
+## 12. Unresolved Questions
 
 1. ~~Should `GET /doctors/{id}` & `GET /hospital-info` return 404?~~ **Resolved** — they now 404 (`NoSuchElementException`). **Open:** should `GET /services/{id}/prices` also 404 (instead of `200 []`) for an unknown service id? Recommend aligning before FE integration.
 2. Should `/appointment-slots` support `doctor`-only filter (no date)? Currently returns `[]`.
