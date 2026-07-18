@@ -42,14 +42,26 @@ class RagSettings(BaseSettings):
         "", validation_alias=AliasChoices("RAG_EMBED_API_KEY", "OPENAI_API_KEY")
     )
 
-    # Rerank (chat-completion endpoint, cheap model; may differ from embedding provider)
+    # Rerank. "cross_encoder" = local bge-reranker-v2-m3 (chosen: beats LLM on
+    # price/schedule queries, offline, ~50-100ms); "none" = passthrough.
+    rerank_provider: str = "cross_encoder"
+    rerank_enabled: bool = True
+    # Trim irrelevant candidates from the reranked set. Calibrated on eval:
+    # gold median 0.909, non-gold median 0.016 → thr 0.1 keeps ~82% gold while
+    # dropping ~73% non-gold. Kept low because dropping a relevant chunk is worse
+    # than passing a weak one (answer node has confidence to weigh it).
+    rerank_min_score: float = 0.1
+    # Local cross-encoder knobs
+    rerank_ce_model: str = "BAAI/bge-reranker-v2-m3"
+    rerank_device: str = "auto"
+    rerank_max_length: int = 512
+    rerank_batch_size: int = 16
+    # LLM-rerank knobs (kept for a future "llm" provider; unused by cross_encoder)
     rerank_base_url: str = "https://api.openai.com/v1"
     rerank_model: str = "gpt-4o-mini"
     rerank_api_key: str = Field(
         "", validation_alias=AliasChoices("RAG_RERANK_API_KEY", "OPENAI_API_KEY")
     )
-    rerank_enabled: bool = True
-    rerank_min_score: float = 0.3
 
     # Qdrant embedded local storage (no Docker). See kb_store.py for the
     # single-process lock caveat.
