@@ -22,8 +22,12 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 COPY chatbot-service/requirements.txt ./requirements.txt
+# Install CPU-only torch BEFORE requirements.txt so sentence-transformers' torch dep
+# is already satisfied by the CPU wheel — prevents pip pulling the default CUDA/nvidia
+# wheels (~3-4GB, 40min build) that this GPU-less image never loads anyway.
 RUN python -m venv /opt/venv \
  && /opt/venv/bin/pip install --upgrade pip \
+ && /opt/venv/bin/pip install --index-url https://download.pytorch.org/whl/cpu torch \
  && /opt/venv/bin/pip install -r requirements.txt
 
 # ---- Runtime: slim, non-root, code + KB baked in ----
