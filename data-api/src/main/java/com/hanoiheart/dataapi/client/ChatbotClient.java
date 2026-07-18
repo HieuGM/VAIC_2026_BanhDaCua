@@ -49,12 +49,16 @@ public class ChatbotClient {
      * @return chatbot ChatResponse
      * @throws ChatbotUnavailableException khi timeout / connection / 5xx / parse
      */
-    public ChatbotResponse chat(ChatRequest req, String sessionId) {
+    public ChatbotResponse chat(ChatRequest req, String sessionId, String userRole,
+                                List<String> allowedPatientIds) {
         Map<String, Object> body = new HashMap<>();
         body.put("sessionId", sessionId);
         body.put("text", req.text());
         body.put("lang", (req.lang() == null || req.lang().isBlank()) ? "vi" : req.lang());
-        body.put("userRole", "ANONYMOUS");
+        // Wire chatbot FHIR path: userRole + allowedPatientIds (aliases per chat_schemas.py).
+        // data-api derive scope từ user_patient_links; null/empty → ANONYMOUS (anon chat OK).
+        body.put("userRole", (userRole == null || userRole.isBlank()) ? "ANONYMOUS" : userRole);
+        body.put("allowedPatientIds", (allowedPatientIds == null) ? List.of() : allowedPatientIds);
         try {
             return restClient.post()
                     .uri("/api/v1/chat")

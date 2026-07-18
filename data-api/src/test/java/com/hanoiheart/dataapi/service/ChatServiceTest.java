@@ -8,6 +8,7 @@ import com.hanoiheart.dataapi.entity.ChatMessage;
 import com.hanoiheart.dataapi.entity.ChatSession;
 import com.hanoiheart.dataapi.repository.ChatMessageRepository;
 import com.hanoiheart.dataapi.repository.ChatSessionRepository;
+import com.hanoiheart.dataapi.repository.UserPatientLinkRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,12 +23,19 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
  * Unit test cho {@link ChatService}. Mock ChatbotClient + repos (no DB, no Spring).
+ *
+ * <p>Cover 2 nhánh wire FHIR scope:
+ * <ul>
+ *   <li>userId=null (anon) → userRole="ANONYMOUS", allowedPatientIds=[]</li>
+ *   <li>userId có link → userRole="USER", allowedPatientIds=[fhir_patient_id]</li>
+ * </ul>
  */
 @ExtendWith(MockitoExtension.class)
 class ChatServiceTest {
@@ -38,6 +46,8 @@ class ChatServiceTest {
     private ChatMessageRepository messageRepository;
     @Mock
     private ChatbotClient chatbotClient;
+    @Mock
+    private UserPatientLinkRepository userPatientLinkRepository;
 
     @InjectMocks
     private ChatService service;
@@ -52,9 +62,11 @@ class ChatServiceTest {
 
         when(sessionRepository.save(any(ChatSession.class))).thenAnswer(i -> i.getArgument(0));
         when(messageRepository.save(any(ChatMessage.class))).thenAnswer(i -> i.getArgument(0));
-        when(chatbotClient.chat(any(ChatRequest.class), any(String.class))).thenReturn(bot);
+        when(chatbotClient.chat(any(ChatRequest.class), any(String.class), any(String.class), any()))
+                .thenReturn(bot);
 
-        ChatResponse resp = service.handleMessage(req, null);
+        // userId=null → anon chat
+        ChatResponse resp = service.handleMessage(req, null, null);
 
         assertThat(resp.answer()).isEqualTo("Chào bạn");
         assertThat(resp.confidence()).isEqualTo(0.9);
@@ -77,11 +89,11 @@ class ChatServiceTest {
         ChatRequest req = new ChatRequest(null, "ôi đau", null);
         when(sessionRepository.save(any(ChatSession.class))).thenAnswer(i -> i.getArgument(0));
         when(messageRepository.save(any(ChatMessage.class))).thenAnswer(i -> i.getArgument(0));
-        when(chatbotClient.chat(any(ChatRequest.class), any(String.class)))
+        when(chatbotClient.chat(any(ChatRequest.class), any(String.class), any(String.class), any()))
                 .thenThrow(new ChatbotUnavailableException("timeout",
                         new RuntimeException("timeout")));
 
-        ChatResponse resp = service.handleMessage(req, null);
+        ChatResponse resp = service.handleMessage(req, null, null);
 
         assertThat(resp.answer()).contains("Tạm thời");
         assertThat(resp.guardrailFlags()).contains(ChatService.FALLBACK_FLAG);
@@ -110,11 +122,11 @@ class ChatServiceTest {
         when(sessionRepository.findById(sessionId)).thenReturn(Optional.of(existing));
         when(sessionRepository.save(any(ChatSession.class))).thenAnswer(i -> i.getArgument(0));
         when(messageRepository.save(any(ChatMessage.class))).thenAnswer(i -> i.getArgument(0));
-        when(chatbotClient.chat(any(), any())).thenReturn(
+        when(chatbotClient.chat(any(), any(), any(), any())).thenReturn(
                 new ChatbotClient.ChatbotResponse("hi", List.of(), 0.5, List.of(),
                         "GREETING", "CHATBOT", null, false, Map.of()));
 
-        ChatResponse resp = service.handleMessage(req, anonToken.toString());
+        ChatResponse resp = service.handleMessage(req, anonToken.toString(), null);
 
         assertThat(resp.sessionId()).isEqualTo(sessionId);
         verify(sessionRepository).findById(sessionId);
@@ -125,14 +137,64 @@ class ChatServiceTest {
         ChatRequest req = new ChatRequest(null, "hi", "");
         when(sessionRepository.save(any(ChatSession.class))).thenAnswer(i -> i.getArgument(0));
         when(messageRepository.save(any(ChatMessage.class))).thenAnswer(i -> i.getArgument(0));
-        when(chatbotClient.chat(any(), any())).thenReturn(
+        when(chatbotClient.chat(any(), any(), any(), any())).thenReturn(
                 new ChatbotClient.ChatbotResponse("hi", List.of(), 0.1, List.of(),
                         "GREETING", "CHATBOT", null, false, Map.of()));
 
-        service.handleMessage(req, null);
+        service.handleMessage(req, null, null);
 
         ArgumentCaptor<ChatSession> sc = ArgumentCaptor.forClass(ChatSession.class);
         verify(sessionRepository).save(sc.capture());
         assertThat(sc.getValue().getLang()).isEqualTo("vi");
+    }
+
+    /**
+     * Core wire test: user đã login (userId=1L) CÓ link → derive userRole="USER"
+     * + allowedPatientIds=["vn-patient-001"] → forward cho chatbot (FHIR path).
+     * Đây là điểm khác biệt cốt lõi vs anon (ANONYMOUS + []).
+     */
+    @Test
+    void handleMessage_authenticatedUserWithLink_forwardsUserRoleUserAndPatientIds() {
+        ChatRequest req = new ChatRequest(null, "kết quả xét nghiệm của tôi", "vi");
+        when(userPatientLinkRepository.findFhirPatientIdByUserId(1L))
+                .thenReturn(List.of("vn-patient-001"));
+        when(sessionRepository.save(any(ChatSession.class))).thenAnswer(i -> i.getArgument(0));
+        when(messageRepository.save(any(ChatMessage.class))).thenAnswer(i -> i.getArgument(0));
+        ChatbotClient.ChatbotResponse bot = new ChatbotClient.ChatbotResponse(
+                "Glucose 5.2 mmol/L", List.of(), 0.9, List.of(), "LAB_RESULT", "AUTHENTICATED_FHIR",
+                null, false, Map.of());
+        when(chatbotClient.chat(any(ChatRequest.class), any(String.class), any(String.class), any()))
+                .thenReturn(bot);
+
+        ChatResponse resp = service.handleMessage(req, null, 1L);
+
+        // wire forwarded USER scope (KHÔNG phải ANONYMOUS) + đúng patient ID
+        verify(chatbotClient).chat(any(ChatRequest.class), any(String.class),
+                eq("USER"), eq(List.of("vn-patient-001")));
+        // ChatResponse không forward route ra API (chỉ intent) — assert intent thay route.
+        assertThat(resp.intent()).isEqualTo("LAB_RESULT");
+        assertThat(resp.answer()).contains("Glucose");
+    }
+
+    /**
+     * User đã login NHƯNG chưa có link (user_patient_links rỗng) → vẫn ANONYMOUS
+     * (chatbot fallback generic, không leak data cá nhân).
+     */
+    @Test
+    void handleMessage_authenticatedUserWithoutLink_fallsBackToAnonymous() {
+        ChatRequest req = new ChatRequest(null, "kết quả xét nghiệm của tôi", "vi");
+        when(userPatientLinkRepository.findFhirPatientIdByUserId(2L))
+                .thenReturn(List.of());
+        when(sessionRepository.save(any(ChatSession.class))).thenAnswer(i -> i.getArgument(0));
+        when(messageRepository.save(any(ChatMessage.class))).thenAnswer(i -> i.getArgument(0));
+        when(chatbotClient.chat(any(ChatRequest.class), any(String.class), any(String.class), any()))
+                .thenReturn(new ChatbotClient.ChatbotResponse(
+                        "Tôi không có thông tin", List.of(), 0.3, List.of(),
+                        "UNKNOWN", "CHATBOT", null, false, Map.of()));
+
+        service.handleMessage(req, null, 2L);
+
+        verify(chatbotClient).chat(any(ChatRequest.class), any(String.class),
+                eq("ANONYMOUS"), eq(List.of()));
     }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { useAuth } from '../contexts/AuthContext';
 import logoImg from '../image/logo.png';
 import './Navbar.css';
 
@@ -37,10 +38,11 @@ const navItems = [
       { label: 'Hướng dẫn đặt lịch', path: '/guide#how-to-book' },
     ],
   },
-  { label: 'Đặt lịch khám', path: '/booking', highlight: true },
 ];
 
 const Navbar = () => {
+  const { isAuthenticated, currentUser, logout } = useAuth();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -66,6 +68,12 @@ const Navbar = () => {
   const closeMobile = () => {
     setMobileOpen(false);
     setOpenDropdown(null);
+  };
+
+  const handleLogout = async () => {
+    closeMobile();
+    await logout();
+    navigate('/');
   };
 
   return (
@@ -95,7 +103,7 @@ const Navbar = () => {
                   to={item.path}
                   end={item.path === '/'}
                   className={({ isActive }) =>
-                    `nav-link ${isActive ? 'active' : ''} ${item.highlight ? 'nav-link-cta' : ''}`
+                    `nav-link ${isActive ? 'active' : ''}`
                   }
                 >
                   {item.label}
@@ -119,6 +127,22 @@ const Navbar = () => {
                 )}
               </div>
             ))}
+
+            {/* Auth CTA Buttons for Desktop */}
+            {isAuthenticated ? (
+              <div className="nav-auth-group">
+                <Link to="/portal/dashboard" className="nav-link nav-link-cta portal-btn">
+                  Portal ({currentUser?.fullName?.split(' ').pop()})
+                </Link>
+                <button onClick={handleLogout} className="logout-btn-header">
+                  Đăng xuất
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="nav-link nav-link-cta" id="btn-login-cta">
+                Đăng nhập
+              </Link>
+            )}
           </nav>
 
           {/* Mobile Toggle */}
@@ -148,7 +172,7 @@ const Navbar = () => {
                 to={item.path}
                 end={item.path === '/'}
                 className={({ isActive }) =>
-                  `mobile-nav-link ${isActive ? 'active' : ''} ${item.highlight ? 'cta' : ''}`
+                  `mobile-nav-link ${isActive ? 'active' : ''}`
                 }
                 onClick={item.children ? (e) => e.preventDefault() : closeMobile}
               >
@@ -177,6 +201,24 @@ const Navbar = () => {
             )}
           </div>
         ))}
+
+        {/* Auth CTA for Mobile */}
+        <div className="mobile-auth-section" style={{ padding: '20px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          {isAuthenticated ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <Link to="/portal/dashboard" className="mobile-nav-link cta" onClick={closeMobile} style={{ textAlign: 'center' }}>
+                Vào Portal
+              </Link>
+              <button onClick={handleLogout} className="logout-btn-header" style={{ width: '100%', padding: '12px', borderRadius: '8px' }}>
+                Đăng xuất
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="mobile-nav-link cta" onClick={closeMobile} style={{ textAlign: 'center' }}>
+              Đăng nhập / Đăng ký
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );

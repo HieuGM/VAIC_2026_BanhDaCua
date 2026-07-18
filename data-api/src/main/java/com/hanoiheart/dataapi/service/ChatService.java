@@ -12,6 +12,7 @@ import com.hanoiheart.dataapi.entity.ChatSession;
 import com.hanoiheart.dataapi.exception.ChatSessionNotFoundException;
 import com.hanoiheart.dataapi.repository.ChatMessageRepository;
 import com.hanoiheart.dataapi.repository.ChatSessionRepository;
+import com.hanoiheart.dataapi.repository.UserPatientLinkRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,18 +48,22 @@ public class ChatService {
     private final ChatSessionRepository sessionRepository;
     private final ChatMessageRepository messageRepository;
     private final ChatbotClient chatbotClient;
+    /** Lookup user→FHIR patient IDs (authorization scope cho chatbot FHIR path). */
+    private final UserPatientLinkRepository userPatientLinkRepository;
 
     public ChatService(ChatSessionRepository sessionRepository,
                        ChatMessageRepository messageRepository,
-                       ChatbotClient chatbotClient) {
+                       ChatbotClient chatbotClient,
+                       UserPatientLinkRepository userPatientLinkRepository) {
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
         this.chatbotClient = chatbotClient;
+        this.userPatientLinkRepository = userPatientLinkRepository;
     }
 
     /** POST /data/v1/chat — persist user msg, proxy chatbot, persist assistant msg. */
     @Transactional
-    public ChatResponse handleMessage(ChatRequest req, String anonTokenHeader) {
+    public ChatResponse handleMessage(ChatRequest req, String anonTokenHeader, Long userId) {
         UUID anonToken = resolveAnonToken(anonTokenHeader);
         ChatSession session = resolveSession(req, anonToken);
         sessionRepository.save(session);
@@ -67,10 +72,20 @@ public class ChatService {
         ChatMessage userMsg = newMessage(session, "user", req.text(), null, null, null, null, null);
         messageRepository.save(userMsg);
 
-        // 2) proxy → chatbot (fallback on upstream error)
+        // 2) resolve FHIR patient scope.
+        //    userId=null (anon) hoặc user chưa có link → ANONYMOUS (chatbot fallback generic).
+        //    user có link → USER + allowedPatientIds (chatbot access_control bắt
+        //    userRole=="USER" + non-empty allowedPatientIds mới trả data cá nhân).
+        //    Lưu ý: DB users.role='PATIENT' KHÔNG bao giờ tới chatbot — wire derive "USER".
+        List<String> allowedPatientIds = (userId == null)
+                ? List.of()
+                : userPatientLinkRepository.findFhirPatientIdByUserId(userId);
+        String userRole = allowedPatientIds.isEmpty() ? "ANONYMOUS" : "USER";
+
+        // 3) proxy → chatbot (fallback on upstream error)
         try {
             ChatbotClient.ChatbotResponse bot =
-                    chatbotClient.chat(req, session.getId().toString());
+                    chatbotClient.chat(req, session.getId().toString(), userRole, allowedPatientIds);
             ChatMessage assistantMsg = newMessage(session, "assistant", bot.answer(),
                     bot.citations(), bot.intent(), bot.route(),
                     bot.guardrailFlags(), (float) bot.confidence());
