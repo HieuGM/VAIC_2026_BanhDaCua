@@ -1,13 +1,34 @@
+# Hanoi Heart Hospital — backend stack (Option B: host nginx serves the FE).
+#
+# The VPS already runs nginx on port 80 (serving /var/www/<site>). This compose file
+# runs ONLY the backend; the host nginx serves the SPA from disk and reverse-proxies
+# /data/* to the data-api container.
+#
+#   browser -> host nginx :80 (SPA /var/www/heca/build + /data proxy)
+#                        -> data-api :8081 (127.0.0.1, host-local only)
+#                        -> chatbot :8000 (internal, data-api proxies to it)
+#                        -> postgres (internal)
+#
+# Only data-api is exposed, and only on 127.0.0.1 (not public). postgres + chatbot
+# stay internal to the compose network.
+#
+# RAM budget on a 4GB box: postgres shared_buffers=64MB, data-api -Xmx256m,
+# chatbot hosted embed/rerank (~0.4GB). ~1.5GB total, ~2.5GB headroom.
+#
+# First-time only: ingest the KB BEFORE starting chatbot (embedded Qdrant is
+# single-process). See DEPLOY.md:
+#   docker compose run --rm chatbot python -m rag.ingest.run_ingest
+
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: hanoi-heart-postgres
+    container_name: hh-postgres
     environment:
       POSTGRES_DB: ${DB:-hanoi_heart}
       POSTGRES_USER: ${DB_USER:-hanoiheart}
       POSTGRES_PASSWORD: ${DB_PASS:-hanoiheart}
-    ports:
-      - "${DB_PORT:-5432}:5432"
+    # Demo tuning (small dataset, few users). Drop for production-scale.
+    command: ["postgres", "-c", "shared_buffers=64MB", "-c", "work_mem=2MB", "-c", "max_connections=20"]
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -15,11 +36,12 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+    restart: unless-stopped
 
   data-api:
     build:
       context: ./data-api
-    container_name: hanoi-heart-data-api
+    container_name: hh-data-api
     depends_on:
       postgres:
         condition: service_healthy
@@ -30,9 +52,39 @@ services:
       DB_USER: ${DB_USER:-hanoiheart}
       DB_PASS: ${DB_PASS:-hanoiheart}
       SERVER_PORT: 8081
-      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
+      # FE is same-origin behind the host nginx, so CORS rarely matters in prod;
+      # kept for direct/debug access.
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://heca.tolalinhne.site}
+      # Reached over the compose network by service name (NOT localhost).
+      CHATBOT_BASE_URL: http://chatbot:8000
+      CHATBOT_CONNECT_TIMEOUT_MS: 10000
+      CHATBOT_READ_TIMEOUT_MS: 30000
+      # Demo JVM cap (overrides the Dockerfile's MaxRAMPercentage=75). Tune up if needed.
+      JAVA_OPTS: "-Xmx256m -Xss512k -XX:MaxMetaspaceSize=128m -XX:+ExitOnOutOfMemoryError"
     ports:
-      - "8081:8081"
+      # Host-local only — the host nginx proxies /data/* here. Not exposed publicly.
+      - "127.0.0.1:8081:8081"
+    restart: unless-stopped
+
+  chatbot:
+    build:
+      context: .
+      dockerfile: chatbot-service/Dockerfile
+    container_name: hh-chatbot
+    depends_on:
+      data-api:
+        condition: service_started
+    # RAG + LLM keys/providers. Copy chatbot-service/.env.example -> .env and fill.
+    env_file:
+      - ./chatbot-service/.env
+    environment:
+      # chatbot -> data-api public tools (reverse direction; same compose network).
+      DATA_API_BASE_URL: http://data-api:8081/data/v1
+    volumes:
+      # Embedded Qdrant vectors — persists across redeploys; populated by one-shot ingest.
+      - qdrant_data:/app/.qdrant_data
+    restart: unless-stopped
 
 volumes:
   pgdata:
+  qdrant_data:
