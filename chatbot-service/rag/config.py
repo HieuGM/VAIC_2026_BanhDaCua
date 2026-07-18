@@ -96,6 +96,24 @@ class RagSettings(BaseSettings):
     # (Youden=1.0); 0.515 is the plateau midpoint (equal margin both sides).
     dense_min_score: float = 0.515
 
+    # Semantic cache — reuse retrieval results for repetitive FAQ traffic.
+    # Two levels: exact-match on the normalized query (skips embed+Qdrant+rerank,
+    # zero risk) and semantic (query-embedding cosine, skips Qdrant+rerank). See
+    # rag/semantic_cache.py. In-process only (single-worker deploy), no Redis.
+    cache_enabled: bool = True
+    cache_max_entries: int = 512  # LRU bound; ~few MB for 1024-dim vectors
+    cache_ttl_seconds: float = 86400.0  # 24h — bounds price/schedule staleness
+    # Cosine gate for a semantic (paraphrase) hit. Medical domain: a wrong cached
+    # answer is dangerous, so this is CONSERVATIVE. Measured on the 40-question
+    # eval set with NVIDIA bge-m3 query embeddings (rag/eval/measure_semantic_cache):
+    # the highest query-query cosine between questions with DISJOINT gold chunks
+    # (different correct answers) is 0.929 — below THAT a hit could serve the wrong
+    # answer. 0.95 sits ~0.02 above it (zero collisions from 0.93 up). Note: the
+    # eval set has no paraphrase clusters, so it bounds SAFETY, not hit rate —
+    # measure real hit rate from production traffic before lowering.
+    cache_similarity_threshold: float = 0.95
+    cache_version: str = "v1"  # bump to invalidate all entries after a KB change
+
     # Ingest source directory, relative to the chatbot-service working dir
     data_dir: str = "../data"
 

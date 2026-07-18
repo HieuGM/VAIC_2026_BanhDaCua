@@ -9,11 +9,19 @@ from unittest.mock import patch
 from core.enums import SourceType
 from rag import retriever
 from rag.config import RagSettings
+from rag.semantic_cache import SemanticCache
 
 # Fixed settings so boundary tests can't be flipped by a dev/CI .env override.
 _TEST_SETTINGS = RagSettings(
     dense_min_score=0.5, rerank_min_score=0.1, rerank_top_k=5, prefetch_limit=20
 )
+
+
+def _disabled_cache() -> SemanticCache:
+    # Pipeline-behavior tests must exercise the real path every call, so the
+    # process-wide cache is replaced by a disabled instance (also isolates
+    # tests that reuse the same query string).
+    return SemanticCache(RagSettings(cache_enabled=False))
 
 
 def _hit(score, chunk_id):
@@ -44,19 +52,20 @@ class _FakeEmbedder:
         return [0.1, 0.2, 0.3, 0.4]
 
 
-def _patches(store):
+def _patches(store, cache=None):
     return [
         patch.object(retriever, "get_settings", return_value=_TEST_SETTINGS),
         patch.object(retriever, "get_store", return_value=store),
         patch.object(retriever, "get_embedder", return_value=_FakeEmbedder()),
         patch.object(retriever, "_sparse_query", return_value={"indices": [1], "values": [1.0]}),
         patch.object(retriever, "rerank_evidence", _passthrough_rerank),
+        patch.object(retriever, "get_cache", return_value=cache or _disabled_cache()),
     ]
 
 
 class RetrieverTest(unittest.IsolatedAsyncioTestCase):
-    async def _run(self, msg, store):
-        ctxs = _patches(store)
+    async def _run(self, msg, store, cache=None):
+        ctxs = _patches(store, cache)
         for c in ctxs:
             c.start()
         try:
@@ -118,6 +127,106 @@ class RetrieverTest(unittest.IsolatedAsyncioTestCase):
         with self.assertLogs("rag.retriever", level="ERROR"):  # captures + asserts log
             out = await self._run("giờ làm việc", Boom())
         self.assertEqual(out, [])  # exception swallowed -> []
+
+
+class _CountingStore:
+    """Records how many times Qdrant is touched so tests can prove a cache hit
+    skipped the search."""
+
+    def __init__(self, dense_hits, hybrid_hits):
+        self._d, self._h = dense_hits, hybrid_hits
+        self.dense_calls = 0
+
+    def dense_search(self, vec, *, limit, query_filter=None):
+        self.dense_calls += 1
+        return self._d
+
+    def hybrid_search(self, dvec, svec, *, limit, query_filter=None):
+        return self._h
+
+
+class _MapEmbedder:
+    """Returns a chosen vector per query text; counts embed calls."""
+
+    def __init__(self, mapping):
+        self._map = mapping
+        self.calls = 0
+
+    def embed_query(self, text):
+        self.calls += 1
+        return self._map[text]
+
+
+class SemanticCacheIntegrationTest(unittest.IsolatedAsyncioTestCase):
+    """retrieve_public_knowledge short-circuits via the cache (real cache, not
+    disabled). The reranker is still patched to passthrough."""
+
+    async def _run(self, msg, store, embedder, cache):
+        ctxs = [
+            patch.object(retriever, "get_settings", return_value=_TEST_SETTINGS),
+            patch.object(retriever, "get_store", return_value=store),
+            patch.object(retriever, "get_embedder", return_value=embedder),
+            patch.object(retriever, "_sparse_query",
+                         return_value={"indices": [1], "values": [1.0]}),
+            patch.object(retriever, "rerank_evidence", _passthrough_rerank),
+            patch.object(retriever, "get_cache", return_value=cache),
+        ]
+        for c in ctxs:
+            c.start()
+        try:
+            return await retriever.retrieve_public_knowledge({"normalized_message": msg})
+        finally:
+            for c in ctxs:
+                c.stop()
+
+    async def test_exact_hit_skips_embed_and_search(self):
+        cache = SemanticCache(RagSettings(cache_enabled=True, cache_similarity_threshold=0.95))
+        store = _CountingStore([_hit(0.9, "a")], [_hit(0.9, "a")])
+        emb = _MapEmbedder({"giá khám bệnh": [1.0, 0.0, 0.0, 0.0]})
+        first = await self._run("giá khám bệnh", store, emb, cache)
+        # Identical query (different case/spacing) → exact hit, no new work.
+        second = await self._run("  Giá  Khám  Bệnh  ", store, emb, cache)
+        self.assertEqual([e.citation.chunk_id for e in first], ["a"])
+        self.assertEqual([e.citation.chunk_id for e in second], ["a"])
+        self.assertEqual(store.dense_calls, 1)  # 2nd call served from cache
+        self.assertEqual(emb.calls, 1)  # exact match never embeds
+        self.assertEqual(cache.hits_exact, 1)
+
+    async def test_semantic_hit_skips_search_but_embeds(self):
+        cache = SemanticCache(RagSettings(cache_enabled=True, cache_similarity_threshold=0.95))
+        store = _CountingStore([_hit(0.9, "a")], [_hit(0.9, "a")])
+        # Two DIFFERENT strings whose vectors are nearly identical (cos ~0.9998).
+        emb = _MapEmbedder({
+            "giá khám bệnh bao nhiêu": [1.0, 0.0, 0.0, 0.0],
+            "chi phí khám bệnh là bao nhiêu": [0.999, 0.02, 0.0, 0.0],
+        })
+        await self._run("giá khám bệnh bao nhiêu", store, emb, cache)
+        out = await self._run("chi phí khám bệnh là bao nhiêu", store, emb, cache)
+        self.assertEqual([e.citation.chunk_id for e in out], ["a"])
+        self.assertEqual(store.dense_calls, 1)  # 2nd query reused via similarity
+        self.assertEqual(emb.calls, 2)  # semantic lookup needs the vector
+        self.assertEqual(cache.hits_semantic, 1)
+
+    async def test_dissimilar_query_misses_and_searches(self):
+        cache = SemanticCache(RagSettings(cache_enabled=True, cache_similarity_threshold=0.95))
+        store = _CountingStore([_hit(0.9, "a")], [_hit(0.9, "a")])
+        emb = _MapEmbedder({
+            "giá khám bệnh": [1.0, 0.0, 0.0, 0.0],
+            "địa chỉ bệnh viện": [0.0, 1.0, 0.0, 0.0],  # orthogonal → cos 0
+        })
+        await self._run("giá khám bệnh", store, emb, cache)
+        await self._run("địa chỉ bệnh viện", store, emb, cache)
+        self.assertEqual(store.dense_calls, 2)  # unrelated query runs full search
+        self.assertEqual(cache.hits_semantic, 0)
+
+    async def test_empty_result_not_cached(self):
+        # Below-gate query returns [] and must not be stored (no LRU pollution,
+        # no chance to suppress a later real query).
+        cache = SemanticCache(RagSettings(cache_enabled=True))
+        store = _CountingStore([_hit(0.4, "a")], [_hit(0.4, "a")])  # 0.4 < gate 0.5
+        emb = _MapEmbedder({"câu mơ hồ": [1.0, 0.0, 0.0, 0.0]})
+        self.assertEqual(await self._run("câu mơ hồ", store, emb, cache), [])
+        self.assertEqual(cache.stats()["size"], 0)
 
 
 if __name__ == "__main__":
