@@ -39,6 +39,10 @@ services:
     restart: unless-stopped
 
   data-api:
+    # GHCR image for `compose pull` in CI deploy. KEEP `build:` for local dev, but
+    # prod deploy MUST `pull && up -d` (never `up --build`) — local build = torch
+    # trap. See DEPLOY.md runbook.
+    image: ghcr.io/hieugm/vaic-data-api:latest
     build:
       context: ./data-api
     container_name: hh-data-api
@@ -67,6 +71,8 @@ services:
     restart: unless-stopped
 
   chatbot:
+    # GHCR image for `compose pull` (prod ALWAYS pull && up -d, never up --build).
+    image: ghcr.io/hieugm/vaic-chatbot:latest
     build:
       context: .
       dockerfile: chatbot-service/Dockerfile
