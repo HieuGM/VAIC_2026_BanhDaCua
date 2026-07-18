@@ -10,11 +10,13 @@ on:
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
+      - 'infra/hapi-fhir/**'
   pull_request:
     branches: [develop]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
+      - 'infra/hapi-fhir/**'
   workflow_dispatch:
     inputs:
       deploy:

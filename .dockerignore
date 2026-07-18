@@ -45,6 +45,9 @@ Thumbs.db
 # === Stale local FE build — nginx builds its own in-image ===
 frontend/build/
 
+# === Local-only infra (not part of chatbot image context) ===
+infra/hapi-fhir/
+
 # === Speech services (FUTURE — preemptive: chatbot build context = repo root) ===
 speech-service/
 stt-service/
