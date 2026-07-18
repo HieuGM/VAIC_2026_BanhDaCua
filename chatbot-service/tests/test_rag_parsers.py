@@ -63,6 +63,17 @@ class ParserMetadataTest(unittest.TestCase):
         ids = [c["chunk_id"] for c in self.all]
         self.assertEqual(len(ids), len(set(ids)), "duplicate chunk_id")
 
+    def test_no_orphan_heading_chunks(self):
+        # Regression: a document chunk must never be just a bare heading/title
+        # (e.g. the 31-char "Hướng dẫn liên hệ đặt lịch khám" that ranked #1
+        # with no substance). Every document chunk carries real body content.
+        for c in self.all:
+            if c["source_type"] != "document":
+                continue
+            self.assertGreaterEqual(
+                len(c["content"]), 80, f"orphan-ish chunk: {c['content']!r}"
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
