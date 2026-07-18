@@ -1,0 +1,298 @@
+/* ============================================
+   BỆNH VIỆN TIM HÀ NỘI - Global Styles
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Primary - Đỏ Y tế chuyên nghiệp */
+  --primary: #c0392b;
+  --primary-dark: #a93226;
+  --primary-light: #e74c3c;
+  --primary-bg: #fdf2f2;
+
+  /* Secondary - Xanh tin tưởng */
+  --secondary: #2c3e50;
+  --secondary-light: #34495e;
+
+  /* Accent */
+  --accent: #e67e22;
+
+  /* Neutral */
+  --white: #ffffff;
+  --black: #1a1a2e;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --text-light: #a0aec0;
+
+  /* Background */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fc;
+  --bg-section: #f0f4f8;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-card: 0 2px 8px rgba(192,57,43,0.10);
+
+  /* Border */
+  --border-color: #e2e8f0;
+  --border-radius: 0.75rem;
+  --border-radius-lg: 1.25rem;
+  --border-radius-full: 9999px;
+
+  /* Transition */
+  --transition: all 0.25s ease;
+  --transition-slow: all 0.4s ease;
+}
+
+/* ============ RESET ============ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  color: var(--text-main);
+  background: var(--bg-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+/* ============ UTILITIES ============ */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.4rem;
+}
+
+.section {
+  padding: 8rem 0;
+}
+
+.section-alt {
+  background: var(--bg-secondary);
+}
+
+.section-title {
+  font-size: 3.6rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1.2rem;
+  line-height: 1.3;
+}
+
+.section-title span {
+  color: var(--primary);
+}
+
+.section-subtitle {
+  font-size: 1.7rem;
+  color: var(--text-muted);
+  max-width: 60rem;
+  line-height: 1.8;
+}
+
+.section-header {
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.section-header .section-subtitle {
+  margin: 0 auto;
+}
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem 2.8rem;
+  border-radius: var(--border-radius-full);
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: var(--transition);
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(192, 57, 43, 0.4);
+  color: var(--white);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-white {
+  background: var(--white);
+  color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-white:hover {
+  background: var(--primary-bg);
+  transform: translateY(-2px);
+  color: var(--primary);
+}
+
+/* ============ BADGE ============ */
+.badge {
+  display: inline-block;
+  padding: 0.4rem 1.4rem;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-radius: var(--border-radius-full);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(192, 57, 43, 0.2);
+}
+
+/* ============ CARD ============ */
+.card {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============ PAGE HERO ============ */
+.page-hero {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+  padding: 12rem 0 6rem;
+  text-align: center;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.page-hero h1 {
+  font-size: 4.2rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.page-hero p {
+  font-size: 1.8rem;
+  opacity: 0.85;
+  position: relative;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 1.6rem;
+  position: relative;
+}
+
+.breadcrumb a {
+  color: rgba(255,255,255,0.7);
+}
+
+.breadcrumb a:hover {
+  color: var(--white);
+}
+
+.breadcrumb .sep {
+  opacity: 0.5;
+}
+
+/* ============ DIVIDER ============ */
+.divider {
+  width: 6rem;
+  height: 0.4rem;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: var(--border-radius-full);
+  margin: 1.6rem auto;
+}
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  html { font-size: 58%; }
+  .section { padding: 6rem 0; }
+  .section-title { font-size: 3rem; }
+}
+
+@media (max-width: 768px) {
+  html { font-size: 54%; }
+  .section { padding: 5rem 0; }
+  .section-title { font-size: 2.6rem; }
+  .page-hero { padding: 10rem 0 5rem; }
+  .page-hero h1 { font-size: 3rem; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 50%; }
+  .container { padding: 0 1.6rem; }
+}

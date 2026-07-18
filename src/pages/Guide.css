@@ -1,0 +1,529 @@
+/* ============ GUIDE PAGE ============ */
+
+/* Tab Nav bar */
+.guide-tab-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 8.5rem;
+  z-index: 100;
+}
+
+.guide-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.guide-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.6rem 2.4rem;
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.guide-tab:hover {
+  color: var(--primary);
+}
+
+.guide-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 700;
+}
+
+/* Process QT.25.01 */
+.guide-process-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 3.2rem;
+}
+
+.process-step-box {
+  display: flex;
+  align-items: stretch;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.process-step-box:hover {
+  transform: translateX(4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.step-badge-left {
+  background: var(--primary);
+  color: var(--white);
+  width: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-align: center;
+  flex-shrink: 0;
+  padding: 2rem;
+}
+
+.step-content-right {
+  padding: 2.4rem 3rem;
+  flex: 1;
+  text-align: left;
+}
+
+.step-role, .step-action {
+  font-size: 1.45rem;
+  color: var(--secondary);
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.step-role strong, .step-action strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.step-desc-p {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+.guide-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: var(--border-radius);
+  padding: 1.6rem 2rem;
+  font-size: 1.45rem;
+  color: var(--text-main);
+  line-height: 1.7;
+}
+
+.note-icon {
+  color: #f39c12;
+  font-size: 2rem;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4rem;
+  margin-bottom: 2rem;
+}
+
+.pricing-card {
+  background: var(--white);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 3rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+.pricing-card.recommended {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(192,57,43,0.08);
+  transform: scale(1.02);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.4rem 1.6rem;
+  border-radius: var(--border-radius-full);
+  white-space: nowrap;
+}
+
+.pricing-header {
+  border-bottom: 2px solid;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.pricing-header h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.pricing-price {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+
+.pricing-header p {
+  font-size: 1.35rem;
+  color: var(--text-muted);
+}
+
+.pricing-items {
+  list-style: none;
+  margin-bottom: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.pricing-items li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+.pricing-note {
+  font-size: 1.35rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* Schedule Table */
+.schedule-filter-widget {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 3rem;
+  margin-bottom: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: left;
+}
+
+.filter-group {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.filter-group label {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.filter-group label svg {
+  color: var(--primary);
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter-buttons button {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.8rem 1.8rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-buttons button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filter-buttons button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+  box-shadow: 0 4px 10px rgba(192, 57, 43, 0.2);
+}
+
+.schedule-contact-banner {
+  background: var(--primary-bg);
+  border: 1px solid rgba(192, 57, 43, 0.15);
+  padding: 1.6rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 2.4rem;
+  text-align: center;
+}
+
+.schedule-contact-banner p {
+  font-size: 1.45rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.schedule-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 2.4rem;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.35rem;
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.schedule-table th {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 1.6rem 1rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.schedule-table td {
+  padding: 1.4rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-muted);
+  line-height: 1.5;
+  min-width: 14rem;
+}
+
+.schedule-table td:last-child {
+  border-right: none;
+}
+
+.schedule-table tr:last-child td {
+  border-bottom: none;
+}
+
+.schedule-table tr:hover td {
+  background: var(--bg-secondary);
+}
+
+.schedule-table td.dept-name {
+  text-align: left;
+  font-weight: 700;
+  color: var(--secondary);
+  padding-left: 1.6rem;
+  background: var(--white);
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  min-width: 16rem;
+}
+
+.schedule-table td.available {
+  color: var(--text-main);
+  font-size: 1.35rem;
+  font-weight: 500;
+  background: #f8fff9;
+  border-left: 2px solid #27ae60;
+}
+
+.schedule-table td.unavailable {
+  color: var(--text-light);
+  background: #fafafa;
+}
+
+.schedule-table td.time-cell {
+  background: var(--white);
+  font-weight: 600;
+  color: var(--text-main);
+  min-width: 11rem;
+}
+
+.schedule-legend {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.schedule-legend p {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.schedule-legend ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.schedule-legend li {
+  position: relative;
+  padding-left: 1.8rem;
+  font-size: 1.35rem;
+  color: var(--text-muted);
+}
+
+.schedule-legend li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+/* Book Methods */
+.book-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4rem;
+}
+
+.book-method {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 3.2rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.book-method:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.book-method-icon {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  margin: 0 auto 2rem;
+}
+
+.book-method h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.book-method p {
+  font-size: 1.45rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+/* Pricing sub-tab & BHYT Widget */
+.price-type-selector button {
+  transition: all 0.3s ease;
+}
+
+.price-type-selector .btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.2);
+}
+
+.price-type-selector .btn-outline {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.price-type-selector .btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.bhyt-cat-filters button {
+  transition: all 0.2s ease;
+}
+
+.bhyt-cat-filters .btn-outline {
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  background: var(--white);
+}
+
+.bhyt-cat-filters .btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.bhyt-search-bar-wrap input:focus {
+  outline: none;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1) !important;
+}
+
+.pagination .btn-outline {
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  background: var(--white);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.pagination .btn-outline:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-bg);
+}
+
+.pagination .btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .pricing-grid, .book-methods-grid { grid-template-columns: 1fr; }
+  .pricing-card.recommended { transform: scale(1); }
+  .guide-tab-nav { top: 7.2rem; }
+  .process-step-box { flex-direction: column; }
+  .step-badge-left { width: 100%; padding: 1.4rem; }
+  .filter-group { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+@media (max-width: 600px) {
+  .guide-tabs { flex-wrap: wrap; }
+  .guide-tab { flex: 1; min-width: 12rem; padding: 1.2rem; font-size: 1.3rem; }
+}
+

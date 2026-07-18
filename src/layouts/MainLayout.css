@@ -1,0 +1,17 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-main {
+  flex: 1;
+  /* push content below fixed navbar (mainnav ~85px) */
+  padding-top: 8.5rem;
+}
+
+@media (max-width: 480px) {
+  .layout-main {
+    padding-top: 7.2rem;
+  }
+}
