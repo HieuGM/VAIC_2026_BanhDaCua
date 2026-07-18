@@ -2,7 +2,7 @@
 
 > **CONTRACT — chốt TRONG GIỜ ĐẦU** để 3 luồng song song không chặn nhau.
 > 2 service: **FastAPI** (AI, `/api/v1`) + **Spring Boot** (data, `/data/v1`).
-> Cập nhật: 2026-07-18 · Phiên bản: **v1.1** · Trạng thái: **Contract draft** (review AI+FE+data).
+> Cập nhật: 2026-07-18 · Phiên bản: **v1.2** · Trạng thái: **Contract draft** (review AI+FE+data) — §B.5 chat BFF **implemented**.
 
 > **Nguyên tắc:** REST + JSON · error `{ "error": { "code", "message" } }` · **no auth** (đề tài scope; data-api internal, network = boundary) · Caddy route `/api/*`→FastAPI, `/data/*`→Spring Boot.
 
@@ -86,20 +86,24 @@
 
 > All `GET` list endpoints: pagination `?page&size`, filter, `Accept-Language` header (R10). Admin CRUD (POST/PUT/DELETE) — nội bộ, MVP skip (seed qua Flyway).
 
-### B.5 Chat BFF + Persistence — **Recommendation A / ADR-008** (sở hữu data dev)
+### B.5 Chat BFF + Persistence — **Recommendation A / ADR-008 — IMPLEMENTED (commit `de120e2`)** (sở hữu data dev)
 
-> FE gọi 3 endpoint này để chat + load lịch sử. data-api persist vào schema `hospital` (`chat_sessions`/`chat_messages`, Flyway) rồi proxy JSON đến chatbot-service `/api/v1/chat`. No streaming (YAGNI). No auth.
+> ✅ **Status (2026-07-18):** 3 endpoints đã implement + unit/integration tested local (11/11). FE wiring xong (commit `f780d35`). Pending: real-chatbot E2E + merge `develop`.
+> FE gọi 3 endpoint này để chat + load lịch sử. data-api persist vào schema `hospital` (`chat_sessions`/`chat_messages`, Flyway V10) rồi proxy JSON đến chatbot-service `/api/v1/chat`. **No streaming** (YAGNI). **No auth** (anon identity qua `X-Anon-Token` header).
 
 - **`POST /data/v1/chat`** — gửi tin nhắn, nhận answer + citations
-  - Request:
+  - Request body:
     ```json
-    { "sessionId": "string?", "text": "string", "lang": "vi?" }
+    { "sessionId": "UUID?", "text": "string (@NotBlank)", "lang": "vi?" }
     ```
-    `sessionId` null/empty → data-api tạo session mới.
-  - Response:
+    - `sessionId` null/empty → data-api tạo session mới.
+    - **Deviation from earlier plan:** `sessionId` provided but NOT found in DB → **HTTP 404** (`ChatSessionNotFoundException`), **NOT** "create new session".
+    - `lang` optional, defaults `"vi"`.
+  - Request header (optional): `X-Anon-Token: <UUID>` — pseudo-identity để filter sessions list. Missing/invalid UUID → data-api tự generate.
+  - Response (HTTP 200):
     ```json
     {
-      "sessionId": "string",
+      "sessionId": "UUID",
       "answer": "string",
       "citations": [{ "source": "...", "url": "...", "snippet": "..." }],
       "confidence": 0.0,
@@ -110,16 +114,21 @@
       "metadata": {}
     }
     ```
-  - Side-effects: data-api persist user message → gọi chatbot `/api/v1/chat` → persist assistant reply + citations. JSON blocking.
+  - **Side-effects (atomic-ish):** data-api persist user message FIRST → proxy chatbot `POST /api/v1/chat` → on success persist assistant reply + citations; on `ChatbotUnavailableException` persist fallback assistant msg + trả 200 (xem fallback bên dưới).
+  - **Fallback khi chatbot down (HTTP 200, không 5xx):** `answer = "Tạm thời không kết nối được tới trợ lý. Vui lòng thử lại."`, `guardrailFlags = ["upstream_error"]`, `intent = "UNKNOWN"`. User msg vẫn được persist.
+  - **Errors:** `400 bad_request` khi `text` blank; `404 not_found` khi `sessionId` không tồn tại.
 
-- **`GET /data/v1/chat/sessions`** — list session của user/anon token
-  - Query: `?page&size` (PageResponse `{total,page,size,totalPages,items[]}`), filter `?lang`, `?anonToken`.
+- **`GET /data/v1/chat/sessions`** — list session của anon token
+  - Header: `X-Anon-Token: <UUID>` (pseudo-identity filter).
+  - Query: `?page&size` → `PageResponse`. (Filter `?lang`, `?anonToken` ở query là planned; hiện filter qua header.)
   - items: `[{ id, createdAt, updatedAt, lang, anonToken?, messageCount, lastSnippet }]`
 
-- **`GET /data/v1/chat/sessions/{sessionId}/messages`** — history 1 session
+- **`GET /data/v1/chat/sessions/{sessionId}/messages`** — history 1 session (ASC by `created_at`)
   - Response: `PageResponse<{ id, role:"user|assistant|system", content, citations[], intent, route, guardrailFlags[], createdAt }>`
 
 > **CORS:** Spring Boot ở 8081 cho phép `localhost:3000` (dev). Prod qua Caddy cùng domain → không CORS.
+> **Config:** `hanoi-heart.chatbot.{base-url (default http://localhost:8000), connect-timeout-ms, read-timeout-ms}` (`application.yml` + `.env.example` `CHATBOT_BASE_URL`).
+> **Contract data-api↔chatbot:** verified khớp `chatbot-service/api/chat_schemas.py` (gửi `sessionId/text/lang/userRole=ANONYMOUS`; response fields match).
 
 ---
 

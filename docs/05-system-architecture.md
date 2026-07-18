@@ -2,7 +2,7 @@
 
 > **Mục đích:** component diagram, data flow, deploy, ADR.
 > **Đọc sau:** `01-project-overview` §6, `06-database-design`, `00-data-strategy`.
-> Cập nhật: 2026-07-17 · Phiên bản: **v1.0** · Trạng thái: **Review** (owner: AI + Spring Boot).
+> Cập nhật: 2026-07-18 · Phiên bản: **v1.1** · Trạng thái: **Review** (owner: AI + Spring Boot).
 
 ---
 
@@ -95,9 +95,13 @@ Env `DATA_PROVIDER=demo|his`. Interface ổn định → prod chỉ swap adapter
 | ADR-005 | FE: Next.js (App Router) | Team React, BFF proxy, streaming, Docker |
 | ADR-006 | 3-tier: Spring Boot data tách FastAPI AI | Swappable HIS (ô 03), ownership rõ |
 | ADR-007 | 1 PG container, 2 schema (hospital+ai) | DRY infra, conversation thuộc AI |
-| **ADR-008** | **data-api = chat BFF + persistence** (FE → `POST /data/v1/chat` → data-api persist + proxy chatbot `/api/v1/chat` JSON). Bảng `chat_sessions`/`chat_messages` ở schema `hospital`, Flyway. | Recommendation A (lead-approved 2026-07-18): YAGNI (không SSE), conversation persistence thuộc Spring Boot layer (đã có Flyway + JPA), chatbot-service giữ stateless RAG/guardrail. **Supersedes** phần "chat owned by FastAPI / session persistence in `ai` schema" của ADR-006/007. |
+| **ADR-008** | **data-api = chat BFF + persistence** (FE → `POST /data/v1/chat` → data-api persist + proxy chatbot `/api/v1/chat` JSON). Bảng `chat_sessions`/`chat_messages` ở schema `hospital`, Flyway `V10`. | Recommendation A (lead-approved 2026-07-18): YAGNI (không SSE), conversation persistence thuộc Spring Boot layer (đã có Flyway + JPA), chatbot-service giữ stateless RAG/guardrail. **Supersedes** phần "chat owned by FastAPI / session persistence in `ai` schema" của ADR-006/007. **Status: IMPLEMENTED (2026-07-18, commit `de120e2`)** — Flyway V10 applied PG, `ChatSession`/`ChatMessage` entity, `ChatService.handleMessage`, `ChatbotClient` (RestClient), `ChatController` 3 endpoints; 11/11 tests pass. Pending: real-chatbot E2E + merge `develop`. |
 
 > ⚠️ **ADR-005 NOT followed (2026-07-18):** FE thực tế = React 18 + CRA (không Next.js). Lý do thay đổi: dev team đã chạy được CRA, không cần SSR/Route Handler BFF vì **data-api đã là BFF** (ADR-008). Next.js giữ roadmap nếu cần SSR/SEO.
+
+> ⚠️ **Circular call data-api ↔ chatbot (2026-07-18, ADR-008 implemented):** khi xử lý chat, **data-api** gọi `chatbot POST /api/v1/chat` (JSON) để lấy answer + citations; **chatbot-service** ngược lại gọi `data-api GET /data/v1/*` (REST adapter) để lấy hospital data (doctors/prices/BHYT/...) làm context RAG. **Không deadlock** vì 2 hướng dùng endpoint khác nhau + chat call là blocking JSON hoàn thành mới trả, còn data lookup của chatbot xảyria **trước/song song** trong phase retrieve (không nắm giữ transaction data-api). Cần lưu ý khi timeout: data-api `read-timeout-ms` ≥ tổng thời gian chatbot (bao gồm retrieve + LLM). Để tránh stack đệ quy, **chatbot KHÔNG** được gọi ngược lại `POST /data/v1/chat`.
+
+> ⚠️ **Fallback-on-upstream-error contract (2026-07-18):** khi chatbot-service down/timeout/5xx/parse-error → `ChatbotClient` ném `ChatbotUnavailableException` → `ChatService` **persist fallback assistant message** (answer = `"Tạm thời không kết nối được tới trợ lý. Vui lòng thử lại."`, `guardrailFlags=["upstream_error"]`, `intent="UNKNOWN"`) → trả **HTTP 200** (không 5xx) cho FE. User message vẫn được persist trước đó. Lý do 200: FE không cần branch error path riêng cho upstream-down; user có thể xem lại lịch sử tin nhắn và thử lại.
 
 ## 8. Liên quan
 - [[01-project-overview]] · [[06-database-design]] · [[07-api-design]] · [[09-deployment-guide]] · [[00-data-strategy]]
