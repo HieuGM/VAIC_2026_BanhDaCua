@@ -44,3 +44,8 @@ management:
 hanoi-heart:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
+  chatbot:
+    # chatbot-service (FastAPI) base URL — data-api proxies POST /api/v1/chat
+    base-url: ${CHATBOT_BASE_URL:http://localhost:8000}
+    connect-timeout-ms: ${CHATBOT_CONNECT_TIMEOUT_MS:10000}
+    read-timeout-ms: ${CHATBOT_READ_TIMEOUT_MS:10000}

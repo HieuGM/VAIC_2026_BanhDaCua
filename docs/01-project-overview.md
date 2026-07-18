@@ -40,6 +40,8 @@ Chatbot web (text + ASR/TTS tiếng Việt *bonus*) trên kiến trúc **RAG gro
 
 ### 6.1 Web (Frontend) — **đề xuất CHỐT** (chi tiết setup ở `08-development-guide`)
 
+> ⚠️ **Trạng thái thực tế (2026-07-18):** FE triển khai thực tế = **React 18.2 + Create React App (react-scripts 5.0.1), JSX (KHÔNG TypeScript)**, dev port **3000**, thư mục `frontend/` (không phải `web/`). `src/services/chatAI.js` hiện là **PURE MOCK** (`sendMessageToAI(msg) => Promise<string>`, không network call); chat lưu **localStorage** (`bvthn_chat_conversations`, `bvthn_chat_active`) — KHÔNG persist backend, KHÔNG citations, KHÔNG status field, KHÔNG SSE/streaming. Bảng Next.js / SSE / TanStack / TypeScript dưới đây = **đề xuất CHƯA implement** (giữ làm roadmap). Khi wire chat thật → swap `chatAI.js` gọi `data-api POST /data/v1/chat` (xem **Recommendation A / ADR-008** trong `05`/`07`).
+
 | Lớp | Công nghệ | Lý do (defensible — ô 06) |
 |---|---|---|
 | Framework | **Next.js 15 (App Router) + React 19 + TypeScript 5** | Team 3 web fluency React; Route Handler làm **BFF proxy SSE** → ẩn URL FastAPI + inject key + 1 domain (không CORS); standalone Docker build. |
@@ -84,11 +86,14 @@ Chatbot web (text + ASR/TTS tiếng Việt *bonus*) trên kiến trúc **RAG gro
 > **Điểm giao thoa duy nhất FE↔AI = API contract `07-api-design.md`** (chốt giờ đầu → 3 luồng song song).
 
 ## 7. Team & luồng song song (không phụ thuộc)
+
+> ⚠️ **Lưu ý thực tế (2026-07-18):** thư mục code FE thực tế là **`frontend/`** (không phải `web/` như bảng gốc). Headcount đang mâu thuẫn: bảng đây ghi **Web FE (2)**, nhưng `00-team-working-guide` §3 ghi **Web FE (3)** — cần Lead chốt (xem `00` §3). Mới thêm vai **Data Backend (1)** sở hữu luôn cả **chat BFF + persistence ở data-api** (Recommendation A / ADR-008).
+
 | Role (SL) | Sở hữu code | Phụ thuộc |
 |---|---|---|
-| **Web FE (2)** | `web/` (Next.js) | chỉ contract `07` |
-| **Data Backend (1)** | `data-api/` (Spring Boot + PG `hospital`) | data seed (BA) |
-| **AI (2)** | `api/` (FastAPI), `ingest/`, `retrieval/`, `guardrail/`, `eval/`, Qdrant | data REST (Spring Boot) + KB (BA) + contract `07` |
+| **Web FE (2)** | `frontend/` (React 18 + CRA, thực tế) — đề xuất Next.js roadmap | chỉ contract `07` |
+| **Data Backend (1)** | `data-api/` (Spring Boot + PG `hospital`) + **chat BFF + persistence** (ADR-008) | data seed (BA) |
+| **AI (2)** | `chatbot-service/` (FastAPI), `ingest/`, `retrieval/`, `guardrail/`, `eval/`, Qdrant | data REST (Spring Boot) + KB (BA) + contract `07` |
 | **BA (1)** | `data/seed`, `data/content`, golden Q&A, slide, kịch bản demo | độc lập |
 | **Lead** (1 trong 6) | repo + Docker compose + deploy | — |
 

@@ -81,13 +81,11 @@ export const useChat = () => {
 
       // Nếu chưa có conversation nào, tạo mới
       let currentId = activeId;
-      let isNew = false;
       if (!currentId) {
         const conv = createConversation();
         setConversations((prev) => [conv, ...prev]);
         setActiveId(conv.id);
         currentId = conv.id;
-        isNew = true;
       }
 
       const userMsg = createMessage('user', content.trim());
@@ -109,14 +107,19 @@ export const useChat = () => {
       setIsLoading(true);
 
       try {
-        const aiReply = await sendMessageToAI(content);
-        const assistantMsg = createMessage('assistant', aiReply);
+        // Lấy sessionId hiện tại của conversation (nếu có) để BFF giữ ngữ cảnh.
+        const currentSessionId =
+          conversations.find((c) => c.id === currentId)?.sessionId || null;
+        const response = await sendMessageToAI(content, currentSessionId);
+        const assistantMsg = createMessage('assistant', response.answer);
 
         setConversations((prev) =>
           prev.map((c) => {
             if (c.id !== currentId) return c;
             return {
               ...c,
+              // Lưu lại sessionId do BFF cấp để dùng cho request tiếp theo.
+              sessionId: response.sessionId || c.sessionId || null,
               messages: [...c.messages, assistantMsg],
               updatedAt: new Date().toISOString(),
             };
@@ -141,7 +144,7 @@ export const useChat = () => {
         setIsLoading(false);
       }
     },
-    [activeId, isLoading]
+    [activeId, isLoading, conversations]
   );
 
   return {
