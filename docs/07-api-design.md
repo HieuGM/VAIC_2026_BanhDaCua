@@ -4,7 +4,7 @@
 > 2 service: **FastAPI** (AI, `/api/v1`) + **Spring Boot** (data, `/data/v1`).
 > Cập nhật: 2026-07-17 · Phiên bản: **v1.0** · Trạng thái: **Contract draft** (review AI+FE+data).
 
-> **Nguyên tắc:** REST + JSON · error `{ "error": { "code", "message" } }` · demo auth `X-API-Key` (pilot: BV SSO) · Caddy route `/api/*`→FastAPI, `/data/*`→Spring Boot.
+> **Nguyên tắc:** REST + JSON · error `{ "error": { "code", "message" } }` · **no auth** (đề tài scope; data-api internal, network = boundary) · Caddy route `/api/*`→FastAPI, `/data/*`→Spring Boot.
 
 ---
 
@@ -56,7 +56,7 @@
 - `GET /data/v1/channels` → `[{ channelType, label, url, phone }]`
 - `GET /data/v1/appointment-slots?doctor&date` → `[{ start, end, capacity, booked, available }]` *(mock — prod = HIS)*
 
-> All `GET` list endpoints: pagination `?page&size`, filter, `Accept-Language` header (R10). Admin CRUD (POST/PUT/DELETE) — nội bộ, guard `X-API-Key`, MVP có thể skip (seed qua Flyway).
+> All `GET` list endpoints: pagination `?page&size`, filter, `Accept-Language` header (R10). Admin CRUD (POST/PUT/DELETE) — nội bộ, MVP skip (seed qua Flyway).
 
 ---
 
