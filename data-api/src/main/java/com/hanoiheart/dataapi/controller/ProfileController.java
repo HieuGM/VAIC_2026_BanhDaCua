@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * GET /api/profile — lấy hồ sơ cá nhân của user đang đăng nhập.
+ * GET /data/v1/profile — lấy hồ sơ cá nhân của user đang đăng nhập.
  * Backend tự lấy fhir_patient_id từ JWT → user_patient_links.
+ * Convention /data/v1/* để đi qua nginx proxy (location /data/).
  */
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/data/v1/profile")
 @RequiredArgsConstructor
 public class ProfileController {
 

@@ -43,17 +43,23 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Auth endpoints — public
-                .requestMatchers("/api/auth/**").permitAll()
-                // Master data — public (read-only)
-                .requestMatchers(HttpMethod.GET, "/api/departments/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/doctors/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/services/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/support-channels/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/appointment-slots/**").permitAll()
+                // Auth — register/login công khai; me/logout yêu cầu JWT (anyRequest)
+                .requestMatchers(HttpMethod.POST, "/data/v1/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/data/v1/auth/login").permitAll()
+                // Master data — public read-only (controller thật ở /data/v1/*, đi qua nginx /data/)
+                .requestMatchers(HttpMethod.GET, "/data/v1/departments/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/doctors/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/services/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/channels/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/appointment-slots/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/hospital-info/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/bhyt-policies/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/data/v1/procedures/**").permitAll()
+                // Chat — anonymous (giữ như develop/VPS LIVE)
+                .requestMatchers("/data/v1/chat/**").permitAll()
                 // Actuator health — public
                 .requestMatchers("/actuator/health", "/actuator/info").permitAll()
-                // All other endpoints require authentication
+                // Tất cả endpoint khác (profile, appointments, auth/me, auth/logout) yêu cầu JWT
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter,

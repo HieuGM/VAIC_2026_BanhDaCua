@@ -14,14 +14,15 @@ import java.util.List;
 
 /**
  * Appointment Controller.
- * GET    /api/appointments/me        — danh sách lịch khám của user
- * POST   /api/appointments           — tạo lịch khám mới
- * PATCH  /api/appointments/{id}/cancel — hủy lịch khám
+ * GET    /data/v1/appointments/me        — danh sách lịch khám của user
+ * POST   /data/v1/appointments           — tạo lịch khám mới
+ * PATCH  /data/v1/appointments/{id}/cancel — hủy lịch khám
  *
  * Frontend KHÔNG truyền fhir_patient_id — backend tự resolve.
+ * Convention /data/v1/* để đi qua nginx proxy (location /data/).
  */
 @RestController
-@RequestMapping("/api/appointments")
+@RequestMapping("/data/v1/appointments")
 @RequiredArgsConstructor
 public class AppointmentController {
 

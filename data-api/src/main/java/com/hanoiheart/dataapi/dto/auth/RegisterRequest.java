@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
- * Request body for POST /api/auth/register
+ * Request body for POST /data/v1/auth/register
  */
 @Data
 public class RegisterRequest {

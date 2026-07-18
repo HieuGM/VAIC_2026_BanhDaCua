@@ -13,15 +13,16 @@ import java.util.Map;
 
 /**
  * Authentication Controller.
- * POST /api/auth/register
- * POST /api/auth/login
- * POST /api/auth/logout
- * GET  /api/auth/me
+ * POST /data/v1/auth/register
+ * POST /data/v1/auth/login
+ * POST /data/v1/auth/logout
+ * GET  /data/v1/auth/me
  *
  * Frontend KHÔNG truyền fhir_patient_id — backend tự resolve.
+ * Convention /data/v1/* để đi qua nginx proxy (location /data/).
  */
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/data/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 

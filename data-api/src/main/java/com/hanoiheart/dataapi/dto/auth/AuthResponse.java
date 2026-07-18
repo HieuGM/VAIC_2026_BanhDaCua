@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Response for POST /api/auth/login and POST /api/auth/register.
+ * Response for POST /data/v1/auth/login and POST /data/v1/auth/register.
  * KHÔNG chứa fhir_patient_id.
  */
 @Data

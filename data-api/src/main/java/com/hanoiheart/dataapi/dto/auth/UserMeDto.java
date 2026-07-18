@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO cho GET /api/auth/me
+ * DTO cho GET /data/v1/auth/me
  * Chỉ trả thông tin auth user — KHÔNG chứa fhir_patient_id.
  */
 @Data

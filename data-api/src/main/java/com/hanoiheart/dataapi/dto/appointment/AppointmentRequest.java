@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * Request body cho POST /api/appointments
+ * Request body cho POST /data/v1/appointments
  * Frontend chọn: slotId (hoặc doctorId + departmentId).
  * Frontend KHÔNG truyền fhir_patient_id — backend tự resolve.
  */

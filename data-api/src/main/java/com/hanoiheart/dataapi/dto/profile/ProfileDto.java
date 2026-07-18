@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * DTO cho GET /api/profile
+ * DTO cho GET /data/v1/profile
  * Kết hợp thông tin từ users + patients_profile_cache.
  * KHÔNG chứa hồ sơ bệnh án, đơn thuốc, xét nghiệm, kết quả khám.
  * KHÔNG chứa fhir_patient_id.
