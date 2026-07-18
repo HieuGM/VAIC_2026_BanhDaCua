@@ -67,10 +67,37 @@ jobs:
         working-directory: chatbot-service
         run: python -m compileall -q app
 
-  # ───────────── BUILD data-api (skip trên PR — không push image từ PR) ─────────────
+  # ───────────── DETECT changed services (path filter — bỏ build không cần) ─────────────
+  # Build = đắt (~5-10ph đầu, ~2-3ph khi cache ấm), test = rẻ (~36s) → test LUÔN chạy
+  # (safety net bắt integration regression), chỉ BUILD service thật sự đổi.
+  # workflow_dispatch override = build ALL (người dùng triệu gọi cố ý, không tin path).
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      data-api: ${{ steps.f.outputs['data-api'] }}   # bracket: 'data-api' có gạch → dot bị parse thành `data - api`
+      chatbot: ${{ steps.f.outputs.chatbot }}
+      fe: ${{ steps.f.outputs.fe }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: f
+        with:
+          # chatbot context = repo root nên bao gồm data/ KB + compose + dockerignore.
+          filters: |
+            data-api:
+              - 'data-api/**'
+            chatbot:
+              - 'chatbot-service/**'
+              - 'data/**'
+              - '.dockerignore'
+              - 'docker-compose.yml'
+            fe:
+              - 'frontend/**'
+
+  # ───────────── BUILD data-api (skip trên PR + skip khi data-api không đổi) ─────────────
   build-data-api:
-    needs: [test-data-api]
-    if: github.event_name != 'pull_request'
+    needs: [test-data-api, changes]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && needs.changes.outputs['data-api'] == 'true')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -93,8 +120,8 @@ jobs:
 
   # ───────────── BUILD chatbot (FastAPI) + torch CPU gate ─────────────
   build-chatbot:
-    needs: [test-chatbot]
-    if: github.event_name != 'pull_request'
+    needs: [test-chatbot, changes]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && needs.changes.outputs.chatbot == 'true')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -130,6 +157,28 @@ jobs:
           fi
           echo "torch version:"; grep -iE '^torch ' pkgs.txt || echo "(torch missing?)"
 
+  # ───────────── ENSURE packages PUBLIC (tránh VPS pull 401 lần đầu) ─────────────
+  # GHCR package mặc định PRIVATE khi first push → VPS `compose pull` 401 → deploy abort.
+  # Flip public idempotent mỗi lần build. GITHUB_TOKEN có thể thiếu admin trên package
+  # thuộc owner khác → continue-on-error + warning fallback (HieuGM flip UI 1 lần duy nhất).
+  ensure-packages-public:
+    needs: [build-data-api, build-chatbot]
+    if: always() && (needs.build-data-api.result == 'success' || needs.build-chatbot.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Flip packages public (idempotent)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for pkg in vaic-data-api vaic-chatbot; do
+            if gh api --method PATCH /user/packages/container/$pkg -f visibility=public 2>/dev/null; then
+              echo "$pkg → public"
+            else
+              echo "::warning::Không flip được $pkg (GITHUB_TOKEN thiếu admin package). HieuGM flip 1 lần: GitHub → gói $pkg → Package settings → Change visibility → Public."
+            fi
+          done
+
   # ───────────── BUILD FE (chỉ khi dispatch + deploy_fe) ─────────────
   build-frontend:
     if: github.event_name == 'workflow_dispatch' && inputs.deploy_fe
@@ -153,7 +202,7 @@ jobs:
 
   # ───────────── DEPLOY (manual dispatch only — KHÔNG chạy trên push/PR/merge) ─────────────
   deploy:
-    needs: [build-data-api, build-chatbot, build-frontend]   # build-frontend skipped=ok khi deploy_fe=false
+    needs: [build-data-api, build-chatbot, build-frontend, ensure-packages-public]
     if: github.event_name == 'workflow_dispatch' && inputs.deploy
     runs-on: ubuntu-latest
     steps:
