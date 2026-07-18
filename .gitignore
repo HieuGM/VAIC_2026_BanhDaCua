@@ -2,6 +2,12 @@
 Claudekit Engineer v2.13.0/
 .opencode/
 
+# === Claude Code tooling / instructions (not project source) ===
+.claude/
+.agents/
+CLAUDE.md
+AGENTS.md
+
 # === Transient extraction / OCR artifacts ===
 docs/_extracted/
 
@@ -26,3 +32,4 @@ build/
 .next/
 .venv/
 .qdrant_data/
+chatbot-service/rag/eval/data/
