@@ -46,6 +46,7 @@ class FhirFormatterTest(unittest.TestCase):
         self.assertIn("7.2 %", answer)
         self.assertIn("09:00 ngay 01/07/2026", answer)
         self.assertIn("4.0 - 6.0 %", answer)
+        self.assertIn("Theo dữ liệu hồ sơ y tế", answer)
 
     def test_diagnostic_report_answer_contains_status_conclusion_and_result_refs(self) -> None:
         answer = generate_fhir_answer(
@@ -67,8 +68,8 @@ class FhirFormatterTest(unittest.TestCase):
         )
 
         self.assertIn("Blood test", answer)
-        self.assertIn("trang thai: final", answer)
-        self.assertIn("ket luan: Da co ket qua", answer)
+        self.assertIn("trạng thái: final", answer)
+        self.assertIn("kết luận: Da co ket qua", answer)
         self.assertIn("HbA1c", answer)
 
     def test_medication_answer_contains_medication_dosage_and_authored_on(self) -> None:
@@ -93,6 +94,7 @@ class FhirFormatterTest(unittest.TestCase):
         self.assertIn("Aspirin", answer)
         self.assertIn("Uong 1 vien moi ngay", answer)
         self.assertIn("01/07/2026", answer)
+        self.assertIn("Theo dữ liệu đơn thuốc", answer)
 
     def test_appointment_answer_contains_start_end_status_and_participant(self) -> None:
         answer = generate_fhir_answer(
@@ -172,6 +174,9 @@ class FhirFormatterTest(unittest.TestCase):
         )
 
         self.assertIn("Nguyen Van B", answer)
+        self.assertIn("Họ tên", answer)
+        self.assertIn("Ngày sinh", answer)
+        self.assertIn("Giới tính", answer)
         self.assertIn("03/02/1990", answer)
         self.assertIn("BN001", answer)
         self.assertIn("0900000000", answer)

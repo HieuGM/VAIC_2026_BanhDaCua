@@ -30,14 +30,14 @@ async def get_hospital_info(
             tool=TOOL_NAME,
             status="no_data",
             queried_endpoints=[ENDPOINT],
-            message="Minh chua tim thay thong tin benh vien trong du lieu cong khai.",
+            message="Mình chưa tìm thấy thông tin bệnh viện trong dữ liệu công khai.",
         )
 
     return public_tool_patch(
         state=state,
         tool=TOOL_NAME,
         status="ok",
-        evidence=[public_evidence("Thong tin benh vien", {"hospital_info": info})],
+        evidence=[public_evidence("Thông tin bệnh viện", {"hospital_info": info})],
         queried_endpoints=[ENDPOINT],
         redirection=_contact_redirection(info),
     )

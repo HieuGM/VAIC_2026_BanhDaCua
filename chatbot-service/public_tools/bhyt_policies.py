@@ -34,7 +34,7 @@ async def get_bhyt_policies(
             tool=TOOL_NAME,
             status="no_data",
             queried_endpoints=[ENDPOINT],
-            message="Minh chua tim thay thong tin BHYT phu hop trong du lieu cong khai.",
+            message="Mình chưa tìm thấy thông tin BHYT phù hợp trong dữ liệu công khai.",
             extra={"category": category},
         )
 
@@ -42,7 +42,7 @@ async def get_bhyt_policies(
         state=state,
         tool=TOOL_NAME,
         status="ok",
-        evidence=[public_evidence("Thong tin BHYT", {"policies": policies})],
+        evidence=[public_evidence("Thông tin BHYT", {"policies": policies})],
         queried_endpoints=[ENDPOINT],
         extra={"category": category},
     )

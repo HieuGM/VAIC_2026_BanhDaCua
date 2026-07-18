@@ -24,6 +24,7 @@ class EmergencyNodeTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("emergency", result["safety_flags"])
         self.assertIn("existing_flag", result["safety_flags"])
         self.assertTrue(result["needs_handoff"])
+        self.assertIn("Đây có thể là tình huống cần cấp cứu", result["answer"])
         self.assertIn("115", result["answer"])
         self.assertIn("1900-0000", result["answer"])
         self.assertTrue(result["metadata"]["preprocessed"])

@@ -14,7 +14,7 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
                 status="ok",
                 evidence=[
                     public_evidence(
-                        "Kenh dat lich",
+                        "Kênh đặt lịch",
                         {
                             "channels": [
                                 {
@@ -45,6 +45,7 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["intent"], "APPOINTMENT_BOOKING")
         self.assertEqual(result["metadata"]["public_tool"]["status"], "ok")
         self.assertEqual(result["evidence"][0]["source_type"], "public_api")
+        self.assertIn("Các kênh hỗ trợ/đặt lịch", result["answer"])
         self.assertIn("Tong dai dat lich", result["answer"])
         self.assertNotIn("{", result["answer"])
 
@@ -56,7 +57,7 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
                 status="ok",
                 evidence=[
                     public_evidence(
-                        "Thong tin BHYT",
+                        "Thông tin BHYT",
                         {"policies": [{"title": "Muc huong BHYT", "summary": "Thong tin cong khai."}]},
                     )
                 ],
@@ -77,6 +78,7 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(mocked.called)
         self.assertEqual(result["route"], "PUBLIC_TOOL")
         self.assertEqual(result["intent"], "BHYT_INFORMATION")
+        self.assertIn("Thông tin BHYT", result["answer"])
         self.assertIn("Muc huong BHYT", result["answer"])
 
 

@@ -17,13 +17,13 @@ def generate_public_tool_answer(state: ChatState) -> str | None:
 
     status = public_tool.get("status")
     if status == "needs_clarification":
-        return public_tool.get("message") or "Ban vui long cung cap them thong tin de minh tra cuu chinh xac hon."
+        return public_tool.get("message") or "Bạn vui lòng cung cấp thêm thông tin để mình tra cứu chính xác hơn."
     if status == "needs_selection":
         return _selection_answer(public_tool)
     if status == "no_data":
-        return public_tool.get("message") or "Minh chua tim thay du lieu phu hop trong nguon cong khai hien co."
+        return public_tool.get("message") or "Mình chưa tìm thấy dữ liệu phù hợp trong nguồn công khai hiện có."
     if status == "upstream_error":
-        return public_tool.get("message") or "Hien minh chua the lay du lieu cong khai. Vui long thu lai sau hoac lien he kenh ho tro chinh thuc."
+        return public_tool.get("message") or "Hiện mình chưa thể lấy dữ liệu công khai. Vui lòng thử lại sau hoặc liên hệ kênh hỗ trợ chính thức."
 
     evidence = _public_evidence(state.get("evidence") or [])
     if not evidence:
@@ -50,7 +50,7 @@ def generate_public_tool_answer(state: ChatState) -> str | None:
 
 def _selection_answer(public_tool: dict[str, Any]) -> str:
     options = public_tool.get("options") if isinstance(public_tool.get("options"), list) else []
-    lines = [public_tool.get("message") or "Minh tim thay nhieu ket qua gan dung. Ban muon chon muc nao?"]
+    lines = [public_tool.get("message") or "Mình tìm thấy nhiều kết quả gần đúng. Bạn muốn chọn mục nào?"]
     for index, option in enumerate(options[:5], start=1):
         label = option.get("label") if isinstance(option, dict) else None
         if label:
@@ -69,45 +69,45 @@ def _public_evidence(items: list[Any]) -> list[dict[str, Any]]:
 def _channels_answer(data: dict[str, Any]) -> str:
     channels = data.get("channels") if isinstance(data.get("channels"), list) else []
     if not channels:
-        return "Minh chua tim thay kenh ho tro chinh thuc trong du lieu cong khai."
-    lines = ["Cac kenh ho tro/dat lich chinh thuc hien co:"]
+        return "Mình chưa tìm thấy kênh hỗ trợ chính thức trong dữ liệu công khai."
+    lines = ["Các kênh hỗ trợ/đặt lịch chính thức hiện có:"]
     for channel in channels[:6]:
         if not isinstance(channel, dict):
             continue
-        parts = [str(channel.get("label") or channel.get("channelType") or "Kenh ho tro")]
+        parts = [str(channel.get("label") or channel.get("channelType") or "Kênh hỗ trợ")]
         if channel.get("phone"):
             parts.append(f"SDT: {channel['phone']}")
         if channel.get("url"):
             parts.append(f"link: {channel['url']}")
         if channel.get("campus"):
-            parts.append(f"co so: {channel['campus']}")
+            parts.append(f"cơ sở: {channel['campus']}")
         lines.append(f"- {'; '.join(parts)}")
     return "\n".join(lines)
 
 
 def _hospital_info_answer(data: dict[str, Any]) -> str:
     info = data.get("hospital_info") if isinstance(data.get("hospital_info"), dict) else data
-    lines = [f"Thong tin {info.get('name') or 'benh vien'}:"]
+    lines = [f"Thông tin {info.get('name') or 'bệnh viện'}:"]
     if info.get("hotline"):
         lines.append(f"- Hotline: {info['hotline']}")
     if info.get("website"):
         lines.append(f"- Website: {info['website']}")
     if info.get("grade"):
-        lines.append(f"- Hang benh vien: {info['grade']}")
+        lines.append(f"- Hạng bệnh viện: {info['grade']}")
     if info.get("workingHours"):
-        lines.append(f"- Gio lam viec: {_readable_value(info['workingHours'])}")
+        lines.append(f"- Giờ làm việc: {_readable_value(info['workingHours'])}")
     if info.get("addresses"):
-        lines.append(f"- Dia chi: {_readable_value(info['addresses'])}")
+        lines.append(f"- Địa chỉ: {_readable_value(info['addresses'])}")
     return "\n".join(lines)
 
 
 def _service_price_answer(data: dict[str, Any]) -> str:
     service = data.get("service") if isinstance(data.get("service"), dict) else {}
     prices = data.get("prices") if isinstance(data.get("prices"), list) else []
-    service_name = service.get("name") or "dich vu"
+    service_name = service.get("name") or "dịch vụ"
     if not prices:
-        return f"Minh chua tim thay bang gia cho {service_name} trong du lieu cong khai hien co."
-    lines = [f"Bang gia cong khai cho {service_name}:"]
+        return f"Mình chưa tìm thấy bảng giá cho {service_name} trong dữ liệu công khai hiện có."
+    lines = [f"Bảng giá công khai cho {service_name}:"]
     for price in prices[:6]:
         if not isinstance(price, dict):
             continue
@@ -115,11 +115,11 @@ def _service_price_answer(data: dict[str, Any]) -> str:
         if price.get("audience"):
             parts.append(str(price["audience"]))
         if price.get("campus"):
-            parts.append(f"co so {price['campus']}")
+            parts.append(f"cơ sở {price['campus']}")
         if price.get("priceVnd") is not None:
             parts.append(f"{price['priceVnd']} VND")
         if price.get("effectiveDate"):
-            parts.append(f"hieu luc {price['effectiveDate']}")
+            parts.append(f"hiệu lực {price['effectiveDate']}")
         lines.append(f"- {'; '.join(parts)}")
     return "\n".join(lines)
 
@@ -127,10 +127,10 @@ def _service_price_answer(data: dict[str, Any]) -> str:
 def _doctor_schedule_answer(data: dict[str, Any]) -> str:
     doctor = data.get("doctor") if isinstance(data.get("doctor"), dict) else {}
     schedules = data.get("schedules") if isinstance(data.get("schedules"), list) else []
-    doctor_name = doctor.get("fullName") or "bac si"
+    doctor_name = doctor.get("fullName") or "bác sĩ"
     if not schedules:
-        return f"Minh chua tim thay lich lam viec phu hop cua {doctor_name} trong du lieu hien co."
-    lines = [f"Lich lam viec cong khai cua {doctor_name}:"]
+        return f"Mình chưa tìm thấy lịch làm việc phù hợp của {doctor_name} trong dữ liệu hiện có."
+    lines = [f"Lịch làm việc công khai của {doctor_name}:"]
     for schedule in schedules[:6]:
         if not isinstance(schedule, dict):
             continue
@@ -138,13 +138,13 @@ def _doctor_schedule_answer(data: dict[str, Any]) -> str:
         if schedule.get("effectiveDate"):
             parts.append(str(schedule["effectiveDate"]))
         if schedule.get("dayOfWeek") is not None:
-            parts.append(f"thu {schedule['dayOfWeek']}")
+            parts.append(f"thứ {schedule['dayOfWeek']}")
         if schedule.get("startTime") or schedule.get("endTime"):
             parts.append(f"{schedule.get('startTime') or ''}-{schedule.get('endTime') or ''}")
         if schedule.get("shift"):
             parts.append(str(schedule["shift"]))
         if schedule.get("room"):
-            parts.append(f"phong {schedule['room']}")
+            parts.append(f"phòng {schedule['room']}")
         lines.append(f"- {'; '.join(parts)}")
     return "\n".join(lines)
 
@@ -152,14 +152,14 @@ def _doctor_schedule_answer(data: dict[str, Any]) -> str:
 def _departments_answer(data: dict[str, Any]) -> str:
     departments = data.get("departments") if isinstance(data.get("departments"), list) else []
     if not departments:
-        return "Minh chua tim thay danh sach khoa/phong trong du lieu cong khai."
-    lines = ["Danh sach khoa/phong cong khai:"]
+        return "Mình chưa tìm thấy danh sách khoa/phòng trong dữ liệu công khai."
+    lines = ["Danh sách khoa/phòng công khai:"]
     for department in departments[:10]:
         if not isinstance(department, dict):
             continue
-        parts = [str(department.get("name") or department.get("code") or "Khoa/phong")]
+        parts = [str(department.get("name") or department.get("code") or "Khoa/phòng")]
         if department.get("floor"):
-            parts.append(f"tang {department['floor']}")
+            parts.append(f"tầng {department['floor']}")
         if department.get("phone"):
             parts.append(f"SDT: {department['phone']}")
         lines.append(f"- {'; '.join(parts)}")
@@ -169,15 +169,15 @@ def _departments_answer(data: dict[str, Any]) -> str:
 def _procedures_answer(data: dict[str, Any]) -> str:
     procedures = data.get("procedures") if isinstance(data.get("procedures"), list) else []
     if not procedures:
-        return "Minh chua tim thay quy trinh phu hop trong du lieu cong khai."
-    title = procedures[0].get("title") if isinstance(procedures[0], dict) else "Quy trinh"
-    lines = [f"{title or 'Quy trinh'}:"]
+        return "Mình chưa tìm thấy quy trình phù hợp trong dữ liệu công khai."
+    title = procedures[0].get("title") if isinstance(procedures[0], dict) else "Quy trình"
+    lines = [f"{title or 'Quy trình'}:"]
     for step in procedures[:8]:
         if not isinstance(step, dict):
             continue
-        name = step.get("name") or step.get("description") or "Buoc"
+        name = step.get("name") or step.get("description") or "Bước"
         step_no = step.get("stepNo")
-        prefix = f"Buoc {step_no}: " if step_no is not None else "- "
+        prefix = f"Bước {step_no}: " if step_no is not None else "- "
         lines.append(f"{prefix}{name}")
     return "\n".join(lines)
 
@@ -185,12 +185,12 @@ def _procedures_answer(data: dict[str, Any]) -> str:
 def _bhyt_answer(data: dict[str, Any]) -> str:
     policies = data.get("policies") if isinstance(data.get("policies"), list) else []
     if not policies:
-        return "Minh chua tim thay thong tin BHYT phu hop trong du lieu cong khai."
-    lines = ["Thong tin BHYT cong khai hien co:"]
+        return "Mình chưa tìm thấy thông tin BHYT phù hợp trong dữ liệu công khai."
+    lines = ["Thông tin BHYT công khai hiện có:"]
     for policy in policies[:6]:
         if not isinstance(policy, dict):
             continue
-        title = policy.get("title") or policy.get("code") or "Chinh sach BHYT"
+        title = policy.get("title") or policy.get("code") or "Chính sách BHYT"
         summary = policy.get("summary") or policy.get("detailsMd") or ""
         lines.append(f"- {title}: {summary}")
     return "\n".join(lines)
