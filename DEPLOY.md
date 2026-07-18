@@ -15,7 +15,7 @@ browser ──► host nginx :80
 
 - Only `data-api` is exposed, and only on `127.0.0.1:8081` (host-local, NOT public).
 - `chatbot` + `postgres` are internal to the compose network.
-- CI/CD is deferred — images are **built on the VPS**.
+- CI/CD (GitHub Actions) builds images **off-VPS** and auto-deploys on push to `develop` (§11). VPS runs `docker compose pull && up -d` — never builds locally (torch trap).
 
 ---
 
@@ -144,9 +144,35 @@ docker compose down -v                  # STOP + DROP data — destructive
 | data-api OOM-killed | raise `JAVA_OPTS -Xmx` in `docker-compose.yml` |
 | Port 80 busy | another site on nginx — check `/etc/nginx/sites-enabled/` |
 
+## 11. CI/CD — automated deploy (push → `develop` → live)
+
+GitHub Actions (`.github/workflows/ci-cd.yml`) builds images off-VPS and deploys
+automatically — the VPS never builds locally (avoids the torch/CUDA build trap).
+
+**On push/merge to `develop`:**
+1. **Test gate** — `test-data-api` (`mvn test`, H2 in-mem `MODE=PostgreSQL`) +
+   `test-chatbot` (`compileall`). Fails → no build, no deploy.
+2. **Path filter** (`changes`) — only rebuild the service whose files changed.
+3. **Build + push** — `ghcr.io/hieugm/vaic-data-api` + `vaic-chatbot`, tags `:latest`
+   + `:<sha>`. chatbot has a **torch CPU-only gate** (fails if CUDA pkgs leak in).
+4. **Ensure public** — flip GHCR packages public (avoid VPS `pull` 401).
+5. **Deploy** — SSH VPS: `scp docker-compose.yml` → `compose pull data-api chatbot`
+   → `up -d --no-build --remove-orphans` → health poll `/data/v1/departments` +
+   chatbot `/health` → `image prune -f`. FE auto-rsyncs when `frontend/` changed.
+
+**Secrets** (repo Settings → Secrets, once): `VPS_SSH_KEY`, `VPS_HOST`=14.225.222.131,
+`VPS_USER`=root, `VPS_PATH`=/home/VAIC_2026_BanhDaCua.
+
+**GHCR visibility** (once): first push creates packages PRIVATE. `ensure-packages-public`
+auto-flips; if it can't (token lacks admin), the repo owner flips both packages to
+Public in the UI (package → Settings → Change visibility).
+
+**Manual redeploy**: Actions → `ci-cd` → Run workflow → `deploy=true` (backend) and/or
+`deploy_fe=true` (force FE rsync). Concurrency: one deploy per ref, never cancelled
+mid-run.
+
 ## Notes / out of scope
 
 - **FHIR service** is NOT in this stack. `chatbot` keeps the default `fhir_base_url`
   → FHIR-path queries fail fast, the graph falls back to RAG/public tools. Add a FHIR
   container + `FHIR_BASE_URL` if needed.
-- **CI/CD + GHCR** (build off-VPS, pull on VPS) = separate phase.
