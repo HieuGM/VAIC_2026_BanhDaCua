@@ -53,3 +53,8 @@ hanoi-heart:
     # Minimum 256-bit (32-char) base64 encoded secret key
     secret: ${JWT_SECRET:aGFub2loZWFydC1zZWNyZXQta2V5LWZvci1oYWNrYXRob24tMjAyNg==}
     expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  demo-seed:
+    # Khi true, DemoUserSeeder tạo 3 demo accounts → vn-patient-001/002/003.
+    # Password: env DEMO_USER_PASSWORD (KHÔNG commit default — blank → skip fail-safe).
+    enabled: ${DEMO_SEED_ENABLED:false}
+    password: ${DEMO_USER_PASSWORD:}
