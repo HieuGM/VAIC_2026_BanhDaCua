@@ -2,7 +2,8 @@ from core.enums import SafetyFlag
 from core.errors import PermissionDenied
 from core.state import ChatState
 from fhir.client import FhirClientError
-from fhir.tools import retrieve_fhir_evidence
+from fhir.planner import FhirPlannerError
+from fhir.tools import FHIR_PLANNER_METADATA_KEY, retrieve_fhir_evidence
 
 
 async def fhir_node(state: ChatState) -> dict:
@@ -34,6 +35,21 @@ async def fhir_node(state: ChatState) -> dict:
                 evidence=[],
             ),
         }
+    except FhirPlannerError as exc:
+        return {
+            "evidence": [],
+            "metadata": _with_fhir_metadata(
+                state,
+                status="planner_error",
+                evidence=[],
+                planner_override={
+                    "source": "fallback",
+                    "selected_tool": None,
+                    "confidence": 0.0,
+                    "reason": str(exc),
+                },
+            ),
+        }
     payload = [item.model_dump(mode="json") for item in evidence]
     status = "ok" if payload else "no_data"
     return {
@@ -42,14 +58,23 @@ async def fhir_node(state: ChatState) -> dict:
     }
 
 
-def _with_fhir_metadata(state: ChatState, *, status: str, evidence: list[dict]) -> dict:
+def _with_fhir_metadata(
+    state: ChatState,
+    *,
+    status: str,
+    evidence: list[dict],
+    planner_override: dict | None = None,
+) -> dict:
     metadata = dict(state.get("metadata") or {})
+    planner = planner_override or metadata.pop(FHIR_PLANNER_METADATA_KEY, None)
     metadata["fhir"] = {
         "queried": True,
         "status": status,
         "evidence_count": len(evidence),
         "resource_types": _resource_types(evidence),
     }
+    if isinstance(planner, dict):
+        metadata["fhir"]["planner"] = planner
     return metadata
 
 
