@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,20 +35,33 @@ import java.util.NoSuchElementException;
  *   <li><b>500 internal_error</b> — fallback {@link Exception}</li>
  * </ul>
  */
-@RestControllerAdvice(basePackages = "com.hanoiheart.dataapi.controller")
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    /** 404 — resource lookup returned empty. */
+    /** 404 — resource not found. */
     @ExceptionHandler({
             NoSuchElementException.class,
             ResourceNotFoundException.class,
+            NotFoundException.class,
             EntityNotFoundException.class,
             EmptyResultDataAccessException.class
     })
     public ResponseEntity<ErrorResponse> notFound(Exception ex) {
         return body(HttpStatus.NOT_FOUND, "not_found", messageOf(ex));
+    }
+
+    /** 400 — business validation failure. */
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> badRequestBusiness(BadRequestException ex) {
+        return body(HttpStatus.BAD_REQUEST, "bad_request", ex.getMessage());
+    }
+
+    /** 403 — access denied. */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> accessDenied(AccessDeniedException ex) {
+        return body(HttpStatus.FORBIDDEN, "forbidden", "Bạn không có quyền thực hiện thao tác này");
     }
 
     /** 400 — bean validation failure on @Valid request body. */

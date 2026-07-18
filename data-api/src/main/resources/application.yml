@@ -49,3 +49,7 @@ hanoi-heart:
     base-url: ${CHATBOT_BASE_URL:http://localhost:8000}
     connect-timeout-ms: ${CHATBOT_CONNECT_TIMEOUT_MS:10000}
     read-timeout-ms: ${CHATBOT_READ_TIMEOUT_MS:10000}
+  jwt:
+    # Minimum 256-bit (32-char) base64 encoded secret key
+    secret: ${JWT_SECRET:aGFub2loZWFydC1zZWNyZXQta2V5LWZvci1oYWNrYXRob24tMjAyNg==}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
