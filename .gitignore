@@ -63,3 +63,5 @@ pgdata/
 # === Local vector/eval data ===
 .qdrant_data/
 chatbot-service/rag/eval/data/
+
+speech2text/
