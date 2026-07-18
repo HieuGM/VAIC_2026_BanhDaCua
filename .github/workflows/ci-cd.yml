@@ -210,11 +210,16 @@ jobs:
   # ───────────── DEPLOY (auto trên push:develop + manual dispatch) ─────────────
   deploy:
     needs: [build-data-api, build-chatbot, build-frontend, ensure-packages-public, changes]
-    # AUTO push:develop → deploy VPS. Dispatch deploy hoặc deploy_fe → force. needs chặn
-    # deploy khi test/build/ensure-public chưa green.
+    # AUTO push:develop → deploy VPS. Dispatch deploy hoặc deploy_fe → force.
+    # !cancelled() (status fn) BẮT BUỘC: nếu không có status fn, GitHub implicit-skip
+    # deploy khi BẤT KỲ job trong `needs` bị skip (build-data-api/build-frontend skip
+    # do path filter là BÌNH THƯỜNG) → deploy không bao giờ chạy trên push. Status fn
+    # tắt implicit đó; !contains(failure) vẫn chặn deploy khi build thật sự fail.
     if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
-      (github.event_name == 'workflow_dispatch' && (inputs.deploy || inputs.deploy_fe))
+      !cancelled() &&
+      !contains(needs.*.result, 'failure') &&
+      (github.event_name == 'push' && github.ref == 'refs/heads/develop' ||
+       github.event_name == 'workflow_dispatch' && (inputs.deploy || inputs.deploy_fe))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
