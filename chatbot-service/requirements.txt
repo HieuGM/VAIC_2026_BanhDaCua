@@ -6,3 +6,6 @@ httpx
 qdrant-client
 fastembed
 openai
+# Local dense embedding (bge-m3). For GPU, install the CUDA torch build first:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+sentence-transformers>=3.0
