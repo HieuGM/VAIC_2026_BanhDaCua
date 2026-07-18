@@ -17,6 +17,7 @@ services:
       timeout: 5s
       retries: 10
     restart: unless-stopped
+    mem_limit: 384m
 
   hapi-fhir:
     image: hapiproject/hapi:latest
@@ -26,11 +27,15 @@ services:
         condition: service_healthy
     environment:
       SPRING_CONFIG_LOCATION: file:///data/hapi/application.yaml
+      # Caps heap chống OOM trên VPS 4GB (image default chiếm MaxRAMPercentage=75% host).
+      # hapiproject/hapi entrypoint đọc JAVA_OPTS. config/application.yaml đã tắt ES+cache.
+      JAVA_OPTS: "-Xmx512m -XX:MaxMetaspaceSize=200m -XX:+ExitOnOutOfMemoryError"
     ports:
       - "8080:8080"
     volumes:
       - ./config/application.yaml:/data/hapi/application.yaml:ro
     restart: unless-stopped
+    mem_limit: 1g
 
 volumes:
   hapi-postgres-data:
