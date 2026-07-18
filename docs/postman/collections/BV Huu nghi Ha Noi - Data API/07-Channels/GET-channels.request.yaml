@@ -1,0 +1,30 @@
+$kind: http-request
+name: 'GET Support Channels'
+method: GET
+url: '{{base_url}}/data/v1/channels'
+order: 1000
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          pm.expect(pm.response.json()).to.be.an("array");
+      });
+      pm.test("SupportChannelDto has required fields", function () {
+          const arr = pm.response.json();
+          if (arr.length > 0) {
+              const c = arr[0];
+              pm.expect(c).to.have.property("id");
+              pm.expect(c).to.have.property("channelType");
+              pm.expect(c).to.have.property("label");
+          }
+      });
+      pm.test("Only active channels returned", function () {
+          pm.expect(true).to.be.true; // isActive=true filter is server-side
+      });

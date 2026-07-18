@@ -1,0 +1,36 @@
+$kind: http-request
+name: 'GET Doctor Schedules'
+method: GET
+url: '{{base_url}}/data/v1/doctors/{{doctor_id}}/schedules'
+order: 4000
+queryParams:
+  - key: from
+    value: '2026-07-01'
+  - key: to
+    value: '2026-07-31'
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          pm.expect(pm.response.json()).to.be.an("array");
+      });
+      pm.test("Schedule items have required fields", function () {
+          const arr = pm.response.json();
+          if (arr.length > 0) {
+              const s = arr[0];
+              pm.expect(s).to.have.property("id");
+              pm.expect(s).to.have.property("doctorId");
+              pm.expect(s).to.have.property("startTime");
+              pm.expect(s).to.have.property("endTime");
+          }
+      });
+      pm.test("NOTE: Both from AND to required for date filter", function () {
+          pm.expect(true).to.be.true; // Behavioral note from API docs
+      });

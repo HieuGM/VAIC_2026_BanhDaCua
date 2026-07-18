@@ -1,0 +1,31 @@
+$kind: http-request
+name: 'GET BHYT Policies'
+method: GET
+url: '{{base_url}}/data/v1/bhyt-policies'
+order: 1000
+queryParams:
+  - key: category
+    value: 'Điều trị'
+    disabled: true
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          pm.expect(pm.response.json()).to.be.an("array");
+      });
+      pm.test("BhytPolicyDto has required fields", function () {
+          const arr = pm.response.json();
+          if (arr.length > 0) {
+              const p = arr[0];
+              pm.expect(p).to.have.property("id");
+              pm.expect(p).to.have.property("code");
+              pm.expect(p).to.have.property("title");
+          }
+      });

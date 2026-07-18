@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'GET Doctor by ID — 404 Not Found'
+method: GET
+url: '{{base_url}}/data/v1/doctors/999999'
+order: 3000
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 404 Not Found", function () {
+          pm.response.to.have.status(404);
+      });
+      pm.test("Error envelope: code = not_found", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("error");
+          pm.expect(json.error.code).to.equal("not_found");
+      });

@@ -1,0 +1,51 @@
+$kind: http-request
+name: 'GET Departments (active=true)'
+method: GET
+url: '{{base_url}}/data/v1/departments'
+order: 1000
+queryParams:
+  - key: active
+    value: 'true'
+  - key: page
+    value: '0'
+  - key: size
+    value: '20'
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("PageResponse structure", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("total");
+          pm.expect(json).to.have.property("page");
+          pm.expect(json).to.have.property("size");
+          pm.expect(json).to.have.property("totalPages");
+          pm.expect(json).to.have.property("items");
+          pm.expect(json.items).to.be.an("array");
+      });
+      pm.test("All items are active", function () {
+          const json = pm.response.json();
+          json.items.forEach(function(dept) {
+              pm.expect(dept.isActive).to.equal(true);
+          });
+      });
+      pm.test("DepartmentDto has required fields", function () {
+          const json = pm.response.json();
+          if (json.items.length > 0) {
+              const dept = json.items[0];
+              pm.expect(dept).to.have.property("id");
+              pm.expect(dept).to.have.property("code");
+              pm.expect(dept).to.have.property("name");
+          }
+      });
+      // Save first department id for later use
+      const json = pm.response.json();
+      if (json.items && json.items.length > 0) {
+          pm.collectionVariables.set("dept_id", json.items[0].id);
+      }

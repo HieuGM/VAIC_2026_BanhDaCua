@@ -1,0 +1,46 @@
+$kind: http-request
+name: 'GET Doctors (list)'
+method: GET
+url: '{{base_url}}/data/v1/doctors'
+order: 1000
+queryParams:
+  - key: department
+    value: '1'
+    disabled: true
+  - key: specialty
+    value: 'Tim'
+    disabled: true
+  - key: page
+    value: '0'
+  - key: size
+    value: '20'
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("PageResponse structure", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("total");
+          pm.expect(json).to.have.property("items");
+          pm.expect(json.items).to.be.an("array");
+      });
+      pm.test("DoctorDto has required fields", function () {
+          const json = pm.response.json();
+          if (json.items.length > 0) {
+              const doc = json.items[0];
+              pm.expect(doc).to.have.property("id");
+              pm.expect(doc).to.have.property("code");
+              pm.expect(doc).to.have.property("fullName");
+          }
+      });
+      // Save first doctor id for later requests
+      const json = pm.response.json();
+      if (json.items && json.items.length > 0) {
+          pm.collectionVariables.set("doctor_id", json.items[0].id);
+      }

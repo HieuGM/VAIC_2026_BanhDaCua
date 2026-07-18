@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'GET Doctor — 400 Bad Request (non-numeric id)'
+method: GET
+url: '{{base_url}}/data/v1/doctors/abc'
+order: 1000
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 400 Bad Request", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("Error envelope: code = bad_request", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("error");
+          pm.expect(json.error.code).to.equal("bad_request");
+      });

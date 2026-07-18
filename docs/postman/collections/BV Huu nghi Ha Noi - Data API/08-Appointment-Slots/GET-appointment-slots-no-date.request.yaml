@@ -1,0 +1,23 @@
+$kind: http-request
+name: 'GET Appointment Slots — No Date (returns [])'
+method: GET
+url: '{{base_url}}/data/v1/appointment-slots'
+order: 2000
+queryParams:
+  - key: doctor
+    value: '12'
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Returns empty array when date is omitted", function () {
+          const arr = pm.response.json();
+          pm.expect(arr).to.be.an("array");
+          pm.expect(arr.length).to.equal(0);
+      });

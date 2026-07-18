@@ -1,0 +1,26 @@
+$kind: http-request
+name: 'GET Hospital Info'
+method: GET
+url: '{{base_url}}/data/v1/hospital-info'
+order: 1000
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response has required fields", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("id");
+          pm.expect(json).to.have.property("name");
+          pm.expect(json).to.have.property("hotline");
+          pm.expect(json).to.have.property("addresses");
+      });
+      pm.test("addresses is an object (not array)", function () {
+          const json = pm.response.json();
+          pm.expect(json.addresses).to.be.an("object");
+      });
