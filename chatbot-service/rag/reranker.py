@@ -1,22 +1,70 @@
-"""Rerank retrieved Evidence with a local cross-encoder (bge-reranker-v2-m3).
+"""Rerank retrieved Evidence with bge-reranker-v2-m3.
 
 Chosen over LLM listwise reranking on measured evidence (rag/eval/measure_rerank.py):
-the cross-encoder dominates price/schedule queries (exact service/doctor matching)
-and wins overall, while running offline in ~50-100ms with no API dependency.
+this cross-encoder dominates price/schedule queries and wins overall.
+
+Two providers (RAG_RERANK_PROVIDER), same model, same [0,1] sigmoid scores:
+- cross_encoder: local sentence-transformers CrossEncoder (GPU, offline, ~2.2GB RAM).
+- fptcloud: FPT Cloud /v1/rerank hosted API (~0 local RAM — for low-RAM deploy).
 
 Contract: rerank_evidence(items, query) -> list[Evidence] re-scored (confidence =
-cross-encoder relevance in [0,1]) and sorted desc. Empty/disabled → items unchanged.
+relevance in [0,1]) and sorted desc. Empty/disabled → items unchanged.
 Never raises into the graph (any error → original order, graceful degrade).
 """
 
 import asyncio
 import logging
 import threading
+from typing import Protocol
 
 from core.contracts import Evidence
 from rag.config import RagSettings, get_settings
 
 _log = logging.getLogger(__name__)
+
+
+class Reranker(Protocol):
+    def score(self, query: str, docs: list[str]) -> list[float]: ...
+
+
+class ApiReranker:
+    """FPT Cloud (Infinity) POST /rerank — returns results[{index, relevance_score}]
+    sorted by score; we map back to the input order. A browser User-Agent is
+    required (the gateway's Cloudflare rejects the default python client UA)."""
+
+    _UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+    def __init__(self, settings: RagSettings):
+        import httpx
+
+        if not settings.rerank_api_key:
+            raise RuntimeError(
+                "Missing rerank API key: set RAG_RERANK_API_KEY (or FPT_CLOUD_KEY)"
+            )
+        self._url = settings.rerank_base_url.rstrip("/") + "/rerank"
+        self._model = settings.rerank_model
+        self._client = httpx.Client(
+            timeout=settings.rerank_timeout_seconds,
+            headers={
+                "User-Agent": self._UA,
+                "Authorization": f"Bearer {settings.rerank_api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        _log.info("Using API reranker %s at %s", self._model, self._url)
+
+    def score(self, query: str, docs: list[str]) -> list[float]:
+        resp = self._client.post(
+            self._url,
+            json={"model": self._model, "query": query, "documents": docs, "top_n": len(docs)},
+        )
+        resp.raise_for_status()
+        scores = [0.0] * len(docs)
+        for item in resp.json().get("results", []):
+            idx = item.get("index")
+            if isinstance(idx, int) and 0 <= idx < len(docs):
+                scores[idx] = float(item.get("relevance_score", 0.0))
+        return scores
 
 
 class CrossEncoderReranker:
@@ -44,17 +92,25 @@ class CrossEncoderReranker:
         return [float(s) for s in scores]
 
 
-_RERANKER: CrossEncoderReranker | None = None
+def _build_reranker(settings: RagSettings) -> Reranker:
+    if settings.rerank_provider == "cross_encoder":
+        return CrossEncoderReranker(settings)
+    if settings.rerank_provider in ("fptcloud", "api"):
+        return ApiReranker(settings)
+    raise ValueError(f"Unknown RAG_RERANK_PROVIDER: {settings.rerank_provider!r}")
+
+
+_RERANKER: Reranker | None = None
 _RERANKER_LOCK = threading.Lock()
 
 
-def get_reranker(settings: RagSettings | None = None) -> CrossEncoderReranker:
-    """Thread-safe process-wide singleton (loads the model once)."""
+def get_reranker(settings: RagSettings | None = None) -> Reranker:
+    """Thread-safe process-wide singleton (builds the provider once)."""
     global _RERANKER
     if _RERANKER is None:
         with _RERANKER_LOCK:
             if _RERANKER is None:
-                _RERANKER = CrossEncoderReranker(settings or get_settings())
+                _RERANKER = _build_reranker(settings or get_settings())
     return _RERANKER
 
 

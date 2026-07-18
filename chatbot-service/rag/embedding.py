@@ -88,13 +88,25 @@ class OpenAIEmbedder:
         self._model = settings.embed_model
         self._batch = settings.embed_batch_size
         self.dim = settings.embed_dim
+        # Asymmetric providers (NVIDIA NIM bge-m3) require input_type per call.
+        self._asymmetric = settings.embed_asymmetric
+        self._truncate = settings.embed_truncate
 
-    def _embed_batch(self, batch: list[str]) -> list[list[float]]:
+    def _embed_batch(self, batch: list[str], input_type: str = "passage") -> list[list[float]]:
         from openai import RateLimitError
 
+        # Only send extra_body for asymmetric providers — OpenAI/FPT reject
+        # unknown body fields, so keep the plain call as the default path.
+        extra = (
+            {"input_type": input_type, "truncate": self._truncate}
+            if self._asymmetric
+            else None
+        )
         for attempt in range(self._MAX_RETRIES):
             try:
-                resp = self._client.embeddings.create(model=self._model, input=batch)
+                resp = self._client.embeddings.create(
+                    model=self._model, input=batch, extra_body=extra
+                )
                 # Sort by index: provider order isn't guaranteed to match input.
                 return [it.embedding for it in sorted(resp.data, key=lambda d: d.index)]
             except RateLimitError:
@@ -108,13 +120,13 @@ class OpenAIEmbedder:
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
         out: list[list[float]] = []
         for i in range(0, len(texts), self._batch):
-            out.extend(self._embed_batch(texts[i : i + self._batch]))
+            out.extend(self._embed_batch(texts[i : i + self._batch], input_type="passage"))
             if i + self._batch < len(texts):
                 time.sleep(1.0)  # stay under tokens-per-minute limits
         return out
 
     def embed_query(self, text: str) -> list[float]:
-        return self._embed_batch([text])[0]
+        return self._embed_batch([text], input_type="query")[0]
 
 
 def _build_embedder(settings: RagSettings) -> DenseEmbedder:
