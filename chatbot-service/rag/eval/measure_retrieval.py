@@ -8,23 +8,21 @@ Evidence for phase-4 decisions (don't assume — measure):
 Run (server stopped): cd chatbot-service && python -m rag.eval.measure_retrieval
 """
 
-import json
-from pathlib import Path
+from fastembed import SparseTextEmbedding
 
 import numpy as np
-from fastembed import SparseTextEmbedding
-from qdrant_client import models
 
 from rag.config import get_settings
 from rag.embedding import get_embedder
-from rag.kb_store import DENSE_VECTOR_NAME, SPARSE_VECTOR_NAME, KnowledgeBaseStore
+from rag.eval._eval_data import by_group, load_eval_qa
+from rag.kb_store import DENSE_VECTOR_NAME, KnowledgeBaseStore
 
-DATA = Path(__file__).parent / "data"
 K_LIST = (1, 3, 5, 10)
 OFFTOPIC = ["cách nấu phở bò tái", "giá vé máy bay đi Đà Nẵng", "kết quả bóng đá ngoại hạng Anh"]
 
 
-def _metrics(ranks: list[int | None], n: int) -> dict:
+def _metrics(ranks: list[int | None]) -> dict:
+    n = len(ranks) or 1
     hits = {k: sum(1 for r in ranks if r and r <= k) / n for k in K_LIST}
     mrr = sum(1.0 / r for r in ranks if r) / n
     return {**{f"Hit@{k}": round(hits[k], 3) for k in K_LIST}, "MRR@10": round(mrr, 3)}
@@ -38,32 +36,26 @@ def _first_gold_rank(points, gold: set[str]) -> int | None:
 
 
 def main() -> None:
-    qa = [json.loads(l) for l in (DATA / "qa_eval.jsonl").read_text(encoding="utf-8").splitlines()]
+    qa = load_eval_qa()
     settings = get_settings()
     store = KnowledgeBaseStore(settings)
     embedder = get_embedder(settings)
     bm25 = SparseTextEmbedding(model_name=settings.sparse_model)
 
-    dense_ranks, hybrid_ranks, gold_top_cos = [], [], []
-    for item in qa:
+    for item in qa:  # annotate each item with dense/hybrid gold ranks + top cosine
         gold = set(item["gold_chunk_ids"])
-        q = item["question"]
-        dvec = embedder.embed_query(q)
-        sp = next(bm25.query_embed(q))
+        dvec = embedder.embed_query(item["question"])
+        sp = next(bm25.query_embed(item["question"]))
         svec = {"indices": sp.indices.tolist(), "values": sp.values.tolist()}
-
         dense = store.client.query_points(
             settings.collection, query=dvec, using=DENSE_VECTOR_NAME,
             limit=10, with_payload=["chunk_id"],
         ).points
         hybrid = store.hybrid_search(dvec, svec, limit=10)
+        item["_dense"] = _first_gold_rank(dense, gold)
+        item["_hybrid"] = _first_gold_rank(hybrid, gold)
+        item["_cos"] = dense[0].score if dense else 0.0
 
-        dense_ranks.append(_first_gold_rank(dense, gold))
-        hybrid_ranks.append(_first_gold_rank(hybrid, gold))
-        if dense:
-            gold_top_cos.append(dense[0].score)  # cosine of top-1 (calibration)
-
-    # Off-topic: top-1 cosine should be clearly lower than in-domain gold.
     off_cos = []
     for q in OFFTOPIC:
         pts = store.client.query_points(
@@ -73,11 +65,15 @@ def main() -> None:
         off_cos.append(round(pts[0].score, 3) if pts else 0.0)
     store.close()
 
-    n = len(qa)
-    print("=== Recall (first gold rank) over", n, "queries ===")
-    print("dense-only:", _metrics(dense_ranks, n))
-    print("hybrid RRF:", _metrics(hybrid_ranks, n))
-    gc = np.array(gold_top_cos)
+    groups = by_group(qa)
+    print("=== dense-only vs hybrid RRF (first gold rank), per group ===")
+    for name, items in [("ALL", qa), *sorted(groups.items())]:
+        d = _metrics([it["_dense"] for it in items])
+        h = _metrics([it["_hybrid"] for it in items])
+        print(f"\n[{name}] n={len(items)}")
+        print(f"  dense : {d}")
+        print(f"  hybrid: {h}")
+    gc = np.array([it["_cos"] for it in qa])
     print("\n=== dense cosine calibration ===")
     print(f"in-domain top-1 cosine: min={gc.min():.3f} p25={np.percentile(gc,25):.3f} "
           f"median={np.median(gc):.3f}")
