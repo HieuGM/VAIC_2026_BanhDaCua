@@ -64,19 +64,19 @@ def _rule_shortcut(text: str) -> RouteDecision | None:
         return _decision(Route.PUBLIC_TOOL, Intent.SERVICE_PRICE, 0.85, "Rule matched service price.")
 
     if _contains_any(text, ["bhyt", "bao hiem y te", "bao hiem"]):
-        return _decision(Route.PUBLIC_RAG, Intent.BHYT_INFORMATION, 0.8, "Rule matched insurance information.")
+        return _decision(Route.PUBLIC_TOOL, Intent.BHYT_INFORMATION, 0.8, "Rule matched insurance information.")
 
     if _contains_any(text, ["quy trinh", "thu tuc", "giay to", "can chuan bi"]):
-        return _decision(Route.PUBLIC_RAG, Intent.EXAMINATION_PROCEDURE, 0.8, "Rule matched examination procedure.")
+        return _decision(Route.PUBLIC_TOOL, Intent.EXAMINATION_PROCEDURE, 0.8, "Rule matched examination procedure.")
 
     if _contains_any(text, ["gio lam viec", "thoi gian lam viec", "may gio mo cua"]):
-        return _decision(Route.PUBLIC_RAG, Intent.WORKING_HOURS, 0.8, "Rule matched working hours.")
+        return _decision(Route.PUBLIC_TOOL, Intent.WORKING_HOURS, 0.8, "Rule matched working hours.")
 
     if _contains_any(text, ["khoa", "phong kham", "chuyen khoa"]):
-        return _decision(Route.PUBLIC_RAG, Intent.DEPARTMENT_INFORMATION, 0.72, "Rule matched department information.")
+        return _decision(Route.PUBLIC_TOOL, Intent.DEPARTMENT_INFORMATION, 0.72, "Rule matched department information.")
 
     if _contains_any(text, ["dia chi", "lien he", "benh vien o dau", "thong tin benh vien"]):
-        return _decision(Route.PUBLIC_RAG, Intent.HOSPITAL_CONTACT, 0.72, "Rule matched hospital contact.")
+        return _decision(Route.PUBLIC_TOOL, Intent.HOSPITAL_CONTACT, 0.72, "Rule matched hospital contact.")
 
     return None
 

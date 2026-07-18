@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     fhir_base_url: str = "http://localhost:8080/fhir"
     fhir_request_timeout_seconds: float = 20
 
+    data_api_base_url: str = "http://localhost:8081/data/v1"
+    data_api_key: str | None = None
+    data_api_timeout_seconds: float = 10
+    data_api_list_page_size: int = 100
+
     qdrant_url: str = "http://localhost:6333"
     rag_collection_name: str = "hanoi_heart_hospital_kb"
 

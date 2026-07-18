@@ -52,6 +52,22 @@ class LlmRouterTest(unittest.TestCase):
         with self.assertRaises(LlmRouterError):
             validate_route_decision(decision)
 
+    def test_public_tool_data_api_intents_are_accepted(self) -> None:
+        for intent in [
+            "BHYT_INFORMATION",
+            "EXAMINATION_PROCEDURE",
+            "WORKING_HOURS",
+            "DEPARTMENT_INFORMATION",
+            "HOSPITAL_INFORMATION",
+            "HOSPITAL_CONTACT",
+            "APPOINTMENT_GUIDANCE",
+        ]:
+            with self.subTest(intent=intent):
+                decision = parse_router_response(
+                    f'{{"route": "PUBLIC_TOOL", "intent": "{intent}", "confidence": 0.9}}'
+                )
+                self.assertEqual(validate_route_decision(decision).route, Route.PUBLIC_TOOL)
+
     def test_low_confidence_is_rejected(self) -> None:
         decision = parse_router_response(
             '{"route": "AUTHENTICATED_FHIR", "intent": "LAB_RESULT", "confidence": 0.2}'

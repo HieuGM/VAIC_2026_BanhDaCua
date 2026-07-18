@@ -23,15 +23,15 @@ VALID_ROUTE_BY_INTENT: dict[Intent, Route] = {
     Intent.SERVICE_PRICE: Route.PUBLIC_TOOL,
     Intent.DOCTOR_SCHEDULE: Route.PUBLIC_TOOL,
     Intent.APPOINTMENT_BOOKING: Route.PUBLIC_TOOL,
-    Intent.BHYT_INFORMATION: Route.PUBLIC_RAG,
-    Intent.EXAMINATION_PROCEDURE: Route.PUBLIC_RAG,
-    Intent.WORKING_HOURS: Route.PUBLIC_RAG,
-    Intent.DEPARTMENT_INFORMATION: Route.PUBLIC_RAG,
+    Intent.BHYT_INFORMATION: Route.PUBLIC_TOOL,
+    Intent.EXAMINATION_PROCEDURE: Route.PUBLIC_TOOL,
+    Intent.WORKING_HOURS: Route.PUBLIC_TOOL,
+    Intent.DEPARTMENT_INFORMATION: Route.PUBLIC_TOOL,
     Intent.DOCTOR_INFORMATION: Route.PUBLIC_RAG,
-    Intent.HOSPITAL_INFORMATION: Route.PUBLIC_RAG,
-    Intent.HOSPITAL_CONTACT: Route.PUBLIC_RAG,
+    Intent.HOSPITAL_INFORMATION: Route.PUBLIC_TOOL,
+    Intent.HOSPITAL_CONTACT: Route.PUBLIC_TOOL,
     Intent.SERVICE_INFORMATION: Route.PUBLIC_RAG,
-    Intent.APPOINTMENT_GUIDANCE: Route.PUBLIC_RAG,
+    Intent.APPOINTMENT_GUIDANCE: Route.PUBLIC_TOOL,
     Intent.SYMPTOM_QUESTION: Route.PUBLIC_RAG,
     Intent.GREETING: Route.PUBLIC_RAG,
     Intent.HUMAN_SUPPORT: Route.HUMAN_HANDOFF,
@@ -136,9 +136,9 @@ def router_system_prompt() -> str:
         "- EMERGENCY -> EMERGENCY\n"
         "- PATIENT_PROFILE, PATIENT_ENCOUNTER, LAB_RESULT, MEDICATION_INFORMATION -> AUTHENTICATED_FHIR\n"
         "- PATIENT_APPOINTMENT, APPOINTMENT_STATUS -> HUMAN_HANDOFF because appointment status will be owned by backend-service later\n"
-        "- SERVICE_PRICE, DOCTOR_SCHEDULE, APPOINTMENT_BOOKING -> PUBLIC_TOOL\n"
-        "- BHYT_INFORMATION, EXAMINATION_PROCEDURE, WORKING_HOURS, DEPARTMENT_INFORMATION, DOCTOR_INFORMATION, "
-        "HOSPITAL_INFORMATION, HOSPITAL_CONTACT, SERVICE_INFORMATION, APPOINTMENT_GUIDANCE, SYMPTOM_QUESTION, GREETING, UNKNOWN -> PUBLIC_RAG\n"
+        "- SERVICE_PRICE, DOCTOR_SCHEDULE, APPOINTMENT_BOOKING, BHYT_INFORMATION, EXAMINATION_PROCEDURE, "
+        "WORKING_HOURS, DEPARTMENT_INFORMATION, HOSPITAL_INFORMATION, HOSPITAL_CONTACT, APPOINTMENT_GUIDANCE -> PUBLIC_TOOL\n"
+        "- DOCTOR_INFORMATION, SERVICE_INFORMATION, SYMPTOM_QUESTION, GREETING, UNKNOWN -> PUBLIC_RAG\n"
         "- HUMAN_SUPPORT, COMPLAINT -> HUMAN_HANDOFF\n"
         "- OUT_OF_SCOPE -> UNSUPPORTED\n\n"
         "FHIR personal data examples:\n"
@@ -146,8 +146,8 @@ def router_system_prompt() -> str:
         "- 'ket qua xet nghiem cua toi', 'can lam sang cua toi' -> LAB_RESULT / AUTHENTICATED_FHIR\n"
         "- 'don thuoc cua toi', 'thuoc cua toi' -> MEDICATION_INFORMATION / AUTHENTICATED_FHIR\n"
         "- 'lan kham cua toi', 'luot kham cua toi' -> PATIENT_ENCOUNTER / AUTHENTICATED_FHIR\n"
-        "Public tool examples: price, doctor schedule, appointment booking channels.\n"
-        "Public RAG examples: BHYT, procedure, paperwork, working hours, department, hospital info, non-emergency symptoms.\n"
+        "Public tool examples: price, doctor schedule, appointment booking channels, BHYT, procedure, paperwork, working hours, department, hospital info.\n"
+        "Public RAG examples: general service descriptions, general doctor information, non-emergency symptoms.\n"
         "Human handoff examples: hotline, call center, complaint, staff support.\n\n"
         "Schema:\n"
         "{\n"

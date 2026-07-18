@@ -47,17 +47,19 @@ class IntentRouterTest(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result["route"], "PUBLIC_TOOL")
                 self.assertEqual(result["intent"], expected_intent)
 
-    async def test_routes_public_rag_cases(self) -> None:
+    async def test_routes_public_tool_data_api_cases(self) -> None:
         cases = [
             ("bhyt can giay to gi", "BHYT_INFORMATION"),
             ("quy trinh kham", "EXAMINATION_PROCEDURE"),
             ("gio lam viec cua benh vien", "WORKING_HOURS"),
+            ("dia chi benh vien", "HOSPITAL_CONTACT"),
+            ("khoa tim mach", "DEPARTMENT_INFORMATION"),
         ]
 
         for message, expected_intent in cases:
             with self.subTest(message=message):
                 result = await intent_router_node({"message": message})
-                self.assertEqual(result["route"], "PUBLIC_RAG")
+                self.assertEqual(result["route"], "PUBLIC_TOOL")
                 self.assertEqual(result["intent"], expected_intent)
 
     async def test_routes_human_support(self) -> None:
