@@ -1,0 +1,49 @@
+# Root .dockerignore — applies to builds whose context is the repo root
+# (chatbot-service + nginx, which need to COPY sibling folders: data/, frontend/).
+# data-api builds from ./data-api and uses data-api/.dockerignore instead.
+
+# === VCS / AI tooling (never ship) ===
+.git/
+.gitignore
+Claudekit Engineer v2.13.0/
+.opencode/
+.claude/
+.agents/
+CLAUDE.md
+AGENTS.md
+plans/
+docs/
+
+# === IDE / OS junk ===
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# === Secrets (never bake into an image) ===
+.env
+.env.*
+!.env.example
+
+# === Python (chatbot-service) ===
+**/__pycache__/
+**/*.pyc
+**/.venv/
+**/venv/
+**/.qdrant_data/
+**/.pytest_cache/
+**/.mypy_cache/
+
+# === Node (frontend) ===
+**/node_modules/
+**/npm-debug.log*
+**/yarn-error.log*
+
+# === Java build output ===
+**/target/
+
+# === Stale local FE build — nginx builds its own in-image ===
+frontend/build/
+
+# === Logs ===
+*.log

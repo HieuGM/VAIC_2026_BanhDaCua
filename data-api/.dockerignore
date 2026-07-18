@@ -1,0 +1,12 @@
+# data-api build context = ./data-api
+target/
+.mvn/
+.mvn/wrapper/maven-wrapper.jar
+*.iml
+.idea/
+.vscode/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
