@@ -1,8 +1,19 @@
 import unittest
 from unittest.mock import patch
 
+from core.contracts import RouteDecision
+from core.enums import Intent, Route
 from graph.builder import build_chat_graph
 from public_tools.tool_response import public_evidence, public_tool_patch
+
+
+def _router_decision(intent: Intent) -> RouteDecision:
+    return RouteDecision(
+        route=Route.PUBLIC_TOOL,
+        intent=intent,
+        confidence=0.9,
+        reason="mocked public tool route",
+    )
 
 
 class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
@@ -29,8 +40,14 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
                 queried_endpoints=["/channels"],
             )
 
+        async def fake_route(state):
+            return _router_decision(Intent.APPOINTMENT_BOOKING)
+
         graph = build_chat_graph()
-        with patch("graph.nodes.public_tool_node.get_booking_channels", side_effect=fake_booking_channels) as mocked:
+        with (
+            patch("graph.nodes.intent_router_node.route_with_llm", side_effect=fake_route),
+            patch("graph.nodes.public_tool_node.get_booking_channels", side_effect=fake_booking_channels) as mocked,
+        ):
             result = await graph.ainvoke(
                 {
                     "session_id": "test-public-tool",
@@ -64,8 +81,14 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
                 queried_endpoints=["/bhyt-policies"],
             )
 
+        async def fake_route(state):
+            return _router_decision(Intent.BHYT_INFORMATION)
+
         graph = build_chat_graph()
-        with patch("graph.nodes.public_tool_node.get_bhyt_policies", side_effect=fake_bhyt) as mocked:
+        with (
+            patch("graph.nodes.intent_router_node.route_with_llm", side_effect=fake_route),
+            patch("graph.nodes.public_tool_node.get_bhyt_policies", side_effect=fake_bhyt) as mocked,
+        ):
             result = await graph.ainvoke(
                 {
                     "session_id": "test-public-tool-bhyt",
@@ -80,6 +103,47 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["intent"], "BHYT_INFORMATION")
         self.assertIn("Thông tin BHYT", result["answer"])
         self.assertIn("Muc huong BHYT", result["answer"])
+
+    async def test_graph_routes_doctor_schedule_to_public_tool_with_llm_router(self) -> None:
+        async def fake_doctor_schedule(state):
+            return public_tool_patch(
+                state=state,
+                tool="get_doctor_schedule",
+                status="ok",
+                evidence=[
+                    public_evidence(
+                        "Lịch bác sĩ Võ Thị Ngọc Anh",
+                        {
+                            "doctor": {"id": 8, "fullName": "Võ Thị Ngọc Anh"},
+                            "schedules": [{"dayOfWeek": 3, "startTime": "09:00"}],
+                        },
+                    )
+                ],
+                queried_endpoints=["/doctors", "/doctors/8/schedules"],
+            )
+
+        async def fake_route(state):
+            return _router_decision(Intent.DOCTOR_SCHEDULE)
+
+        graph = build_chat_graph()
+        with (
+            patch("graph.nodes.intent_router_node.route_with_llm", side_effect=fake_route),
+            patch("graph.nodes.public_tool_node.get_doctor_schedule", side_effect=fake_doctor_schedule) as mocked,
+        ):
+            result = await graph.ainvoke(
+                {
+                    "session_id": "test-public-tool-doctor",
+                    "user_role": "ANONYMOUS",
+                    "message": "Bác sĩ Võ Thị Ngọc Anh có lịch khám ngày nào?",
+                    "context": {},
+                }
+            )
+
+        self.assertTrue(mocked.called)
+        self.assertEqual(result["route"], "PUBLIC_TOOL")
+        self.assertEqual(result["intent"], "DOCTOR_SCHEDULE")
+        self.assertEqual(result["metadata"]["router"]["source"], "llm")
+        self.assertIn("Võ Thị Ngọc Anh", result["answer"])
 
 
 if __name__ == "__main__":

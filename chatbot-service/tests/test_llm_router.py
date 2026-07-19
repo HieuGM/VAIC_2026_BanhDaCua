@@ -1,7 +1,7 @@
 import unittest
 
 from core.enums import Intent, Route
-from llm.router import LlmRouterError, parse_router_response, validate_route_decision
+from llm.router import LlmRouterError, parse_router_response, router_system_prompt, validate_route_decision
 
 
 class LlmRouterTest(unittest.TestCase):
@@ -54,6 +54,7 @@ class LlmRouterTest(unittest.TestCase):
 
     def test_public_tool_data_api_intents_are_accepted(self) -> None:
         for intent in [
+            "DOCTOR_SCHEDULE",
             "BHYT_INFORMATION",
             "EXAMINATION_PROCEDURE",
             "WORKING_HOURS",
@@ -75,6 +76,13 @@ class LlmRouterTest(unittest.TestCase):
 
         with self.assertRaises(LlmRouterError):
             validate_route_decision(decision, min_confidence=0.65)
+
+    def test_prompt_distinguishes_doctor_schedule_and_personal_appointment(self) -> None:
+        prompt = router_system_prompt()
+
+        self.assertIn("DOCTOR_SCHEDULE / PUBLIC_TOOL", prompt)
+        self.assertIn("APPOINTMENT_STATUS / HUMAN_HANDOFF", prompt)
+        self.assertIn("AUTHENTICATED_FHIR", prompt)
 
 
 if __name__ == "__main__":
