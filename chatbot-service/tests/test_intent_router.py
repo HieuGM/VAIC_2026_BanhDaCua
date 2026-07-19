@@ -17,9 +17,6 @@ def _decision(route: Route, intent: Intent, confidence: float = 0.9) -> RouteDec
 
 
 class IntentRouterTest(unittest.IsolatedAsyncioTestCase):
-<<<<<<< HEAD
-    async def test_prefers_llm_over_fallback_keyword(self) -> None:
-=======
     async def test_routes_fhir_lab_result_with_accents(self) -> None:
         result = await intent_router_node({"message": "Ket qua xet nghiem cua toi"})
 
@@ -97,7 +94,6 @@ class IntentRouterTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result["needs_handoff"])
 
     async def test_uses_llm_for_ambiguous_question(self) -> None:
->>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
         async def fake_route(state):
             return _decision(Route.PUBLIC_RAG, Intent.GREETING)
 

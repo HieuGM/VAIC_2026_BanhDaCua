@@ -54,13 +54,8 @@ def _fallback_decision(text: str) -> RouteDecision:
     if _contains_any(text, ["dat lich kham", "dang ky kham", "kenh dat lich", "huong dan dat lich"]):
         return _decision(Route.PUBLIC_TOOL, Intent.APPOINTMENT_BOOKING, 0.62, "Fallback matched appointment booking.")
 
-<<<<<<< HEAD
-    if _contains_any(text, ["lich bac si", "lich kham bac si", "ca kham bac si", "bac si lam viec"]):
-        return _decision(Route.PUBLIC_TOOL, Intent.DOCTOR_SCHEDULE, 0.62, "Fallback matched doctor schedule.")
-=======
     if _is_doctor_schedule_query(text):
         return _decision(Route.PUBLIC_TOOL, Intent.DOCTOR_SCHEDULE, 0.85, "Rule matched doctor schedule.")
->>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
 
     if _contains_any(text, ["bang gia", "chi phi", "phi kham", "gia dich vu", "gia kham"]):
         return _decision(Route.PUBLIC_TOOL, Intent.SERVICE_PRICE, 0.62, "Fallback matched service price.")
