@@ -7,6 +7,7 @@ import com.hanoiheart.dataapi.dto.ChatSessionDto;
 import com.hanoiheart.dataapi.dto.PageResponse;
 import com.hanoiheart.dataapi.service.ChatService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,8 +42,12 @@ public class ChatController {
 
     @PostMapping
     public ChatResponse send(@Valid @RequestBody ChatRequest req,
-                             @RequestHeader(name = "X-Anon-Token", required = false) String anonToken) {
-        return service.handleMessage(req, anonToken);
+                             @RequestHeader(name = "X-Anon-Token", required = false) String anonToken,
+                             @AuthenticationPrincipal Long userId) {
+        // userId=null khi anon (chat permitAll, JwtAuthenticationFilter vẫn chạy →
+        // JWT có thì set principal=Long userId, không thì null). Truyền xuống service
+        // để resolve FHIR patient scope.
+        return service.handleMessage(req, anonToken, userId);
     }
 
     @GetMapping("/sessions")

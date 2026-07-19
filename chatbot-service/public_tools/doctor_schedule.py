@@ -21,7 +21,7 @@ async def get_doctor_schedule(
             state=state,
             tool=TOOL_NAME,
             status="needs_clarification",
-            message="Ban vui long cho minh biet ten bac si hoac chuyen khoa can xem lich.",
+            message="Bạn vui lòng cho mình biết tên bác sĩ hoặc chuyên khoa cần xem lịch.",
         )
 
     data_api = client or get_data_api_client()
@@ -83,7 +83,7 @@ async def get_doctor_schedule(
         status="ok" if rows else "no_data",
         evidence=[
             public_evidence(
-                f"Lich bac si {match.selected.get('fullName') or match.selected.get('id')}",
+                f"Lịch bác sĩ {match.selected.get('fullName') or match.selected.get('id')}",
                 {"doctor": match.selected, "schedules": rows},
             )
         ]
@@ -91,7 +91,7 @@ async def get_doctor_schedule(
         else [],
         options=match.options,
         queried_endpoints=queried_endpoints,
-        message=None if rows else "Minh chua tim thay lich lam viec phu hop cua bac si nay.",
+        message=None if rows else "Mình chưa tìm thấy lịch làm việc phù hợp của bác sĩ này.",
         truncated=truncated,
         total=total,
         extra={"query": query},
@@ -100,7 +100,7 @@ async def get_doctor_schedule(
 
 def _status_message(status: str) -> str:
     if status == "needs_selection":
-        return "Minh tim thay nhieu bac si/chuyen khoa gan dung. Ban muon xem lich cua ai?"
+        return "Mình tìm thấy nhiều bác sĩ/chuyên khoa gần đúng. Bạn muốn xem lịch của ai?"
     if status == "no_data":
-        return "Minh chua tim thay bac si/chuyen khoa phu hop trong du lieu cong khai."
-    return "Ban vui long bo sung ten bac si hoac chuyen khoa can xem lich."
+        return "Mình chưa tìm thấy bác sĩ/chuyên khoa phù hợp trong dữ liệu công khai."
+    return "Bạn vui lòng bổ sung tên bác sĩ hoặc chuyên khoa cần xem lịch."

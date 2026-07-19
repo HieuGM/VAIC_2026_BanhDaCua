@@ -1,19 +1,20 @@
 from __future__ import annotations
 
-import unicodedata
 from typing import Any
 
 from core.contracts import Evidence
-from core.enums import Intent
 from core.state import ChatState
 from fhir.access_control import resolve_allowed_patient_id
 from fhir.client import FhirClient, get_fhir_client
 from fhir.normalizer import normalize_bundle, normalize_fhir_resource
+from fhir.planner import plan_fhir_tool
+from fhir.schemas import FhirPlannerDecision
 from fhir.tool_registry import is_allowed_fhir_tool
 
 
 DEFAULT_LIMIT = 10
 MAX_LIMIT = 20
+FHIR_PLANNER_METADATA_KEY = "fhir_planner"
 
 
 async def get_patient_profile(state: ChatState, client: FhirClient | None = None) -> list[Evidence]:
@@ -71,28 +72,16 @@ async def get_medications(state: ChatState, client: FhirClient | None = None) ->
 
 
 async def retrieve_fhir_evidence(state: ChatState, client: FhirClient | None = None) -> list[Evidence]:
-    text = _normalized_query(state)
-    intent = state.get("intent")
+    decision = await plan_fhir_tool(state)
+    _store_planner_metadata(state, decision)
 
-    if _contains_any(text, ["xet nghiem", "ket qua", "lab", "cls"]):
-        return await get_lab_results(state, client=client)
-    if _contains_any(text, ["don thuoc", "thuoc", "medication"]):
-        return await get_medications(state, client=client)
-    if _contains_any(text, ["lich hen", "tai kham", "appointment"]):
-        return await get_patient_appointments(state, client=client)
-    if _contains_any(text, ["lan kham", "luot kham", "encounter"]):
-        return await get_patient_encounters(state, client=client)
-    if _contains_any(text, ["ho so", "thong tin cua toi"]):
-        return await get_patient_profile(state, client=client)
+    if decision.tool_name is None:
+        return []
 
-    if intent == Intent.LAB_RESULT.value:
-        return await get_lab_results(state, client=client)
-    if intent == Intent.MEDICATION_INFORMATION.value:
-        return await get_medications(state, client=client)
-    if intent == Intent.PATIENT_APPOINTMENT.value:
-        return await get_patient_appointments(state, client=client)
-
-    return []
+    executor = _FHIR_TOOL_EXECUTORS.get(decision.tool_name)
+    if executor is None:
+        return []
+    return await executor(state, client=client)
 
 
 async def _search_patient_resource(
@@ -116,6 +105,14 @@ def _client(client: FhirClient | None) -> FhirClient:
     return client or get_fhir_client()
 
 
+_FHIR_TOOL_EXECUTORS = {
+    "get_patient_profile": get_patient_profile,
+    "get_patient_encounters": get_patient_encounters,
+    "get_lab_results": get_lab_results,
+    "get_medications": get_medications,
+}
+
+
 def _ensure_allowed_tool(tool_name: str) -> None:
     if not is_allowed_fhir_tool(tool_name):
         raise ValueError(f"FHIR tool is not allowlisted: {tool_name}")
@@ -131,12 +128,12 @@ def _limit_from_state(state: ChatState) -> int:
     return max(1, min(limit, MAX_LIMIT))
 
 
-def _normalized_query(state: ChatState) -> str:
-    value = state.get("normalized_message") or state.get("message") or ""
-    text = str(value).lower()
-    text = unicodedata.normalize("NFD", text)
-    return "".join(char for char in text if unicodedata.category(char) != "Mn")
-
-
-def _contains_any(text: str, keywords: list[str]) -> bool:
-    return any(keyword in text for keyword in keywords)
+def _store_planner_metadata(state: ChatState, decision: FhirPlannerDecision) -> None:
+    metadata = dict(state.get("metadata") or {})
+    metadata[FHIR_PLANNER_METADATA_KEY] = {
+        "source": decision.source,
+        "selected_tool": decision.tool_name,
+        "confidence": decision.confidence,
+        "reason": decision.reason,
+    }
+    state["metadata"] = metadata

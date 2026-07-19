@@ -15,13 +15,13 @@ async def generate_grounded_answer(state: ChatState) -> str:
     evidence = state.get("evidence") or []
     if not evidence:
         return (
-            "Minh chua co du thong tin chinh thuc de tra loi cau nay. "
-            "Vui long lien he kenh ho tro chinh thuc cua benh vien de duoc xac nhan."
+            "Mình chưa có đủ thông tin chính thức để trả lời câu này. "
+            "Vui lòng liên hệ kênh hỗ trợ chính thức của bệnh viện để được xác nhận."
         )
 
-    lines = ["Theo thong tin hien co:"]
+    lines = ["Theo thông tin hiện có:"]
     for item in evidence[:3]:
-        title = item.get("title") or "Nguon"
+        title = item.get("title") or "Nguồn"
         content = item.get("content")
         data = item.get("data")
         if content:

@@ -5,9 +5,11 @@ import com.hanoiheart.dataapi.dto.ChatRequest;
 import com.hanoiheart.dataapi.dto.ChatResponse;
 import com.hanoiheart.dataapi.dto.PageResponse;
 import com.hanoiheart.dataapi.exception.GlobalExceptionHandler;
+import com.hanoiheart.dataapi.security.JwtUtil;
 import com.hanoiheart.dataapi.service.ChatService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -31,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Mock {@link ChatService}; import {@link GlobalExceptionHandler} để verify error envelope.
  */
 @WebMvcTest(ChatController.class)
+@AutoConfigureMockMvc(addFilters = false) // bỏ security filter chain — test controller contract thuần
 @Import(GlobalExceptionHandler.class)
 class ChatControllerTest {
 
@@ -40,11 +43,18 @@ class ChatControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private ChatService service;
+    /**
+     * Slice test pull SecurityAutoConfiguration (feat/web-api thêm Spring Security) →
+     * SecurityFilterChain cần JwtAuthenticationFilter → JwtUtil. Mock để context start;
+     * filter skip-safe khi không có Bearer header → @AuthenticationPrincipal=null (anon flow).
+     */
+    @MockBean
+    private JwtUtil jwtUtil;
 
     @Test
     void postChat_validBody_returns200() throws Exception {
         UUID sessionId = UUID.randomUUID();
-        when(service.handleMessage(any(ChatRequest.class), eq(null)))
+        when(service.handleMessage(any(ChatRequest.class), eq(null), eq(null)))
                 .thenReturn(new ChatResponse(sessionId, "Chào bạn", List.of(), 0.9,
                         "GREETING", List.of(), null, false, Map.of()));
 

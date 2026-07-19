@@ -1,11 +1,7 @@
 // services/api.js
 // Axios instance dùng chung cho các lời gọi tới data-api (BFF).
-//
-// baseURL lấy từ biến môi trường CRA (REACT_APP_ prefix bắt buộc).
-// Mặc định trỏ về data-api BFF local trên :8081.
-//
-// TODO(phase-03+): thêm request interceptor để gắn X-Anon-Token header
-// (anonymous session scoping) khi backend sẵn sàng.
+// Request interceptor: tự động đính JWT token vào Authorization header.
+// Response interceptor: 401 → xóa token, redirect về /login.
 
 import axios from 'axios';
 
@@ -17,5 +13,33 @@ const api = axios.create({
     Accept: 'application/json',
   },
 });
+
+// Request interceptor — gắn JWT token nếu có
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor — 401: xóa token và redirect
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('auth_user');
+      // Tránh vòng lặp redirect nếu đang ở trang login
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

@@ -12,7 +12,7 @@ async def output_safety_node(state: ChatState) -> dict:
     if SafetyFlag.MEDICAL_ADVICE.value not in flags:
         flags.append(SafetyFlag.MEDICAL_ADVICE.value)
     return {
-        "answer": "Minh chua the tra loi noi dung nay mot cach an toan. Vui long lien he bac si hoac kenh ho tro chinh thuc cua benh vien.",
+        "answer": "Mình chưa thể trả lời nội dung này một cách an toàn. Vui lòng liên hệ bác sĩ hoặc kênh hỗ trợ chính thức của bệnh viện.",
         "safety_flags": flags,
         "needs_handoff": True,
     }

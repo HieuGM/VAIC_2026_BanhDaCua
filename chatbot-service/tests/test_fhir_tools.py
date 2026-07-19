@@ -1,10 +1,14 @@
 import unittest
+from unittest.mock import patch
 
+from core.enums import Intent
+from fhir.schemas import FhirPlannerDecision
 from fhir.tools import (
     get_lab_results,
     get_medications,
     get_patient_appointments,
     get_patient_encounters,
+    get_patient_profile,
     retrieve_fhir_evidence,
 )
 
@@ -91,6 +95,14 @@ class FhirToolsTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(client.calls[0]["resource_type"], "Encounter")
         self.assertEqual(evidence[0].title, "Encounter/enc-1")
 
+    async def test_get_patient_profile_calls_patient(self) -> None:
+        client = FakeFhirClient()
+
+        evidence = await get_patient_profile(_state("thong tin cua toi"), client=client)
+
+        self.assertEqual(client.calls[0]["resource_type"], "Patient")
+        self.assertEqual(evidence[0].title, "Patient/patient-1")
+
     async def test_empty_bundle_returns_empty_evidence(self) -> None:
         client = FakeFhirClient({"MedicationRequest": []})
 
@@ -102,17 +114,40 @@ class FhirToolsTest(unittest.IsolatedAsyncioTestCase):
         client = FakeFhirClient({"MedicationRequest": [{"resourceType": "MedicationRequest", "id": "med-1"}]})
         state = _state("don thuoc cua Patient/patient-999")
 
-        await retrieve_fhir_evidence(state, client=client)
+        with patch(
+            "fhir.tools.plan_fhir_tool",
+            return_value=FhirPlannerDecision(tool_name="get_medications", confidence=0.9, source="llm"),
+        ):
+            await retrieve_fhir_evidence(state, client=client)
 
         self.assertEqual(client.calls[0]["patient_id"], "patient-1")
 
-    async def test_retrieve_supports_vietnamese_with_accents_directly(self) -> None:
+    async def test_retrieve_supports_planner_lab_tool(self) -> None:
         client = FakeFhirClient({"Observation": [{"resourceType": "Observation", "id": "obs-1"}]})
-        state = _state("kết quả xét nghiệm của tôi")
+        state = _state("ket qua xet nghiem cua toi")
 
-        await retrieve_fhir_evidence(state, client=client)
+        with patch(
+            "fhir.tools.plan_fhir_tool",
+            return_value=FhirPlannerDecision(tool_name="get_lab_results", confidence=0.9, source="llm"),
+        ):
+            await retrieve_fhir_evidence(state, client=client)
 
         self.assertEqual(client.calls[0]["resource_type"], "Observation")
+
+    async def test_retrieve_uses_planner_for_profile_intent(self) -> None:
+        client = FakeFhirClient()
+        state = _state("toi muon xem thong tin suc khoe cua minh trong he thong")
+        state["intent"] = Intent.PATIENT_PROFILE.value
+
+        with patch(
+            "fhir.tools.plan_fhir_tool",
+            return_value=FhirPlannerDecision(tool_name="get_patient_profile", confidence=0.9, source="llm"),
+        ):
+            evidence = await retrieve_fhir_evidence(state, client=client)
+
+        self.assertEqual(client.calls[0]["resource_type"], "Patient")
+        self.assertEqual(evidence[0].title, "Patient/patient-1")
+        self.assertEqual(state["metadata"]["fhir_planner"]["selected_tool"], "get_patient_profile")
 
 
 if __name__ == "__main__":

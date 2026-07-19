@@ -63,7 +63,7 @@ class FhirGraphIntegrationTest(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(result["route"], "AUTHENTICATED_FHIR")
         self.assertFalse(result.get("needs_handoff", False))
-        self.assertIn("chua tim thay du lieu phu hop", result["answer"])
+        self.assertIn("Mình chưa tìm thấy dữ liệu phù hợp", result["answer"])
         self.assertEqual(result["metadata"]["fhir"]["status"], "no_data")
 
     async def test_graph_fhir_permission_error_handoffs_safely(self) -> None:

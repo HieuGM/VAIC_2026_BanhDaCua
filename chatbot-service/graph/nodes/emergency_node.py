@@ -36,11 +36,11 @@ def emergency_answer_text() -> str:
     settings = get_settings()
     lines = [
         (
-            "Day co the la tinh huong can cap cuu. "
-            f"Hay goi {settings.emergency_number} ngay hoac den co so cap cuu gan nhat."
+            "Đây có thể là tình huống cần cấp cứu. "
+            f"Hãy gọi {settings.emergency_number} ngay hoặc đến cơ sở cấp cứu gần nhất."
         ),
-        "Chatbot khong chan doan, khong ke don va khong huong dan tu dieu tri trong tinh huong nay.",
+        "Chatbot không chẩn đoán, không kê đơn và không hướng dẫn tự điều trị trong tình huống này.",
     ]
     if settings.hotline:
-        lines.append(f"Neu can ho tro tu benh vien, vui long lien he hotline {settings.hotline}.")
+        lines.append(f"Nếu cần hỗ trợ từ bệnh viện, vui lòng liên hệ hotline {settings.hotline}.")
     return " ".join(lines)

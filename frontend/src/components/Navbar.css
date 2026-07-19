@@ -319,3 +319,40 @@
 @media (max-width: 480px) {
   .navbar-topbar { display: none; }
 }
+
+/* Auth Header Group */
+.nav-auth-group {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.portal-btn {
+  background: var(--secondary) !important;
+  box-shadow: 0 3px 10px rgba(44, 62, 80, 0.25) !important;
+}
+
+.portal-btn:hover {
+  background: #1a252f !important;
+  box-shadow: 0 5px 15px rgba(44, 62, 80, 0.35) !important;
+}
+
+.logout-btn-header {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--border-radius-full);
+  font-size: 1.35rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.logout-btn-header:hover {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
+}
+
