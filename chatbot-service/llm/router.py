@@ -154,8 +154,13 @@ def router_system_prompt() -> str:
         "- Appointment booking channels or guidance such as 'dat lich kham nhu the nao' "
         "-> APPOINTMENT_BOOKING or APPOINTMENT_GUIDANCE / PUBLIC_TOOL\n"
         "Public tool examples: price, doctor schedule, appointment booking channels, BHYT, procedure, paperwork, working hours, department, hospital info.\n"
+<<<<<<< HEAD
         "Public RAG is for general explanatory knowledge that is not a structured data lookup. "
         "Use PUBLIC_TOOL for structured public lookups such as prices, schedules, channels, procedures, BHYT policy, departments, contact and working hours.\n"
+=======
+        "- 'bac si Vo Thi Ngoc Anh co lich kham ngay nao', 'lich bac si tim mach ngay 16/7', "
+        "'bac si Nguyen Van A co kham hom nay khong' -> DOCTOR_SCHEDULE / PUBLIC_TOOL\n"
+>>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
         "Public RAG examples: general service descriptions, general doctor information, non-emergency symptoms.\n"
         "Human handoff examples: hotline, call center, complaint, staff support.\n\n"
         "Schema:\n"

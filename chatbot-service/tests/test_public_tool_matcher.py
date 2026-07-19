@@ -1,9 +1,11 @@
 import unittest
+from datetime import date
 
 from public_tools.matcher import page_items, select_best_match
 from public_tools.param_extractor import (
     extract_bhyt_category,
     extract_date_range,
+    extract_doctor_query,
     extract_procedure_code,
     extract_service_category,
     extract_service_query,
@@ -24,6 +26,21 @@ class PublicToolMatcherTest(unittest.TestCase):
         self.assertEqual(extract_bhyt_category("bhyt dong chi tra the nao"), "copay")
         self.assertEqual(extract_procedure_code("quy trinh kham"), "QT.25.01")
         self.assertEqual(extract_date_range("xem lich ngay 2026-07-18"), ("2026-07-18", "2026-07-18"))
+
+    def test_doctor_query_and_slash_date_extraction(self) -> None:
+        self.assertEqual(
+            extract_doctor_query("Bác sĩ Võ Thị Ngọc Anh có lịch khám ngày nào?"),
+            "vo thi ngoc anh",
+        )
+        self.assertEqual(
+            extract_doctor_query("Lịch bác sĩ tim mạch ngày 16/7"),
+            "tim mach",
+        )
+        self.assertIsNone(extract_doctor_query("ngày 16/7 có khám không"))
+        self.assertEqual(
+            extract_date_range("ngày 16/7", today=date(2026, 7, 19)),
+            ("2026-07-16", "2026-07-16"),
+        )
 
     def test_fuzzy_match_typo(self) -> None:
         result = select_best_match(

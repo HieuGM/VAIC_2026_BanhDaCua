@@ -104,7 +104,11 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("Thông tin BHYT", result["answer"])
         self.assertIn("Muc huong BHYT", result["answer"])
 
+<<<<<<< HEAD
     async def test_graph_routes_doctor_schedule_to_public_tool_with_llm_router(self) -> None:
+=======
+    async def test_graph_routes_accented_doctor_schedule_to_public_tool(self) -> None:
+>>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
         async def fake_doctor_schedule(state):
             return public_tool_patch(
                 state=state,
@@ -122,6 +126,7 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
                 queried_endpoints=["/doctors", "/doctors/8/schedules"],
             )
 
+<<<<<<< HEAD
         async def fake_route(state):
             return _router_decision(Intent.DOCTOR_SCHEDULE)
 
@@ -130,6 +135,10 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
             patch("graph.nodes.intent_router_node.route_with_llm", side_effect=fake_route),
             patch("graph.nodes.public_tool_node.get_doctor_schedule", side_effect=fake_doctor_schedule) as mocked,
         ):
+=======
+        graph = build_chat_graph()
+        with patch("graph.nodes.public_tool_node.get_doctor_schedule", side_effect=fake_doctor_schedule) as mocked:
+>>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
             result = await graph.ainvoke(
                 {
                     "session_id": "test-public-tool-doctor",
@@ -142,7 +151,11 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(mocked.called)
         self.assertEqual(result["route"], "PUBLIC_TOOL")
         self.assertEqual(result["intent"], "DOCTOR_SCHEDULE")
+<<<<<<< HEAD
         self.assertEqual(result["metadata"]["router"]["source"], "llm")
+=======
+        self.assertEqual(result["metadata"]["router"]["source"], "rule")
+>>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
         self.assertIn("Võ Thị Ngọc Anh", result["answer"])
 
 

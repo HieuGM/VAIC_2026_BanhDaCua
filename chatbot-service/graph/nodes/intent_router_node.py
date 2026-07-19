@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unicodedata
 
 from app.config import get_settings
@@ -53,8 +54,13 @@ def _fallback_decision(text: str) -> RouteDecision:
     if _contains_any(text, ["dat lich kham", "dang ky kham", "kenh dat lich", "huong dan dat lich"]):
         return _decision(Route.PUBLIC_TOOL, Intent.APPOINTMENT_BOOKING, 0.62, "Fallback matched appointment booking.")
 
+<<<<<<< HEAD
     if _contains_any(text, ["lich bac si", "lich kham bac si", "ca kham bac si", "bac si lam viec"]):
         return _decision(Route.PUBLIC_TOOL, Intent.DOCTOR_SCHEDULE, 0.62, "Fallback matched doctor schedule.")
+=======
+    if _is_doctor_schedule_query(text):
+        return _decision(Route.PUBLIC_TOOL, Intent.DOCTOR_SCHEDULE, 0.85, "Rule matched doctor schedule.")
+>>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
 
     if _contains_any(text, ["bang gia", "chi phi", "phi kham", "gia dich vu", "gia kham"]):
         return _decision(Route.PUBLIC_TOOL, Intent.SERVICE_PRICE, 0.62, "Fallback matched service price.")
@@ -138,6 +144,44 @@ def _decision(route: Route, intent: Intent, confidence: float, reason: str) -> R
         confidence=confidence,
         reason=reason,
     )
+
+
+DATE_LIKE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}[/-]\d{1,2}(?:[/-]\d{2,4})?\b")
+
+
+def _is_doctor_schedule_query(text: str) -> bool:
+    if _contains_any(
+        text,
+        [
+            "lich bac si",
+            "lich kham bac si",
+            "lich lam viec bac si",
+            "lich lam viec cua bac si",
+            "lich chuyen khoa",
+            "lich kham chuyen khoa",
+            "ca kham bac si",
+            "bac si lam viec",
+        ],
+    ):
+        return True
+
+    schedule_terms = [
+        "lich",
+        "lich kham",
+        "lam viec",
+        "ca kham",
+        "co kham",
+        "ngay nao",
+        "hom nay",
+        "ngay mai",
+    ]
+    if "bac si" in text and _contains_any(text, schedule_terms):
+        return True
+    if "chuyen khoa" in text and _contains_any(text, schedule_terms):
+        return True
+    if DATE_LIKE_RE.search(text) and _contains_any(text, ["co kham", "lich kham", "bac si", "chuyen khoa"]):
+        return True
+    return False
 
 
 def _normalize(value: str) -> str:

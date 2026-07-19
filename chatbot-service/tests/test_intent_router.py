@@ -17,7 +17,87 @@ def _decision(route: Route, intent: Intent, confidence: float = 0.9) -> RouteDec
 
 
 class IntentRouterTest(unittest.IsolatedAsyncioTestCase):
+<<<<<<< HEAD
     async def test_prefers_llm_over_fallback_keyword(self) -> None:
+=======
+    async def test_routes_fhir_lab_result_with_accents(self) -> None:
+        result = await intent_router_node({"message": "Ket qua xet nghiem cua toi"})
+
+        self.assertEqual(result["route"], "AUTHENTICATED_FHIR")
+        self.assertEqual(result["intent"], "LAB_RESULT")
+        self.assertEqual(result["metadata"]["router"]["source"], "rule")
+
+    async def test_routes_fhir_medications_profile_and_encounters(self) -> None:
+        cases = [
+            ("don thuoc cua toi", "MEDICATION_INFORMATION"),
+            ("ho so cua toi", "PATIENT_PROFILE"),
+            ("lan kham cua toi", "PATIENT_ENCOUNTER"),
+        ]
+
+        for message, expected_intent in cases:
+            with self.subTest(message=message):
+                result = await intent_router_node({"message": message})
+                self.assertEqual(result["route"], "AUTHENTICATED_FHIR")
+                self.assertEqual(result["intent"], expected_intent)
+
+    async def test_personal_appointment_status_does_not_route_fhir(self) -> None:
+        result = await intent_router_node({"message": "lich hen cua toi"})
+
+        self.assertEqual(result["route"], "HUMAN_HANDOFF")
+        self.assertEqual(result["intent"], "APPOINTMENT_STATUS")
+        self.assertTrue(result["needs_handoff"])
+
+    async def test_routes_public_tool_cases(self) -> None:
+        cases = [
+            ("dat lich kham", "APPOINTMENT_BOOKING"),
+            ("bang gia kham", "SERVICE_PRICE"),
+            ("lich bac si tim mach", "DOCTOR_SCHEDULE"),
+        ]
+
+        for message, expected_intent in cases:
+            with self.subTest(message=message):
+                result = await intent_router_node({"message": message})
+                self.assertEqual(result["route"], "PUBLIC_TOOL")
+                self.assertEqual(result["intent"], expected_intent)
+
+    async def test_routes_doctor_schedule_natural_vietnamese_with_accents(self) -> None:
+        cases = [
+            "Bác sĩ Võ Thị Ngọc Anh có lịch khám ngày nào?",
+            "Bác sĩ Nguyễn Văn A có khám hôm nay không?",
+            "Lịch bác sĩ tim mạch ngày 16/7",
+        ]
+
+        for message in cases:
+            with self.subTest(message=message):
+                result = await intent_router_node({"message": message})
+                self.assertEqual(result["route"], "PUBLIC_TOOL")
+                self.assertEqual(result["intent"], "DOCTOR_SCHEDULE")
+                self.assertEqual(result["metadata"]["router"]["source"], "rule")
+
+    async def test_routes_public_tool_data_api_cases(self) -> None:
+        cases = [
+            ("bhyt can giay to gi", "BHYT_INFORMATION"),
+            ("quy trinh kham", "EXAMINATION_PROCEDURE"),
+            ("gio lam viec cua benh vien", "WORKING_HOURS"),
+            ("dia chi benh vien", "HOSPITAL_CONTACT"),
+            ("khoa tim mach", "DEPARTMENT_INFORMATION"),
+        ]
+
+        for message, expected_intent in cases:
+            with self.subTest(message=message):
+                result = await intent_router_node({"message": message})
+                self.assertEqual(result["route"], "PUBLIC_TOOL")
+                self.assertEqual(result["intent"], expected_intent)
+
+    async def test_routes_human_support(self) -> None:
+        result = await intent_router_node({"message": "toi muon gap nhan vien"})
+
+        self.assertEqual(result["route"], "HUMAN_HANDOFF")
+        self.assertEqual(result["intent"], "HUMAN_SUPPORT")
+        self.assertTrue(result["needs_handoff"])
+
+    async def test_uses_llm_for_ambiguous_question(self) -> None:
+>>>>>>> c19675f045ecdd71794cc4932b096a16e2cda411
         async def fake_route(state):
             return _decision(Route.PUBLIC_RAG, Intent.GREETING)
 

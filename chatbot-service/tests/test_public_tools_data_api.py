@@ -110,6 +110,30 @@ class PublicToolsDataApiTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["metadata"]["public_tool"]["status"], "ok")
         self.assertEqual(client.calls[1][0], "/doctors/7/schedules")
 
+        named_client = FakeDataApiClient(
+            {
+                "/doctors": {
+                    "items": [{"id": 8, "fullName": "Võ Thị Ngọc Anh", "specialty": "Tim mạch"}],
+                    "total": 1,
+                },
+                "/doctors/8/schedules": [{"doctorId": 8, "dayOfWeek": 3, "startTime": "09:00"}],
+            }
+        )
+        named = await get_doctor_schedule(
+            {"message": "Bác sĩ Võ Thị Ngọc Anh có lịch khám ngày nào?"},
+            client=named_client,
+        )
+        self.assertEqual(named["metadata"]["public_tool"]["status"], "ok")
+        self.assertEqual(named_client.calls[1][0], "/doctors/8/schedules")
+
+        clarification_client = FakeDataApiClient({})
+        clarification = await get_doctor_schedule(
+            {"message": "ngày 16/7 có khám không"},
+            client=clarification_client,
+        )
+        self.assertEqual(clarification["metadata"]["public_tool"]["status"], "needs_clarification")
+        self.assertEqual(clarification_client.calls, [])
+
         selection_client = FakeDataApiClient(
             {
                 "/doctors": {
