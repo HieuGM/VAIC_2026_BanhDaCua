@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unicodedata
 
 from app.config import get_settings
@@ -57,7 +58,7 @@ def _rule_shortcut(text: str) -> RouteDecision | None:
     if _contains_any(text, ["dat lich", "dat kham", "dang ky kham", "hen kham"]):
         return _decision(Route.PUBLIC_TOOL, Intent.APPOINTMENT_BOOKING, 0.85, "Rule matched appointment booking.")
 
-    if _contains_any(text, ["lich bac si", "bac si nao", "ca kham bac si", "bac si lam viec"]):
+    if _is_doctor_schedule_query(text):
         return _decision(Route.PUBLIC_TOOL, Intent.DOCTOR_SCHEDULE, 0.85, "Rule matched doctor schedule.")
 
     if _contains_any(text, ["bang gia", "chi phi", "phi kham", "gia dich vu", "gia kham"]):
@@ -148,8 +149,46 @@ def _decision(route: Route, intent: Intent, confidence: float, reason: str) -> R
     )
 
 
+DATE_LIKE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}[/-]\d{1,2}(?:[/-]\d{2,4})?\b")
+
+
+def _is_doctor_schedule_query(text: str) -> bool:
+    if _contains_any(
+        text,
+        [
+            "lich bac si",
+            "lich kham bac si",
+            "lich lam viec bac si",
+            "lich lam viec cua bac si",
+            "lich chuyen khoa",
+            "lich kham chuyen khoa",
+            "ca kham bac si",
+            "bac si lam viec",
+        ],
+    ):
+        return True
+
+    schedule_terms = [
+        "lich",
+        "lich kham",
+        "lam viec",
+        "ca kham",
+        "co kham",
+        "ngay nao",
+        "hom nay",
+        "ngay mai",
+    ]
+    if "bac si" in text and _contains_any(text, schedule_terms):
+        return True
+    if "chuyen khoa" in text and _contains_any(text, schedule_terms):
+        return True
+    if DATE_LIKE_RE.search(text) and _contains_any(text, ["co kham", "lich kham", "bac si", "chuyen khoa"]):
+        return True
+    return False
+
+
 def _normalize(value: str) -> str:
-    text = (value or "").lower().replace("đ", "d")
+    text = (value or "").lower().replace("đ", "d").replace("Ä‘", "d")
     text = unicodedata.normalize("NFD", text)
     text = "".join(char for char in text if unicodedata.category(char) != "Mn")
     return " ".join(text.split())

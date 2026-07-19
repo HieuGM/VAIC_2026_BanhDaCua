@@ -81,6 +81,41 @@ class PublicToolGraphTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("Thông tin BHYT", result["answer"])
         self.assertIn("Muc huong BHYT", result["answer"])
 
+    async def test_graph_routes_accented_doctor_schedule_to_public_tool(self) -> None:
+        async def fake_doctor_schedule(state):
+            return public_tool_patch(
+                state=state,
+                tool="get_doctor_schedule",
+                status="ok",
+                evidence=[
+                    public_evidence(
+                        "Lịch bác sĩ Võ Thị Ngọc Anh",
+                        {
+                            "doctor": {"id": 8, "fullName": "Võ Thị Ngọc Anh"},
+                            "schedules": [{"dayOfWeek": 3, "startTime": "09:00"}],
+                        },
+                    )
+                ],
+                queried_endpoints=["/doctors", "/doctors/8/schedules"],
+            )
+
+        graph = build_chat_graph()
+        with patch("graph.nodes.public_tool_node.get_doctor_schedule", side_effect=fake_doctor_schedule) as mocked:
+            result = await graph.ainvoke(
+                {
+                    "session_id": "test-public-tool-doctor",
+                    "user_role": "ANONYMOUS",
+                    "message": "Bác sĩ Võ Thị Ngọc Anh có lịch khám ngày nào?",
+                    "context": {},
+                }
+            )
+
+        self.assertTrue(mocked.called)
+        self.assertEqual(result["route"], "PUBLIC_TOOL")
+        self.assertEqual(result["intent"], "DOCTOR_SCHEDULE")
+        self.assertEqual(result["metadata"]["router"]["source"], "rule")
+        self.assertIn("Võ Thị Ngọc Anh", result["answer"])
+
 
 if __name__ == "__main__":
     unittest.main()
