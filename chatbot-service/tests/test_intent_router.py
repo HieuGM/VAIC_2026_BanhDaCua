@@ -47,6 +47,20 @@ class IntentRouterTest(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result["route"], "PUBLIC_TOOL")
                 self.assertEqual(result["intent"], expected_intent)
 
+    async def test_routes_doctor_schedule_natural_vietnamese_with_accents(self) -> None:
+        cases = [
+            "Bác sĩ Võ Thị Ngọc Anh có lịch khám ngày nào?",
+            "Bác sĩ Nguyễn Văn A có khám hôm nay không?",
+            "Lịch bác sĩ tim mạch ngày 16/7",
+        ]
+
+        for message in cases:
+            with self.subTest(message=message):
+                result = await intent_router_node({"message": message})
+                self.assertEqual(result["route"], "PUBLIC_TOOL")
+                self.assertEqual(result["intent"], "DOCTOR_SCHEDULE")
+                self.assertEqual(result["metadata"]["router"]["source"], "rule")
+
     async def test_routes_public_tool_data_api_cases(self) -> None:
         cases = [
             ("bhyt can giay to gi", "BHYT_INFORMATION"),

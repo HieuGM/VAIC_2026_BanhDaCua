@@ -147,6 +147,8 @@ def router_system_prompt() -> str:
         "- 'don thuoc cua toi', 'thuoc cua toi' -> MEDICATION_INFORMATION / AUTHENTICATED_FHIR\n"
         "- 'lan kham cua toi', 'luot kham cua toi' -> PATIENT_ENCOUNTER / AUTHENTICATED_FHIR\n"
         "Public tool examples: price, doctor schedule, appointment booking channels, BHYT, procedure, paperwork, working hours, department, hospital info.\n"
+        "- 'bac si Vo Thi Ngoc Anh co lich kham ngay nao', 'lich bac si tim mach ngay 16/7', "
+        "'bac si Nguyen Van A co kham hom nay khong' -> DOCTOR_SCHEDULE / PUBLIC_TOOL\n"
         "Public RAG examples: general service descriptions, general doctor information, non-emergency symptoms.\n"
         "Human handoff examples: hotline, call center, complaint, staff support.\n\n"
         "Schema:\n"
