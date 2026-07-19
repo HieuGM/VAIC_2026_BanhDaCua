@@ -27,7 +27,7 @@
 }
 
 .hero-content {
-  max-width: 56rem;
+  max-width: 65rem;
 }
 
 .hero-title {
@@ -36,6 +36,7 @@
   color: var(--secondary);
   line-height: 1.15;
   margin-bottom: 0.8rem;
+  white-space: nowrap;
 }
 
 .hero-title span { color: var(--primary); }
@@ -97,7 +98,7 @@
 
 .hero-img {
   width: 100%;
-  max-width: 48rem;
+  max-width: 55rem;
   border-radius: 2rem;
   box-shadow: var(--shadow-lg);
   object-fit: cover;
@@ -526,6 +527,7 @@
   .hero-image-wrap { display: none; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid, .testimonials-grid, .news-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-title { white-space: normal; }
 }
 
 @media (max-width: 600px) {

@@ -78,7 +78,7 @@ const Register = () => {
 
         {globalError && (
           <div className="register-global-error">
-            <span>⚠️</span> {globalError}
+            {globalError}
           </div>
         )}
 
@@ -87,7 +87,6 @@ const Register = () => {
           <div className="form-group">
             <label className="form-label" htmlFor="reg-fullname">Họ và tên *</label>
             <div className="form-input-wrapper">
-              <span className="form-input-icon">👤</span>
               <input
                 id="reg-fullname"
                 className={`form-input ${errors.fullName ? 'error' : ''}`}
@@ -99,14 +98,13 @@ const Register = () => {
                 autoFocus
               />
             </div>
-            {errors.fullName && <span className="form-error">⚠ {errors.fullName}</span>}
+            {errors.fullName && <span className="form-error">{errors.fullName}</span>}
           </div>
 
           {/* Email */}
           <div className="form-group">
             <label className="form-label" htmlFor="reg-email">Email</label>
             <div className="form-input-wrapper">
-              <span className="form-input-icon">✉️</span>
               <input
                 id="reg-email"
                 className={`form-input ${errors.email ? 'error' : ''}`}
@@ -118,7 +116,7 @@ const Register = () => {
                 autoComplete="email"
               />
             </div>
-            {errors.email && <span className="form-error">⚠ {errors.email}</span>}
+            {errors.email && <span className="form-error">{errors.email}</span>}
             <span className="register-hint">Nhập email hoặc số điện thoại (ít nhất một)</span>
           </div>
 
@@ -126,7 +124,6 @@ const Register = () => {
           <div className="form-group">
             <label className="form-label" htmlFor="reg-phone">Số điện thoại</label>
             <div className="form-input-wrapper">
-              <span className="form-input-icon">📱</span>
               <input
                 id="reg-phone"
                 className="form-input"
@@ -144,7 +141,6 @@ const Register = () => {
           <div className="form-group">
             <label className="form-label" htmlFor="reg-password">Mật khẩu *</label>
             <div className="form-input-wrapper">
-              <span className="form-input-icon">🔑</span>
               <input
                 id="reg-password"
                 className={`form-input ${errors.password ? 'error' : ''}`}
@@ -156,14 +152,13 @@ const Register = () => {
                 autoComplete="new-password"
               />
             </div>
-            {errors.password && <span className="form-error">⚠ {errors.password}</span>}
+            {errors.password && <span className="form-error">{errors.password}</span>}
           </div>
 
           {/* Xác nhận mật khẩu */}
           <div className="form-group">
             <label className="form-label" htmlFor="reg-confirm">Xác nhận mật khẩu *</label>
             <div className="form-input-wrapper">
-              <span className="form-input-icon">🔒</span>
               <input
                 id="reg-confirm"
                 className={`form-input ${errors.confirmPassword ? 'error' : ''}`}
@@ -176,7 +171,7 @@ const Register = () => {
               />
             </div>
             {errors.confirmPassword && (
-              <span className="form-error">⚠ {errors.confirmPassword}</span>
+              <span className="form-error">{errors.confirmPassword}</span>
             )}
           </div>
 
@@ -188,7 +183,7 @@ const Register = () => {
           >
             {loading ? (
               <><div className="btn-spinner" /> Đang tạo tài khoản...</>
-            ) : 'Tạo tài khoản →'}
+            ) : 'Tạo tài khoản'}
           </button>
         </form>
 
@@ -196,7 +191,7 @@ const Register = () => {
           Đã có tài khoản? <Link to="/login">Đăng nhập ngay</Link>
         </p>
         <p className="register-footer" style={{ marginTop: 8 }}>
-          <Link to="/" style={{ color: 'rgba(255,255,255,0.35)' }}>← Về trang chủ</Link>
+          <Link to="/" style={{ color: '#718096' }}>← Về trang chủ</Link>
         </p>
       </div>
     </div>
