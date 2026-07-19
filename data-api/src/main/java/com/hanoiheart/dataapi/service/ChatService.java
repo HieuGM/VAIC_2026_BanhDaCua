@@ -13,6 +13,8 @@ import com.hanoiheart.dataapi.exception.ChatSessionNotFoundException;
 import com.hanoiheart.dataapi.repository.ChatMessageRepository;
 import com.hanoiheart.dataapi.repository.ChatSessionRepository;
 import com.hanoiheart.dataapi.repository.UserPatientLinkRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +46,7 @@ public class ChatService {
     static final String FALLBACK_FLAG = "upstream_error";
     static final String DEFAULT_LANG = "vi";
     private static final int LAST_SNIPPET_MAX = 100;
+    private static final Logger log = LoggerFactory.getLogger(ChatService.class);
 
     private final ChatSessionRepository sessionRepository;
     private final ChatMessageRepository messageRepository;
@@ -81,11 +84,15 @@ public class ChatService {
                 ? List.of()
                 : userPatientLinkRepository.findFhirPatientIdByUserId(userId);
         String userRole = allowedPatientIds.isEmpty() ? "ANONYMOUS" : "USER";
+        log.info("[chat] session={} userId={} role={} allowedPatientIds={}",
+                session.getId(), userId, userRole, allowedPatientIds);
 
         // 3) proxy → chatbot (fallback on upstream error)
         try {
             ChatbotClient.ChatbotResponse bot =
                     chatbotClient.chat(req, session.getId().toString(), userRole, allowedPatientIds);
+            log.info("[chat] <- chatbot route={} intent={} confidence={} flags={} metadata={}",
+                    bot.route(), bot.intent(), bot.confidence(), bot.guardrailFlags(), bot.metadata());
             ChatMessage assistantMsg = newMessage(session, "assistant", bot.answer(),
                     bot.citations(), bot.intent(), bot.route(),
                     bot.guardrailFlags(), (float) bot.confidence());
