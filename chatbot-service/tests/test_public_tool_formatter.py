@@ -18,7 +18,7 @@ class PublicToolFormatterTest(unittest.TestCase):
                 },
                 "evidence": [
                     public_evidence(
-                        "Thong tin benh vien",
+                        "Thông tin bệnh viện",
                         {
                             "hospital_info": {
                                 "name": "Benh vien Tim Ha Noi",
@@ -32,6 +32,7 @@ class PublicToolFormatterTest(unittest.TestCase):
             }
         )
 
+        self.assertIn("Thông tin", answer)
         self.assertIn("92 Tran Hung Dao", answer)
         self.assertIn("07:00-17:00", answer)
         self.assertNotIn("{", answer)

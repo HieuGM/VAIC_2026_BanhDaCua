@@ -35,7 +35,7 @@ async def get_procedures(
             tool=TOOL_NAME,
             status="no_data",
             queried_endpoints=[ENDPOINT],
-            message="Minh chua tim thay quy trinh phu hop trong du lieu cong khai.",
+            message="Mình chưa tìm thấy quy trình phù hợp trong dữ liệu công khai.",
             extra={"procedure_code": code},
         )
 
@@ -43,7 +43,7 @@ async def get_procedures(
         state=state,
         tool=TOOL_NAME,
         status="ok",
-        evidence=[public_evidence("Quy trinh kham", {"procedures": procedures})],
+        evidence=[public_evidence("Quy trình khám", {"procedures": procedures})],
         queried_endpoints=[ENDPOINT],
         extra={"procedure_code": code},
     )

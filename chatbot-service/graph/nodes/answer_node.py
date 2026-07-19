@@ -10,7 +10,7 @@ async def answer_node(state: ChatState) -> dict:
 
     if state.get("route") == Route.HUMAN_HANDOFF.value:
         return {
-            "answer": "Minh se chuyen yeu cau nay sang kenh ho tro phu hop. Ban co the lien he hotline hoac nhan vien CSKH.",
+            "answer": "Mình sẽ chuyển yêu cầu này sang kênh hỗ trợ phù hợp. Bạn có thể liên hệ hotline hoặc nhân viên CSKH.",
             "needs_handoff": True,
         }
 
@@ -22,7 +22,7 @@ async def answer_node(state: ChatState) -> dict:
 
     if state.get("route") == Route.UNSUPPORTED.value:
         return {
-            "answer": "Minh chua the ho tro yeu cau nay trong pham vi chatbot benh vien.",
+            "answer": "Mình chưa thể hỗ trợ yêu cầu này trong phạm vi chatbot bệnh viện.",
             "needs_handoff": True,
         }
 

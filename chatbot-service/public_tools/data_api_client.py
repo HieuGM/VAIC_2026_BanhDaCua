@@ -51,18 +51,18 @@ class DataApiClient:
                 return response.json()
         except httpx.HTTPStatusError as exc:
             raise DataApiError(
-                "Khong the lay du lieu cong khai tu he thong.",
+                "Không thể lấy dữ liệu công khai từ hệ thống.",
                 f"Data API returned HTTP {exc.response.status_code}.",
                 status_code=exc.response.status_code,
             ) from exc
         except httpx.RequestError as exc:
             raise DataApiError(
-                "He thong du lieu cong khai hien khong kha dung.",
+                "Hệ thống dữ liệu công khai hiện không khả dụng.",
                 str(exc),
             ) from exc
         except ValueError as exc:
             raise DataApiError(
-                "He thong du lieu cong khai tra ve du lieu khong hop le.",
+                "Hệ thống dữ liệu công khai trả về dữ liệu không hợp lệ.",
                 str(exc),
             ) from exc
 

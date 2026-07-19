@@ -37,7 +37,7 @@ async def get_departments(
             tool=TOOL_NAME,
             status="no_data",
             queried_endpoints=[ENDPOINT],
-            message="Minh chua tim thay danh sach khoa/phong trong du lieu cong khai.",
+            message="Mình chưa tìm thấy danh sách khoa/phòng trong dữ liệu công khai.",
             truncated=truncated,
             total=total,
         )
@@ -46,7 +46,7 @@ async def get_departments(
         state=state,
         tool=TOOL_NAME,
         status="ok",
-        evidence=[public_evidence("Danh sach khoa/phong", {"departments": departments})],
+        evidence=[public_evidence("Danh sách khoa/phòng", {"departments": departments})],
         queried_endpoints=[ENDPOINT],
         truncated=truncated,
         total=total,

@@ -21,7 +21,7 @@ async def get_service_prices(
             state=state,
             tool=TOOL_NAME,
             status="needs_clarification",
-            message="Ban vui long cho minh biet ten dich vu can tra cuu gia.",
+            message="Bạn vui lòng cho mình biết tên dịch vụ cần tra cứu giá.",
         )
 
     data_api = client or get_data_api_client()
@@ -84,7 +84,7 @@ async def get_service_prices(
         status="ok" if prices else "no_data",
         evidence=[
             public_evidence(
-                f"Gia dich vu {match.selected.get('name') or match.selected.get('id')}",
+                f"Giá dịch vụ {match.selected.get('name') or match.selected.get('id')}",
                 {"service": match.selected, "prices": prices},
             )
         ]
@@ -92,7 +92,7 @@ async def get_service_prices(
         else [],
         options=match.options,
         queried_endpoints=queried_endpoints,
-        message=None if prices else "Minh chua tim thay bang gia cong khai cho dich vu nay.",
+        message=None if prices else "Mình chưa tìm thấy bảng giá công khai cho dịch vụ này.",
         truncated=truncated,
         total=total,
         extra={"query": query, "category": category},
@@ -107,7 +107,7 @@ def _api_category(category: str | None) -> str | None:
 
 def _status_message(status: str) -> str:
     if status == "needs_selection":
-        return "Minh tim thay nhieu dich vu gan dung. Ban muon tra cuu dich vu nao?"
+        return "Mình tìm thấy nhiều dịch vụ gần đúng. Bạn muốn tra cứu dịch vụ nào?"
     if status == "no_data":
-        return "Minh chua tim thay dich vu phu hop trong du lieu cong khai."
-    return "Ban vui long bo sung ten dich vu can tra cuu gia."
+        return "Mình chưa tìm thấy dịch vụ phù hợp trong dữ liệu công khai."
+    return "Bạn vui lòng bổ sung tên dịch vụ cần tra cứu giá."

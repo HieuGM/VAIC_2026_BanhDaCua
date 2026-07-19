@@ -29,7 +29,7 @@ async def get_booking_channels(
             tool=TOOL_NAME,
             status="no_data",
             queried_endpoints=[ENDPOINT],
-            message="Minh chua tim thay kenh dat lich/ho tro trong du lieu cong khai.",
+            message="Mình chưa tìm thấy kênh đặt lịch/hỗ trợ trong dữ liệu công khai.",
         )
 
     return public_tool_patch(
@@ -38,7 +38,7 @@ async def get_booking_channels(
         status="ok",
         evidence=[
             public_evidence(
-                "Kenh dat lich/ho tro",
+                "Kênh đặt lịch/hỗ trợ",
                 {"channels": channels},
             )
         ],

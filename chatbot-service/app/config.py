@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     llm_router_min_confidence: float = 0.65
     llm_router_timeout_seconds: float = 10
     model_route: str | None = None
+    use_llm_fhir_planner: bool = True
+    fhir_planner_min_confidence: float = 0.65
+    fhir_planner_timeout_seconds: float = 8
+    model_fhir_planner: str | None = None
 
     fhir_base_url: str = "http://localhost:8080/fhir"
     fhir_request_timeout_seconds: float = 20

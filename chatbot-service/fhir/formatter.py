@@ -9,8 +9,8 @@ from core.state import ChatState
 
 MAX_FHIR_ITEMS = 5
 NO_FHIR_DATA_MESSAGE = (
-    "Minh chua tim thay du lieu phu hop trong ho so duoc cap quyen. "
-    "Neu ban can xac minh them, vui long lien he kenh ho tro chinh thuc cua benh vien."
+    "Mình chưa tìm thấy dữ liệu phù hợp trong hồ sơ được cấp quyền. "
+    "Nếu bạn cần xác minh thêm, vui lòng liên hệ kênh hỗ trợ chính thức của bệnh viện."
 )
 
 
@@ -41,7 +41,7 @@ def generate_fhir_answer(state: ChatState) -> str | None:
 
 
 def _format_lab_results(evidence: list[dict[str, Any]]) -> str:
-    lines = ["Theo du lieu ho so y te cua ban, ket qua xet nghiem/can lam sang hien co:"]
+    lines = ["Theo dữ liệu hồ sơ y tế của bạn, kết quả xét nghiệm/cận lâm sàng hiện có:"]
     for item in evidence[:MAX_FHIR_ITEMS]:
         data = item.get("data") or {}
         resource_type = data.get("resource_type")
@@ -54,34 +54,34 @@ def _format_lab_results(evidence: list[dict[str, Any]]) -> str:
 
 
 def _format_medications(evidence: list[dict[str, Any]]) -> str:
-    lines = ["Theo du lieu don thuoc trong ho so y te cua ban:"]
+    lines = ["Theo dữ liệu đơn thuốc trong hồ sơ y tế của bạn:"]
     for item in _items_of_type(evidence, "MedicationRequest")[:MAX_FHIR_ITEMS]:
         data = item.get("data") or {}
-        medication = data.get("medication") or "Thuoc chua ro ten"
+        medication = data.get("medication") or "Thuốc chưa rõ tên"
         parts = [str(medication)]
         if data.get("dosage"):
-            parts.append(f"cach dung: {', '.join(str(value) for value in data['dosage'])}")
+            parts.append(f"cách dùng: {', '.join(str(value) for value in data['dosage'])}")
         if data.get("authored_on"):
-            parts.append(f"ngay ke: {_format_datetime(data['authored_on'])}")
+            parts.append(f"ngày kê: {_format_datetime(data['authored_on'])}")
         if data.get("status"):
-            parts.append(f"trang thai: {data['status']}")
+            parts.append(f"trạng thái: {data['status']}")
         lines.append(f"- {'; '.join(parts)}")
-    lines.append("Vui long dung thuoc theo don va huong dan truc tiep cua bac si.")
+    lines.append("Vui lòng dùng thuốc theo đơn và hướng dẫn trực tiếp của bác sĩ.")
     return "\n".join(lines)
 
 
 def _format_appointments(evidence: list[dict[str, Any]]) -> str:
-    lines = ["Theo du lieu lich hen trong ho so y te cua ban:"]
+    lines = ["Theo dữ liệu lịch hẹn trong hồ sơ y tế của bạn:"]
     for item in _items_of_type(evidence, "Appointment")[:MAX_FHIR_ITEMS]:
         data = item.get("data") or {}
-        title = data.get("description") or _first_concept_text(data.get("service_type")) or "Lich hen"
+        title = data.get("description") or _first_concept_text(data.get("service_type")) or "Lịch hẹn"
         parts = [str(title)]
         if data.get("start"):
-            parts.append(f"bat dau: {_format_datetime(data['start'])}")
+            parts.append(f"bắt đầu: {_format_datetime(data['start'])}")
         if data.get("end"):
-            parts.append(f"ket thuc: {_format_datetime(data['end'])}")
+            parts.append(f"kết thúc: {_format_datetime(data['end'])}")
         if data.get("status"):
-            parts.append(f"trang thai: {data['status']}")
+            parts.append(f"trạng thái: {data['status']}")
         participant = _participant_text(data.get("participant"))
         if participant:
             parts.append(participant)
@@ -90,18 +90,18 @@ def _format_appointments(evidence: list[dict[str, Any]]) -> str:
 
 
 def _format_encounters(evidence: list[dict[str, Any]]) -> str:
-    lines = ["Theo du lieu cac lan kham trong ho so y te cua ban:"]
+    lines = ["Theo dữ liệu các lần khám trong hồ sơ y tế của bạn:"]
     for item in _items_of_type(evidence, "Encounter")[:MAX_FHIR_ITEMS]:
         data = item.get("data") or {}
-        title = _first_concept_text(data.get("type")) or _concept_text(data.get("service_type")) or "Lan kham"
+        title = _first_concept_text(data.get("type")) or _concept_text(data.get("service_type")) or "Lần khám"
         parts = [str(title)]
         period = data.get("period") if isinstance(data.get("period"), dict) else {}
         if period.get("start"):
-            parts.append(f"bat dau: {_format_datetime(period['start'])}")
+            parts.append(f"bắt đầu: {_format_datetime(period['start'])}")
         if period.get("end"):
-            parts.append(f"ket thuc: {_format_datetime(period['end'])}")
+            parts.append(f"kết thúc: {_format_datetime(period['end'])}")
         if data.get("status"):
-            parts.append(f"trang thai: {data['status']}")
+            parts.append(f"trạng thái: {data['status']}")
         location = _encounter_location_text(data.get("location"))
         if location:
             parts.append(location)
@@ -111,24 +111,24 @@ def _format_encounters(evidence: list[dict[str, Any]]) -> str:
 
 def _format_patient_profile(evidence: list[dict[str, Any]]) -> str:
     data = (_items_of_type(evidence, "Patient")[0].get("data") or {})
-    lines = ["Theo du lieu ho so benh nhan duoc cap quyen:"]
+    lines = ["Theo dữ liệu hồ sơ bệnh nhân được cấp quyền:"]
     if data.get("name"):
-        lines.append(f"- Ho ten: {data['name']}")
+        lines.append(f"- Họ tên: {data['name']}")
     if data.get("birth_date"):
-        lines.append(f"- Ngay sinh: {_format_datetime(data['birth_date'])}")
+        lines.append(f"- Ngày sinh: {_format_datetime(data['birth_date'])}")
     if data.get("gender"):
-        lines.append(f"- Gioi tinh: {data['gender']}")
+        lines.append(f"- Giới tính: {data['gender']}")
     identifier = _identifier_text(data.get("identifier"))
     if identifier:
-        lines.append(f"- Ma dinh danh: {identifier}")
+        lines.append(f"- Mã định danh: {identifier}")
     telecom = _telecom_text(data.get("telecom"))
     if telecom:
-        lines.append(f"- Lien he: {telecom}")
+        lines.append(f"- Liên hệ: {telecom}")
     return "\n".join(lines)
 
 
 def _format_generic_fhir(evidence: list[dict[str, Any]]) -> str:
-    lines = ["Theo du lieu ho so y te duoc cap quyen:"]
+    lines = ["Theo dữ liệu hồ sơ y tế được cấp quyền:"]
     for item in evidence[:MAX_FHIR_ITEMS]:
         title = item.get("title") or "FHIR"
         lines.append(f"- {title}")
@@ -136,36 +136,36 @@ def _format_generic_fhir(evidence: list[dict[str, Any]]) -> str:
 
 
 def _format_observation_line(data: dict[str, Any]) -> str:
-    code = data.get("code") or "Chi so xet nghiem"
+    code = data.get("code") or "Chỉ số xét nghiệm"
     parts = [str(code)]
     value = _value_text(data.get("value"))
     if value:
-        parts.append(f"ket qua: {value}")
+        parts.append(f"kết quả: {value}")
     if data.get("effective_time"):
-        parts.append(f"thoi gian: {_format_datetime(data['effective_time'])}")
+        parts.append(f"thời gian: {_format_datetime(data['effective_time'])}")
     if data.get("status"):
-        parts.append(f"trang thai: {data['status']}")
+        parts.append(f"trạng thái: {data['status']}")
     reference_range = _reference_range_text(data.get("reference_range"))
     if reference_range:
-        parts.append(f"khoang tham chieu: {reference_range}")
+        parts.append(f"khoảng tham chiếu: {reference_range}")
     component_text = _components_text(data.get("components"))
     if component_text:
-        parts.append(f"thanh phan: {component_text}")
+        parts.append(f"thành phần: {component_text}")
     return f"- {'; '.join(parts)}"
 
 
 def _format_diagnostic_report_line(data: dict[str, Any]) -> str:
-    code = data.get("code") or "Bao cao can lam sang"
+    code = data.get("code") or "Báo cáo cận lâm sàng"
     parts = [str(code)]
     if data.get("effective_time"):
-        parts.append(f"thoi gian: {_format_datetime(data['effective_time'])}")
+        parts.append(f"thời gian: {_format_datetime(data['effective_time'])}")
     if data.get("status"):
-        parts.append(f"trang thai: {data['status']}")
+        parts.append(f"trạng thái: {data['status']}")
     if data.get("conclusion"):
-        parts.append(f"ket luan: {data['conclusion']}")
+        parts.append(f"kết luận: {data['conclusion']}")
     result_refs = _result_refs_text(data.get("result"))
     if result_refs:
-        parts.append(f"ket qua lien quan: {result_refs}")
+        parts.append(f"kết quả liên quan: {result_refs}")
     return f"- {'; '.join(parts)}"
 
 
@@ -296,7 +296,7 @@ def _participant_text(value: Any) -> str | None:
         actor = item.get("actor")
         if isinstance(actor, dict) and actor.get("display"):
             names.append(str(actor["display"]))
-    return f"nguoi tham gia: {', '.join(names)}" if names else None
+    return f"người tham gia: {', '.join(names)}" if names else None
 
 
 def _encounter_location_text(value: Any) -> str | None:
@@ -309,7 +309,7 @@ def _encounter_location_text(value: Any) -> str | None:
         location = item.get("location")
         if isinstance(location, dict) and location.get("display"):
             names.append(str(location["display"]))
-    return f"dia diem: {', '.join(names)}" if names else None
+    return f"địa điểm: {', '.join(names)}" if names else None
 
 
 def _identifier_text(value: Any) -> str | None:
@@ -327,4 +327,4 @@ def _telecom_text(value: Any) -> str | None:
 
 
 def _fhir_safety_note() -> str:
-    return "Thong tin tren chi la du lieu trong ho so; vui long trao doi voi bac si de duoc giai thich va huong dan dieu tri."
+    return "Thông tin trên chỉ là dữ liệu trong hồ sơ; vui lòng trao đổi với bác sĩ để được giải thích và hướng dẫn điều trị."
