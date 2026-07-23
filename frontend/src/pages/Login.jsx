@@ -72,15 +72,12 @@ const Login = () => {
           </p>
           <div className="brand-features">
             <div className="brand-feature">
-              <div className="brand-feature-icon">📅</div>
               <span>Đặt lịch khám trực tuyến nhanh chóng</span>
             </div>
             <div className="brand-feature">
-              <div className="brand-feature-icon">🔒</div>
               <span>Bảo mật thông tin cá nhân tuyệt đối</span>
             </div>
             <div className="brand-feature">
-              <div className="brand-feature-icon">💬</div>
               <span>Hỗ trợ AI Chatbot 24/7</span>
             </div>
           </div>
@@ -93,7 +90,7 @@ const Login = () => {
 
           {globalError && (
             <div className="login-global-error">
-              <span>⚠️</span> {globalError}
+              {globalError}
             </div>
           )}
 
@@ -103,7 +100,6 @@ const Login = () => {
                 Email hoặc Số điện thoại
               </label>
               <div className="form-input-wrapper">
-                <span className="form-input-icon">👤</span>
                 <input
                   id="login-identifier"
                   className={`form-input ${errors.identifier ? 'error' : ''}`}
@@ -117,7 +113,7 @@ const Login = () => {
                 />
               </div>
               {errors.identifier && (
-                <span className="form-error">⚠ {errors.identifier}</span>
+                <span className="form-error">{errors.identifier}</span>
               )}
             </div>
 
@@ -126,7 +122,6 @@ const Login = () => {
                 Mật khẩu
               </label>
               <div className="form-input-wrapper">
-                <span className="form-input-icon">🔑</span>
                 <input
                   id="login-password"
                   className={`form-input ${errors.password ? 'error' : ''}`}
@@ -139,7 +134,7 @@ const Login = () => {
                 />
               </div>
               {errors.password && (
-                <span className="form-error">⚠ {errors.password}</span>
+                <span className="form-error">{errors.password}</span>
               )}
             </div>
 
@@ -155,7 +150,7 @@ const Login = () => {
                   Đang đăng nhập...
                 </>
               ) : (
-                'Đăng nhập →'
+                'Đăng nhập'
               )}
             </button>
           </form>
